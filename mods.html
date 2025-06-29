@@ -228,17 +228,25 @@
         voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
 
         upvoteBtn.addEventListener("click", () => {
-          const newVotes = currentVotes + 1;
-          voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
-          // TODO: Send to Google Form or backend
-          fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
-  method: "POST",
-  body: new URLSearchParams({
-    name: modId,
-action:"vote",
-    votes: newVotes
+  const newVotes = currentVotes + 1;
+  voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+
+  fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "vote",
+      name: modId,
+      votes: newVotes
+    })
   })
+  .then(() => {
+    console.log(`✅ Vote for "${modId}" submitted successfully.`);
+  })
+  .catch(err => {
+    console.error(`❌ Failed to submit vote for "${modId}":`, err);
+  });
 });
+
         });
 
         voteContainer.appendChild(upvoteBtn);
