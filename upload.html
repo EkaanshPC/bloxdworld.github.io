@@ -9,6 +9,59 @@
     html {
       overflow-x: hidden;
     }
+body.dark-mode {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark-mode .mod-card {
+  background-color: #222;
+}
+
+body.dark-mode .mod-card p {
+  color: #ccc;
+}
+
+body.dark-mode .mod-card h3 {
+  color: #00e0e2;
+}
+
+body.dark-mode .mod-details pre {
+  background-color: #333;
+  color: #ddd;
+}
+
+body.dark-mode .nav-links a {
+  color: #ccc;
+}
+
+body.dark-mode .nav-links a:hover {
+  color: cyan;
+}
+
+body.dark-mode .search-bar {
+  background-color: #222;
+  color: #eee;
+  border-color: #555;
+}
+
+body.dark-mode .vote-btn {
+  background-color: #009fa1;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .mods-container {
+    padding: 10px;
+  }
+  .mod-card {
+    padding: 15px;
+  }
+  .search-bar {
+    width: 90%;
+  }
+}
+
 
     body {
       margin: 0;
@@ -158,6 +211,7 @@
         <li><a href="mods.html"><i class="fas fa-cubes"></i> Mods</a></li>
         <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
         <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+<li><a href="#" id="themeToggle"><i class="fas fa-moon"></i> Theme</a></li>
       </ul>
     </div>
   </div>
@@ -178,6 +232,9 @@
 </iframe>
 
   </div>
-
+<script>document.getElementById("themeToggle").addEventListener("click", (e) => {
+  e.preventDefault(); // prevent link jump
+  document.body.classList.toggle("dark-mode");
+});</script>
 </body>
 </html>
