@@ -240,12 +240,14 @@
     })
   })
   .then(() => {
+    voteData[modId] = newVotes; // ✅ Update local cache
     console.log(`✅ Vote for "${modId}" submitted successfully.`);
   })
   .catch(err => {
     console.error(`❌ Failed to submit vote for "${modId}":`, err);
   });
 });
+
 
         });
 
