@@ -242,7 +242,7 @@
           details.appendChild(img);
         }
 
-        if (mod["Other Info"]) {
+        if (mod["Addon Code"]) {
           const codeBlock = document.createElement("pre");
           codeBlock.textContent = mod["Other Info"];
           details.appendChild(codeBlock);
@@ -252,9 +252,25 @@
         card.appendChild(category);
         card.appendChild(details);
 
-        card.addEventListener("click", () => {
-          details.style.display = details.style.display === "none" ? "block" : "none";
-        });
+        const toggleBtn = document.createElement("button");
+toggleBtn.textContent = "Show More";
+toggleBtn.style.marginTop = "10px";
+toggleBtn.style.padding = "6px 12px";
+toggleBtn.style.border = "none";
+toggleBtn.style.borderRadius = "4px";
+toggleBtn.style.backgroundColor = "#00a7a9";
+toggleBtn.style.color = "white";
+toggleBtn.style.cursor = "pointer";
+
+toggleBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const isVisible = details.style.display === "block";
+  details.style.display = isVisible ? "none" : "block";
+  toggleBtn.textContent = isVisible ? "Show More" : "Show Less";
+});
+
+card.appendChild(toggleBtn);
+
 
         container.appendChild(card);
       });
