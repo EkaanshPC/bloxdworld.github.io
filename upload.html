@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload a Mod | Bloxd World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      height: 45px;
+    }
+
+    .header-left {
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 0 15px;
+    }
+
+    .logo-text {
+      font-weight: bold;
+      font-size: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .header-right {
+      background-color: #444;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 30px;
+      flex: 2;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: cyan;
+    }
+
+    /* Cube */
+    .cube-container {
+      perspective: 1000px;
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 6s infinite linear;
+    }
+
+    .face {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url('https://art.pixilart.com/sr5z31cacaee5baws3.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .front  { transform: translateZ(10px); }
+    .back   { transform: rotateY(180deg) translateZ(10px); }
+    .right  { transform: rotateY(90deg) translateZ(10px); }
+    .left   { transform: rotateY(-90deg) translateZ(10px); }
+    .top    { transform: rotateX(90deg) translateZ(10px); }
+    .bottom { transform: rotateX(-90deg) translateZ(10px); }
+
+    @keyframes rotateCube {
+      from { transform: rotateX(0deg) rotateY(0deg); }
+      to   { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    /* Upload Form Styling */
+    .upload-container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    iframe {
+      width: 100%;
+      height: 800px;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .upload-container p {
+      font-size: 1.1rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🧠 Header -->
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd World</div>
+    </div>
+
+    <div class="header-right">
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="mods.html"><i class="fas fa-cubes"></i> Mods</a></li>
+        <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 📤 Upload Form -->
+  <div class="upload-container">
+    <p>Fill out the form below to submit your Bloxd mod. It will appear on the Mods page once approved!</p>
+
+    <!-- 🔗 Replace this with your actual Google Form embed link -->
+<iframe 
+  src="https://docs.google.com/forms/d/e/1FAIpQLSe0KkPyyqJ8-WvVNgGulvVA-yE2NdYDl3SKzXeWNPsDQ41ntg/viewform?embedded=true" 
+  width="100%" 
+  height="800" 
+  frameborder="0" 
+  marginheight="0" 
+  marginwidth="0">
+  Loading…
+</iframe>
+
+  </div>
+
+</body>
+</html>

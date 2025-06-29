@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloxd World Alpha Developmental version v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    html {
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      height: 45px;
+    }
+
+    .header-left {
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 0 15px;
+    }
+
+    .logo-text {
+      font-weight: bold;
+      font-size: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .header-right {
+      background-color: #444;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 30px;
+      flex: 2;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: cyan;
+    }
+
+    /* Cube */
+    .cube-container {
+      perspective: 1000px;
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 6s infinite linear;
+    }
+
+    .face {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url('https://art.pixilart.com/sr5z31cacaee5baws3.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .front  { transform: translateZ(10px); }
+    .back   { transform: rotateY(180deg) translateZ(10px); }
+    .right  { transform: rotateY(90deg) translateZ(10px); }
+    .left   { transform: rotateY(-90deg) translateZ(10px); }
+    .top    { transform: rotateX(90deg) translateZ(10px); }
+    .bottom { transform: rotateX(-90deg) translateZ(10px); }
+
+    @keyframes rotateCube {
+      from { transform: rotateX(0deg) rotateY(0deg); }
+      to   { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    /* Intro Section Layout */
+    .intro-section {
+      display: flex;
+      align-items: flex-start;
+      gap: 30px;
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+      flex-wrap: wrap;
+    }
+
+    .left-block {
+      width: 300px;
+      height: 335px;
+      background: linear-gradient(135deg, #00cfd1, #007c7e);
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+
+    .welcome-text-block {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .welcome-text {
+      font-size: 20px;
+      color: white;
+      background-color: #00cfd1;
+      border-top: 3px solid #00a7a9;
+      border-bottom: 3px solid #00a7a9;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      padding: 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .welcome-para {
+      padding: 20px 30px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: white;
+      background-color: #77f7f1;
+      border-bottom: 2px solid #00a7a9;
+      margin: 0 auto;
+      border-radius: 4px;
+      background-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), #8ffcfb, #00a7a9);
+      background-size: 200% 200%;
+      background-position: center;
+      transition: background-position 0.2s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-text::before,
+    .welcome-para::before {
+      content: '';
+      position: absolute;
+      left: var(--mouse-x, 50%);
+      top: var(--mouse-y, 50%);
+      opacity: 1;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 60%);
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease;
+      z-index: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🧠 Header -->
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd World</div>
+    </div>
+
+    <div class="header-right">
+  <ul class="nav-links">
+    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="mods.html"><i class="fas fa-cubes"></i> Mods</a></li>
+    <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+  </ul>
+</div>
+  </div>
+
+  <!-- 👋 Welcome Section -->
+  <div class="intro-section">
+    
+      <img src="download.png" class="left-block">
+    
+
+    <div class="welcome-text-block">
+      <div class="welcome-text">
+        <p>
+          <strong>Bloxd World</strong> is the ultimate hub for discovering, sharing,
+          and creating <strong>Bloxd Codes</strong>.<br><br>
+        </p>
+      </div>
+      <p class="welcome-para">
+        Join a passionate community of builders, modders, and explorers<br>
+        who are shaping the future of Bloxd one block at a time.<br><br>
+        Whether you're here to play, create, or collaborate —<br>
+        you're in the right place.
+      </p>
+    </div>
+  </div>
+
+  <!-- 💡 Mouse Tracking Script -->
+  <script>
+    const targets = document.querySelectorAll('.welcome-text, .welcome-para');
+
+    targets.forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        el.style.setProperty('--mouse-x', `${x}px`);
+        el.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.setProperty('--mouse-x', `50%`);
+        el.style.setProperty('--mouse-y', `50%`);
+      });
+    });
+  </script>
+</body>
+</html>

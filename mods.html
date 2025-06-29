@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mods | Bloxd World</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Fredoka', sans-serif;
+      background-color: #f0f0f0;
+    }
+
+    .header {
+      display: flex;
+      height: 45px;
+    }
+
+    .header-left {
+      background-color: #000;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      padding: 0 15px;
+    }
+
+    .logo-text {
+      font-weight: bold;
+      font-size: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .header-right {
+      background-color: #444;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-left: 30px;
+      flex: 2;
+    }
+
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: cyan;
+    }
+
+    .cube-container {
+      perspective: 1000px;
+      width: 20px;
+      height: 20px;
+      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
+    }
+
+    .cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotateCube 6s infinite linear;
+    }
+
+    .face {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-image: url('https://art.pixilart.com/sr5z31cacaee5baws3.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .front  { transform: translateZ(10px); }
+    .back   { transform: rotateY(180deg) translateZ(10px); }
+    .right  { transform: rotateY(90deg) translateZ(10px); }
+    .left   { transform: rotateY(-90deg) translateZ(10px); }
+    .top    { transform: rotateX(90deg) translateZ(10px); }
+    .bottom { transform: rotateX(-90deg) translateZ(10px); }
+
+    @keyframes rotateCube {
+      from { transform: rotateX(0deg) rotateY(0deg); }
+      to   { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    .mods-container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .mods-header {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #00a7a9;
+      text-align: center;
+    }
+
+    .search-bar {
+      display: block;
+      margin: 0 auto 30px;
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .mod-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .mod-card h3 {
+      margin-top: 0;
+      color: #007c7e;
+    }
+
+    .mod-card p {
+      margin: 10px 0 0;
+      color: #333;
+    }
+
+    .mod-card img {
+      max-width: 100%;
+      border-radius: 6px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🧠 Header -->
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd World</div>
+    </div>
+
+    <div class="header-right">
+      <ul class="nav-links">
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="mods.html"><i class="fas fa-cubes"></i> Mods</a></li>
+        <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+        <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 🧱 Mods Section -->
+  <div class="mods-container">
+    <div class="mods-header">Community Mods</div>
+    <input type="text" id="search" class="search-bar" placeholder="Search mods...">
+    <div id="mods-list"></div>
+  </div>
+
+  <script>
+    let allMods = [];
+
+    function createTextElement(tag, text) {
+      const el = document.createElement(tag);
+      el.textContent = text;
+      return el;
+    }
+
+    function renderMods(mods) {
+      const container = document.getElementById("mods-list");
+      while (container.firstChild) container.removeChild(container.firstChild);
+
+      if (mods.length === 0) {
+        container.appendChild(createTextElement("p", "No mods found."));
+        return;
+      }
+
+      mods.forEach(mod => {
+        const card = document.createElement("div");
+        card.className = "mod-card";
+
+        card.appendChild(createTextElement("h3", mod["Addon Name"] || "Unnamed Mod"));
+        card.appendChild(createTextElement("p", `Category: ${mod["Category (what type of mod is this?)"] || "Uncategorized"}`));
+        card.appendChild(createTextElement("p", mod["About Addon / Description"] || "No description provided."));
+        card.appendChild(createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`));
+
+        if (mod["Image (upload image to imgur, put the link here.)"]) {
+          const img = document.createElement("img");
+          img.src = mod["Image (upload image to imgur, put the link here.)"];
+          img.alt = "Mod Image";
+          card.appendChild(img);
+        }
+
+        if (mod["Other Info"]) {
+          card.appendChild(createTextElement("p", mod["Other Info"]));
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201")
+      .then(res => res.json())
+      .then(data => {
+        allMods = data.filter(mod => mod["Approved"]?.toLowerCase() === "true");
+        renderMods(allMods);
+      })
+      .catch(err => {
+        const container = document.getElementById("mods-list");
+        container.appendChild(createTextElement("p", "Failed to load mods."));
+        console.error("Error loading mods:", err);
+      });
+
+    document.getElementById("search").addEventListener("input", e => {
+      const query = e.target.value.toLowerCase();
+      const filtered = allMods.filter(mod =>
+        (mod["Addon Name"] || "").toLowerCase().includes(query) ||
+        (mod["About Addon / Description"] || "").toLowerCase().includes(query) ||
+        (mod["Author Name (leave blank for your username to be displayed anonymous)"] || "").toLowerCase().includes(query)
+      );
+      renderMods(filtered);
+    });
+  </script>
+
+</body>
+</html>
