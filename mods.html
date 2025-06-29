@@ -254,4 +254,27 @@
     .then(([mods, votes]) => {
       allMods = mods.filter(mod => mod["Approved"]?.toLowerCase() === "true");
       votes.forEach(entry => {
-        voteData[entry["Addon Name"]] =
+                voteData[entry["Addon Name"]] = entry["Votes"];
+      });
+      renderMods(allMods);
+    })
+    .catch(err => {
+      const container = document.getElementById("mods-list");
+      container.appendChild(createTextElement("p", "Failed to load mods."));
+      console.error("Error loading mods:", err);
+    });
+
+    document.getElementById("search").addEventListener("input", e => {
+      const query = e.target.value.toLowerCase();
+      const filtered = allMods.filter(mod =>
+        (mod["Addon Name"] || "").toLowerCase().includes(query) ||
+        (mod["About Addon / Description"] || "").toLowerCase().includes(query) ||
+        (mod["Author Name (leave blank for your username to be displayed anonymous)"] || "").toLowerCase().includes(query)
+      );
+      renderMods(filtered);
+    });
+  </script>
+
+</body>
+</html>
+
