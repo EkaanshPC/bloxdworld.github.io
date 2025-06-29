@@ -130,6 +130,7 @@
       padding: 20px;
       margin-bottom: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      cursor: pointer;
     }
 
     .mod-card h3 {
@@ -145,6 +146,20 @@
     .mod-card img {
       max-width: 100%;
       border-radius: 6px;
+      margin-top: 10px;
+    }
+
+    .mod-details {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .mod-details pre {
+      font-family: 'Courier New', monospace;
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 6px;
+      overflow-x: auto;
       margin-top: 10px;
     }
   </style>
@@ -197,7 +212,7 @@
 
     function renderMods(mods) {
       const container = document.getElementById("mods-list");
-      while (container.firstChild) container.removeChild(container.firstChild);
+      container.innerHTML = "";
 
       if (mods.length === 0) {
         container.appendChild(createTextElement("p", "No mods found."));
@@ -208,21 +223,38 @@
         const card = document.createElement("div");
         card.className = "mod-card";
 
-        card.appendChild(createTextElement("h3", mod["Addon Name"] || "Unnamed Mod"));
-        card.appendChild(createTextElement("p", `Category: ${mod["Category (what type of mod is this?)"] || "Uncategorized"}`));
-        card.appendChild(createTextElement("p", mod["About Addon / Description"] || "No description provided."));
-        card.appendChild(createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`));
+        const title = createTextElement("h3", mod["Addon Name"] || "Unnamed Mod");
+        const category = createTextElement("p", `Category: ${mod["Category (what type of mod is this?)"] || "Uncategorized"}`);
+
+        const details = document.createElement("div");
+        details.className = "mod-details";
+
+        const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
+        const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
+
+        details.appendChild(description);
+        details.appendChild(author);
 
         if (mod["Image (upload image to imgur, put the link here.)"]) {
           const img = document.createElement("img");
           img.src = mod["Image (upload image to imgur, put the link here.)"];
           img.alt = "Mod Image";
-          card.appendChild(img);
+          details.appendChild(img);
         }
 
         if (mod["Other Info"]) {
-          card.appendChild(createTextElement("p", mod["Other Info"]));
+          const codeBlock = document.createElement("pre");
+          codeBlock.textContent = mod["Other Info"];
+          details.appendChild(codeBlock);
         }
+
+        card.appendChild(title);
+        card.appendChild(category);
+        card.appendChild(details);
+
+        card.addEventListener("click", () => {
+          details.style.display = details.style.display === "none" ? "block" : "none";
+        });
 
         container.appendChild(card);
       });
@@ -235,7 +267,7 @@
         renderMods(allMods);
       })
       .catch(err => {
-        const container = document.getElementById("mods-list");
+                const container = document.getElementById("mods-list");
         container.appendChild(createTextElement("p", "Failed to load mods."));
         console.error("Error loading mods:", err);
       });
@@ -253,3 +285,4 @@
 
 </body>
 </html>
+       
