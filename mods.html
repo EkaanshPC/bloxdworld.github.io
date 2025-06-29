@@ -64,43 +64,6 @@
       color: cyan;
     }
 
-    .cube-container {
-      perspective: 1000px;
-      width: 20px;
-      height: 20px;
-      filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
-    }
-
-    .cube {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: rotateCube 6s infinite linear;
-    }
-
-    .face {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-image: url('https://art.pixilart.com/sr5z31cacaee5baws3.png');
-      background-size: cover;
-      background-position: center;
-      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
-    }
-
-    .front  { transform: translateZ(10px); }
-    .back   { transform: rotateY(180deg) translateZ(10px); }
-    .right  { transform: rotateY(90deg) translateZ(10px); }
-    .left   { transform: rotateY(-90deg) translateZ(10px); }
-    .top    { transform: rotateX(90deg) translateZ(10px); }
-    .bottom { transform: rotateX(-90deg) translateZ(10px); }
-
-    @keyframes rotateCube {
-      from { transform: rotateX(0deg) rotateY(0deg); }
-      to   { transform: rotateX(360deg) rotateY(360deg); }
-    }
-
     .mods-container {
       max-width: 1000px;
       margin: 40px auto;
@@ -130,7 +93,6 @@
       padding: 20px;
       margin-bottom: 20px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      cursor: pointer;
     }
 
     .mod-card h3 {
@@ -162,28 +124,24 @@
       overflow-x: auto;
       margin-top: 10px;
     }
+
+    .vote-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007c7e;
+      color: white;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🧠 Header -->
   <div class="header">
     <div class="header-left">
-      <div style="display: flex; align-items: center; height: 100%;">
-        <div class="cube-container">
-          <div class="cube">
-            <div class="face front"></div>
-            <div class="face back"></div>
-            <div class="face right"></div>
-            <div class="face left"></div>
-            <div class="face top"></div>
-            <div class="face bottom"></div>
-          </div>
-        </div>
-      </div>
       <div class="logo-text"> Bloxd World</div>
     </div>
-
     <div class="header-right">
       <ul class="nav-links">
         <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
@@ -194,7 +152,6 @@
     </div>
   </div>
 
-  <!-- 🧱 Mods Section -->
   <div class="mods-container">
     <div class="mods-header">Community Mods</div>
     <input type="text" id="search" class="search-bar" placeholder="Search mods...">
@@ -203,6 +160,7 @@
 
   <script>
     let allMods = [];
+    let voteData = {};
 
     function createTextElement(tag, text) {
       const el = document.createElement(tag);
@@ -220,33 +178,6 @@
       }
 
       mods.forEach(mod => {
-const voteContainer = document.createElement("div");
-voteContainer.style.marginTop = "10px";
-
-const upvoteBtn = document.createElement("button");
-upvoteBtn.innerHTML = "👍 Upvote";
-upvoteBtn.style.marginRight = "10px";
-upvoteBtn.style.padding = "6px 12px";
-upvoteBtn.style.border = "none";
-upvoteBtn.style.borderRadius = "4px";
-upvoteBtn.style.backgroundColor = "#007c7e";
-upvoteBtn.style.color = "white";
-upvoteBtn.style.cursor = "pointer";
-
-const voteCount = document.createElement("span");
-voteCount.textContent = `0 votes`;
-
-upvoteBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  let current = parseInt(voteCount.textContent) || 0;
-  current++;
-  voteCount.textContent = `${current} vote${current === 1 ? "" : "s"}`;
-});
-
-voteContainer.appendChild(upvoteBtn);
-voteContainer.appendChild(voteCount);
-details.appendChild(voteContainer);
-
         const card = document.createElement("div");
         card.className = "mod-card";
 
@@ -271,61 +202,56 @@ details.appendChild(voteContainer);
 
         if (mod["Addon Code"]) {
           const codeBlock = document.createElement("pre");
-          codeBlock.textContent = mod["Other Info"];
+          codeBlock.textContent = mod["Addon Code"];
           details.appendChild(codeBlock);
         }
 
+        const toggleBtn = document.createElement("button");
+        toggleBtn.textContent = "Show More";
+        toggleBtn.className = "vote-btn";
+        toggleBtn.addEventListener("click", () => {
+          const isVisible = details.style.display === "block";
+          details.style.display = isVisible ? "none" : "block";
+          toggleBtn.textContent = isVisible ? "Show More" : "Show Less";
+        });
+
+        const voteContainer = document.createElement("div");
+        voteContainer.style.marginTop = "10px";
+
+        const upvoteBtn = document.createElement("button");
+        upvoteBtn.textContent = "👍 Upvote";
+        upvoteBtn.className = "vote-btn";
+
+        const voteCount = document.createElement("span");
+        const modId = mod["Addon Name"];
+        const currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
+        voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
+
+        upvoteBtn.addEventListener("click", () => {
+          const newVotes = currentVotes + 1;
+          voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+          // TODO: Send to Google Form or backend
+          alert("Upvote recorded (not yet saved permanently)");
+        });
+
+        voteContainer.appendChild(upvoteBtn);
+        voteContainer.appendChild(voteCount);
+
         card.appendChild(title);
         card.appendChild(category);
+        card.appendChild(toggleBtn);
         card.appendChild(details);
-
-        const toggleBtn = document.createElement("button");
-toggleBtn.textContent = "Show More";
-toggleBtn.style.marginTop = "10px";
-toggleBtn.style.padding = "6px 12px";
-toggleBtn.style.border = "none";
-toggleBtn.style.borderRadius = "4px";
-toggleBtn.style.backgroundColor = "#00a7a9";
-toggleBtn.style.color = "white";
-toggleBtn.style.cursor = "pointer";
-
-toggleBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  const isVisible = details.style.display === "block";
-  details.style.display = isVisible ? "none" : "block";
-  toggleBtn.textContent = isVisible ? "Show More" : "Show Less";
-});
-
-card.appendChild(toggleBtn);
-
+        card.appendChild(voteContainer);
 
         container.appendChild(card);
       });
     }
 
-    fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201")
-      .then(res => res.json())
-      .then(data => {
-        allMods = data.filter(mod => mod["Approved"]?.toLowerCase() === "true");
-        renderMods(allMods);
-      })
-      .catch(err => {
-                const container = document.getElementById("mods-list");
-        container.appendChild(createTextElement("p", "Failed to load mods."));
-        console.error("Error loading mods:", err);
-      });
-
-    document.getElementById("search").addEventListener("input", e => {
-      const query = e.target.value.toLowerCase();
-      const filtered = allMods.filter(mod =>
-        (mod["Addon Name"] || "").toLowerCase().includes(query) ||
-        (mod["About Addon / Description"] || "").toLowerCase().includes(query) ||
-        (mod["Author Name (leave blank for your username to be displayed anonymous)"] || "").toLowerCase().includes(query)
-      );
-      renderMods(filtered);
-    });
-  </script>
-
-</body>
-</html>
-       
+    Promise.all([
+      fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json()),
+      fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/DATA%20STORE").then(res => res.json())
+    ])
+    .then(([mods, votes]) => {
+      allMods = mods.filter(mod => mod["Approved"]?.toLowerCase() === "true");
+      votes.forEach(entry => {
+        voteData[entry["Addon Name"]] =
