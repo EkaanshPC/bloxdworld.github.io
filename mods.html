@@ -150,7 +150,7 @@
       el.textContent = text;
       return el;
     }
-
+const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
     function renderMods(mods) {
       const container = document.getElementById("mods-list");
       container.innerHTML = "";
@@ -210,27 +210,40 @@
         let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
         voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
 
-        upvoteBtn.addEventListener("click", () => {
-          const newVotes = currentVotes + 1;
-          voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
-          voteData[modId] = newVotes;
-          currentVotes = newVotes;
+        if (votedMods[modId]) {
+  upvoteBtn.disabled = true;
+  upvoteBtn.textContent = "✅ Voted";
+}
 
-          fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_WEBAPP_ID/exec", {
-            method: "POST",
-            body: new URLSearchParams({
-              action: "vote",
-              name: modId,
-              votes: newVotes
-            })
-          })
-          .then(() => {
-            console.log(`✅ Vote for "${modId}" submitted successfully.`);
-          })
-          .catch(err => {
-            console.error(`❌ Failed to submit vote for "${modId}":`, err);
-          });
-        });
+upvoteBtn.addEventListener("click", () => {
+  if (votedMods[modId]) return;
+
+  const newVotes = currentVotes + 1;
+  voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+  voteData[modId] = newVotes;
+  currentVotes = newVotes;
+
+  votedMods[modId] = true;
+  localStorage.setItem("votedMods", JSON.stringify(votedMods));
+
+  upvoteBtn.disabled = true;
+  upvoteBtn.textContent = "✅ Voted";
+
+  fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_WEBAPP_ID/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "vote",
+      name: modId,
+      votes: newVotes
+    })
+  })
+  .then(() => {
+    console.log(`✅ Vote for "${modId}" submitted successfully.`);
+  })
+  .catch(err => {
+    console.error(`❌ Failed to submit vote for "${modId}":`, err);
+  });
+});
 
         voteContainer.appendChild(upvoteBtn);
         voteContainer.appendChild(voteCount);
@@ -264,8 +277,8 @@
     })
     .catch(err => {
       const container = document.getElementById("mods-list");
-      container.appendChild(createTextElement("p", "Failed to load mods."));
-      console.error("Error loading mods:", err);
+  container.appendChild(createTextElement("p", "⚠️ Failed to load mods. Check console for details."));
+  console.error("❌ Error loading mods:", err);
     });
 
     document.getElementById("search").addEventListener("input", e => {
