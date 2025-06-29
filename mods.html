@@ -201,9 +201,13 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
         const voteContainer = document.createElement("div");
         voteContainer.style.marginTop = "10px";
 
-        const upvoteBtn = document.createElement("button");
-        upvoteBtn.textContent = "👍 Upvote";
-        upvoteBtn.className = "vote-btn";
+        const upvoteBtn = document.createElement("img");
+upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
+upvoteBtn.alt = "Upvote";
+upvoteBtn.style.width = "32px";
+upvoteBtn.style.cursor = "pointer";
+upvoteBtn.style.marginRight = "10px";
+
 
         const voteCount = document.createElement("span");
         const modId = mod["Addon Name"];
@@ -211,8 +215,10 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
         voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
 
         if (votedMods[modId]) {
-  upvoteBtn.disabled = true;
-  upvoteBtn.textContent = "✅ Voted";
+upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+upvoteBtn.alt = "Voted";
+upvoteBtn.style.opacity = "0.7"; // optional: make it look disabled
+upvoteBtn.style.pointerEvents = "none"; // disable further clicks
 }
 
 upvoteBtn.addEventListener("click", () => {
@@ -226,8 +232,11 @@ upvoteBtn.addEventListener("click", () => {
   votedMods[modId] = true;
   localStorage.setItem("votedMods", JSON.stringify(votedMods));
 
-  upvoteBtn.disabled = true;
-  upvoteBtn.textContent = "✅ Voted";
+  upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+upvoteBtn.alt = "Voted";
+upvoteBtn.style.opacity = "0.7"; // optional: make it look disabled
+upvoteBtn.style.pointerEvents = "none"; // disable further clicks
+
 
   fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
     method: "POST",
