@@ -220,6 +220,33 @@
       }
 
       mods.forEach(mod => {
+const voteContainer = document.createElement("div");
+voteContainer.style.marginTop = "10px";
+
+const upvoteBtn = document.createElement("button");
+upvoteBtn.innerHTML = "👍 Upvote";
+upvoteBtn.style.marginRight = "10px";
+upvoteBtn.style.padding = "6px 12px";
+upvoteBtn.style.border = "none";
+upvoteBtn.style.borderRadius = "4px";
+upvoteBtn.style.backgroundColor = "#007c7e";
+upvoteBtn.style.color = "white";
+upvoteBtn.style.cursor = "pointer";
+
+const voteCount = document.createElement("span");
+voteCount.textContent = `0 votes`;
+
+upvoteBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  let current = parseInt(voteCount.textContent) || 0;
+  current++;
+  voteCount.textContent = `${current} vote${current === 1 ? "" : "s"}`;
+});
+
+voteContainer.appendChild(upvoteBtn);
+voteContainer.appendChild(voteCount);
+details.appendChild(voteContainer);
+
         const card = document.createElement("div");
         card.className = "mod-card";
 
