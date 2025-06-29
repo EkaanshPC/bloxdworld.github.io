@@ -117,6 +117,10 @@
       color: white;
       cursor: pointer;
     }
+img.vote-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
 
   </style>
 </head>
@@ -208,6 +212,7 @@ upvoteBtn.alt = "Upvote";
 upvoteBtn.style.width = "32px";
 upvoteBtn.style.cursor = "pointer";
 upvoteBtn.style.marginRight = "10px";
+upvoteBtn.classList.add("vote-icon");
 
 
         const voteCount = document.createElement("span");
