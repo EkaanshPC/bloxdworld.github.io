@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bloxd World Alpha Developmental version v2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+body {
+      font-family: 'Fredoka', sans-serif;
+      background-color: #f0f0f0;
+      color: #111;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .devlog-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00a7a9;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section h2 {
+      color: #007c7e;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 5px;
+    }
+
+    .log-entry {
+      margin-bottom: 20px;
+    }
+
+    .log-entry time {
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .roadmap ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .roadmap li::before {
+      content: "🛠️ ";
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: #888;
+    }
+
+    body.dark-mode {
+      background-color: #111;
+      color: #eee;
+    }
+
+    body.dark-mode .section h2 {
+      color: #00e0e2;
+      border-color: #444;
+    }
+
+    body.dark-mode .done {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 🧠 Header -->
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd World</div>
+    </div>
+
+    <div class="header-right">
+  <ul class="nav-links">
+    <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+    <li><a href="mods.html"><i class="fas fa-cubes"></i> Mods</a></li>
+    <li><a href="upload.html"><i class="fas fa-upload"></i> Upload</a></li>
+    <li><a href="#"><i class="fas fa-info-circle"></i> About</a></li>
+<li><a href="#" id="themeToggle"><i class="fas fa-moon"></i> Theme</a></li>
+  </ul>
+</div>
+  </div>
+
+  
+ <div class="devlog-container">
+    <h1>🛠️ Bloxd World Devlog & Roadmap</h1>
+
+    <div class="section">
+      <h2>📅 Latest Updates</h2>
+      <div class="log-entry">
+        <time>July 1, 2025</time>
+        <p>🔥 First coder reacted with fire and upvote. We are officially cooking.</p>
+      </div>
+      <div class="log-entry">
+        <time>June 30, 2025</time>
+        <p>✅ Added dark mode toggle with persistence. 🌙</p>
+      </div>
+      <div class="log-entry">
+        <time>June 29, 2025</time>
+        <p>🚀 Upvote system launched with pixel-art buttons and Google Sheets backend.</p>
+      </div>
+    </div>
+
+    <div class="section roadmap">
+      <h2>🗺️ Roadmap</h2>
+      <ul>
+        <li class="done">Add upvoting system</li>
+        <li class="done">Dark mode toggle</li>
+        <li class="done">Tag-based filtering</li>
+        <li>Leaderboard page (🔥 in progress)</li>
+        <li>Mod of the Day (random from top 10)</li>
+        <li>Toggle upvote (remove your vote)</li>
+        <li>“How to Install” section on About page</li>
+        <li>Creator badges (maybe later)</li>
+        <li>Email milestone updates to users</li>
+        <li>Mod version history (lol... maybe?)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 💡 Mouse Tracking Script -->
+  <script>
+const themeToggle = document.getElementById("themeToggle");
+
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
+
+// Toggle and save preference
+themeToggle.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+
+  // Save preference
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
+
+    const targets = document.querySelectorAll('.welcome-text, .welcome-para');
+
+    targets.forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        el.style.setProperty('--mouse-x', `${x}px`);
+        el.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.setProperty('--mouse-x', `50%`);
+        el.style.setProperty('--mouse-y', `50%`);
+      });
+    });
+  </script>
+</body>
+</html>
