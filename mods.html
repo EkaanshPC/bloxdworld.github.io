@@ -229,7 +229,7 @@ upvoteBtn.addEventListener("click", () => {
   upvoteBtn.disabled = true;
   upvoteBtn.textContent = "✅ Voted";
 
-  fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_WEBAPP_ID/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
     method: "POST",
     body: new URLSearchParams({
       action: "vote",
