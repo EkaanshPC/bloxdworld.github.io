@@ -6,70 +6,282 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+html {
+  overflow-x: hidden;
+}
+
 body {
-      font-family: 'Fredoka', sans-serif;
-      background-color: #f0f0f0;
-      color: #111;
-      margin: 0;
-      padding: 20px;
-    }
+  margin: 0;
+  font-family: 'Fredoka', sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+}
 
-    .devlog-container {
-      max-width: 800px;
-      margin: 0 auto;
-    }
+/* Header */
+.header {
+  display: flex;
+  height: 45px;
+}
 
-    h1 {
-      text-align: center;
-      color: #00a7a9;
-    }
+.header-left {
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 0 15px;
+}
 
-    .section {
-      margin-bottom: 40px;
-    }
+.logo-text {
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
 
-    .section h2 {
-      color: #007c7e;
-      border-bottom: 2px solid #ccc;
-      padding-bottom: 5px;
-    }
+.header-right {
+  background-color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 30px;
+  flex: 2;
+}
 
-    .log-entry {
-      margin-bottom: 20px;
-    }
+.nav-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 25px;
+}
 
-    .log-entry time {
-      font-size: 0.9rem;
-      color: #666;
-    }
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
 
-    .roadmap ul {
-      list-style: none;
-      padding-left: 0;
-    }
+.nav-links a:hover {
+  color: cyan;
+}
 
-    .roadmap li::before {
-      content: "🛠️ ";
-    }
+/* Cube */
+.cube-container {
+  perspective: 1000px;
+  width: 20px;
+  height: 20px;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.4));
+}
 
-    .done {
-      text-decoration: line-through;
-      color: #888;
-    }
+.cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: rotateCube 6s infinite linear;
+}
 
-    body.dark-mode {
-      background-color: #111;
-      color: #eee;
-    }
+.face {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('https://art.pixilart.com/sr5z31cacaee5baws3.png');
+  background-size: cover;
+  background-position: center;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
 
-    body.dark-mode .section h2 {
-      color: #00e0e2;
-      border-color: #444;
-    }
+.front  { transform: translateZ(10px); }
+.back   { transform: rotateY(180deg) translateZ(10px); }
+.right  { transform: rotateY(90deg) translateZ(10px); }
+.left   { transform: rotateY(-90deg) translateZ(10px); }
+.top    { transform: rotateX(90deg) translateZ(10px); }
+.bottom { transform: rotateX(-90deg) translateZ(10px); }
 
-    body.dark-mode .done {
-      color: #555;
-    }
+@keyframes rotateCube {
+  from { transform: rotateX(0deg) rotateY(0deg); }
+  to   { transform: rotateX(360deg) rotateY(360deg); }
+}
+
+/* Intro Section Layout */
+.intro-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.left-block {
+  width: 300px;
+  height: 335px;
+  background: linear-gradient(135deg, #00cfd1, #007c7e);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+.welcome-text-block {
+  flex: 1;
+  min-width: 250px;
+}
+
+.welcome-text {
+  font-size: 20px;
+  color: white;
+  background-color: #00cfd1;
+  border-top: 3px solid #00a7a9;
+  border-bottom: 3px solid #00a7a9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-para {
+  padding: 20px 30px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: white;
+  background-color: #77f7f1;
+  border-bottom: 2px solid #00a7a9;
+  margin: 0 auto;
+  border-radius: 4px;
+  background-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), #8ffcfb, #00a7a9);
+  background-size: 200% 200%;
+  background-position: center;
+  transition: background-position 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-text::before,
+.welcome-para::before {
+  content: '';
+  position: absolute;
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  opacity: 1;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 60%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+  z-index: 0;
+}
+
+/* Devlog & Roadmap */
+.devlog-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: left;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section h2 {
+  color: #007c7e;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 5px;
+}
+
+.log-entry {
+  margin-bottom: 20px;
+}
+
+.log-entry time {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.roadmap ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.roadmap li::before {
+  content: "🛠️ ";
+}
+
+.done {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark-mode .mod-card {
+  background-color: #222;
+}
+
+body.dark-mode .mod-card p {
+  color: #ccc;
+}
+
+body.dark-mode .mod-card h3 {
+  color: #00e0e2;
+}
+
+body.dark-mode .mod-details pre {
+  background-color: #333;
+  color: #ddd;
+}
+
+body.dark-mode .nav-links a {
+  color: #ccc;
+}
+
+body.dark-mode .nav-links a:hover {
+  color: cyan;
+}
+
+body.dark-mode .search-bar {
+  background-color: #222;
+  color: #eee;
+  border-color: #555;
+}
+
+body.dark-mode .vote-btn {
+  background-color: #009fa1;
+}
+
+body.dark-mode .section h2 {
+  color: #00e0e2;
+  border-color: #444;
+}
+
+body.dark-mode .done {
+  color: #555;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .mods-container {
+    padding: 10px;
+  }
+  .mod-card {
+    padding: 15px;
+  }
+  .search-bar {
+    width: 90%;
+  }
+}
+
   </style>
 </head>
 <body>
