@@ -380,7 +380,6 @@ upvoteBtn.addEventListener("click", () => {
     fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
       method: "POST",
       body: new URLSearchParams({
-        action: "vote",
         name: modId,
         votes: newVotes
       })
@@ -408,7 +407,6 @@ upvoteBtn.addEventListener("click", () => {
     fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
       method: "POST",
       body: new URLSearchParams({
-        action: "vote",
         name: modId,
         votes: newVotes
       })
@@ -434,21 +432,11 @@ upvoteBtn.addEventListener("click", () => {
       });
     }
 
-    Promise.all([
+    Promise.all(
       fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json()),
-      fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20responses%202").then(res => res.json())
-    ])
-    .then(([mods, votes]) => {
+  )
+    .then((mods) => {
       allMods = mods.filter(mod => mod["Approved"]?.toLowerCase() === "true");
-
-      votes.forEach(entry => {
-        const name = entry["Addon Name"];
-        const count = parseInt(entry["Votes"]);
-        if (name && !isNaN(count)) {
-          voteData[name] = count;
-        }
-      });
-
       renderMods(allMods);
     })
     .catch(err => {
@@ -456,6 +444,12 @@ upvoteBtn.addEventListener("click", () => {
   container.appendChild(createTextElement("p", "⚠️ Failed to load mods. Check console for details."));
   console.error("❌ Error loading mods:", err);
     });
+fetch(""https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes")
+  .then(res => res.json())
+  .then(votes => {
+    voteData = votes;
+    renderMods(allMods);
+  });
 
     document.getElementById("search").addEventListener("input", e => {
       const query = e.target.value.toLowerCase();
