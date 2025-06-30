@@ -377,7 +377,7 @@ upvoteBtn.addEventListener("click", () => {
     upvoteBtn.style.opacity = "1";
     upvoteBtn.title = "Click to upvote";
 
-    fetch("https://bloxdworld.pages.dev/proxy?url="+"https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
+    fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
       method: "POST",
       body: new URLSearchParams({
         name: modId,
