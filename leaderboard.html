@@ -364,41 +364,37 @@ body.dark-mode .done {
   <script>
 const leaderboardContainer = document.getElementById("leaderboard-list");
 
-  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20responses%202")
-    .then(res => res.json())
-    .then(data => {
-      const sorted = data
-        .filter(entry => entry["Addon Name"] && !isNaN(parseInt(entry["Votes"])))
-        .sort((a, b) => parseInt(b["Votes"]) - parseInt(a["Votes"]))
-        .slice(0, 10);
+fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes"))
+  .then(res => res.json())
+  .then(voteData => {
+    const sorted = Object.entries(voteData)
+      .map(([name, votes]) => ({ name, votes: parseInt(votes) }))
+      .sort((a, b) => b.votes - a.votes)
+      .slice(0, 10);
 
-      leaderboardContainer.innerHTML = "";
+    leaderboardContainer.innerHTML = "";
 
-      sorted.forEach((mod, index) => {
-        const rank = index + 1;
-        const name = mod["Addon Name"];
-        const votes = parseInt(mod["Votes"]);
-        const emoji = rank === 1 ? "👑" : rank <= 3 ? "🔥" : "⭐";
+    sorted.forEach((mod, index) => {
+      const rank = index + 1;
+      const emoji = rank === 1 ? "👑" : rank <= 3 ? "🔥" : "⭐";
 
-        const entry = document.createElement("div");
-const entry = document.createElement("div");
-entry.className = rank === 1
-  ? "winner"
-  : rank <= 3
-    ? "following-winners"
-    : "others";
+      const entry = document.createElement("div");
+      entry.className = rank === 1
+        ? "winner"
+        : rank <= 3
+          ? "following-winners"
+          : "others";
 
-entry.style.margin = "10px 0";
-entry.style.fontSize = "1.1rem";
-entry.innerHTML = `${emoji} <strong>#${rank}</strong> — ${name} <span style="color: #888;">(${votes} vote${votes !== 1 ? "s" : ""})</span>`;
-leaderboardContainer.appendChild(entry);
-
-      });
-    })
-    .catch(err => {
-      leaderboardContainer.textContent = "⚠️ Failed to load leaderboard.";
-      console.error("Leaderboard error:", err);
+      entry.style.margin = "10px 0";
+      entry.style.fontSize = "1.1rem";
+      entry.innerHTML = `${emoji} <strong>#${rank}</strong> — ${mod.name} <span style="color: #888;">(${mod.votes} vote${mod.votes !== 1 ? "s" : ""})</span>`;
+      leaderboardContainer.appendChild(entry);
     });
+  })
+  .catch(err => {
+    leaderboardContainer.textContent = "⚠️ Failed to load leaderboard.";
+    console.error("Leaderboard error:", err);
+  });
 
 const themeToggle = document.getElementById("themeToggle");
 
