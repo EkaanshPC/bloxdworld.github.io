@@ -405,22 +405,24 @@ upvoteBtn.addEventListener("click", () => {
     upvoteBtn.title = "Click to remove vote";
 
     fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/x-www-form-urlencoded"
-  },
-  body: new URLSearchParams({
-    name: modId,
-    votes: newVotes
-  })
-})
-.then(() => {
-  console.log(`✅ Vote for "${modId}" submitted successfully.`);
-})
-.catch(err => {
-  console.error(`❌ Failed to submit vote for "${modId}":`, err);
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        name: modId,
+        votes: newVotes
+      })
+    })
+    .then(() => {
+      console.log(`✅ Vote for "${modId}" submitted successfully.`);
+    })
+    .catch(err => {
+      console.error(`❌ Failed to submit vote for "${modId}":`, err);
+    });
+  }
 });
-
+  
 
         voteContainer.appendChild(upvoteBtn);
         voteContainer.appendChild(voteCount);
@@ -435,11 +437,15 @@ upvoteBtn.addEventListener("click", () => {
       });
     }
 
-    Promise.all([
+Promise.all([
   fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json())
 ])
 .then(([mods]) => {
-  allMods = mods.filter(mod => mod["Approved"]?.toLowerCase() === "true");
+  if (!Array.isArray(mods)) {
+    throw new Error("Mods data is not an array");
+  }
+
+  allMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
   renderMods(allMods);
 })
 .catch(err => {
