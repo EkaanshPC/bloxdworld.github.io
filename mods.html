@@ -404,18 +404,21 @@ upvoteBtn.addEventListener("click", () => {
     upvoteBtn.style.opacity = "0.7";
     upvoteBtn.title = "Click to remove vote";
 
-    fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
-      method: "POST",
-      body: new URLSearchParams({
-        name: modId,
-        votes: newVotes
-      })
-    }).then(() => {
-      console.log(`✅ Vote for "${modId}" submitted successfully.`);
-    }).catch(err => {
-      console.error(`❌ Failed to submit vote for "${modId}":`, err);
-    });
-  }
+    fetch("https://corsproxy.io/?" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded"
+  },
+  body: new URLSearchParams({
+    name: modId,
+    votes: newVotes
+  })
+})
+.then(() => {
+  console.log(`✅ Vote for "${modId}" submitted successfully.`);
+})
+.catch(err => {
+  console.error(`❌ Failed to submit vote for "${modId}":`, err);
 });
 
 
@@ -445,7 +448,7 @@ upvoteBtn.addEventListener("click", () => {
   console.error("❌ Error loading mods:", err);
 });
 
-fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes")
+fetch("https://corsproxy.io/?" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes"))
   .then(res => res.json())
   .then(votes => {
     voteData = votes;
