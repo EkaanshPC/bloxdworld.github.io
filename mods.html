@@ -401,7 +401,7 @@ upvoteBtn.title = "ALREADY VOTED"
 
     Promise.all([
       fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json()),
-      fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%202").then(res => res.json())
+      fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20responses%202").then(res => res.json())
     ])
     .then(([mods, votes]) => {
       allMods = mods.filter(mod => mod["Approved"]?.toLowerCase() === "true");
