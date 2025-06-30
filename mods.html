@@ -377,7 +377,7 @@ upvoteBtn.addEventListener("click", () => {
     upvoteBtn.style.opacity = "1";
     upvoteBtn.title = "Click to upvote";
 
-    fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
+    fetch("https://bloxdworld.pages.dev/proxy?url="+"https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
       method: "POST",
       body: new URLSearchParams({
         name: modId,
@@ -448,7 +448,7 @@ upvoteBtn.addEventListener("click", () => {
   console.error("❌ Error loading mods:", err);
 });
 
-fetch("https://corsproxy.io/?" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes"))
+fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes"))
   .then(res => res.json())
   .then(votes => {
     voteData = votes;
