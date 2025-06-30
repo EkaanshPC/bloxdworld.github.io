@@ -345,46 +345,76 @@ upvoteBtn.classList.add("vote-icon");
         voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
 
         if (votedMods[modId]) {
-upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
-upvoteBtn.alt = "Voted";
-upvoteBtn.style.opacity = "0.7"; // optional: make it look disabled
-upvoteBtn.style.pointerEvents = "none"; // disable further clicks
-upvoteBtn.title = "ALREADY VOTED"
+  upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+  upvoteBtn.alt = "Voted";
+  upvoteBtn.style.opacity = "0.7";
+  upvoteBtn.title = "Click to remove vote";
+} else {
+  upvoteBtn.title = "Click to upvote";
 }
 
+
 upvoteBtn.addEventListener("click", () => {
-  if (votedMods[modId]) return;
+  const hasVoted = votedMods[modId];
 
-  const newVotes = currentVotes + 1;
-  voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
-  voteData[modId] = newVotes;
-  currentVotes = newVotes;
+  if (hasVoted) {
+    // 🔄 Remove vote
+    const newVotes = currentVotes - 1;
+    voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+    voteData[modId] = newVotes;
+    currentVotes = newVotes;
 
-  votedMods[modId] = true;
-  localStorage.setItem("votedMods", JSON.stringify(votedMods));
+    delete votedMods[modId];
+    localStorage.setItem("votedMods", JSON.stringify(votedMods));
 
-  upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
-upvoteBtn.alt = "Voted";
-upvoteBtn.style.opacity = "0.7"; // optional: make it look disabled
-upvoteBtn.style.pointerEvents = "none"; // disable further clicks
-upvoteBtn.title = "ALREADY VOTED"
+    upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
+    upvoteBtn.alt = "Upvote";
+    upvoteBtn.style.opacity = "1";
+    upvoteBtn.title = "Click to upvote";
 
+    fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "vote",
+        name: modId,
+        votes: newVotes
+      })
+    }).then(() => {
+      console.log(`🔁 Vote for "${modId}" removed.`);
+    }).catch(err => {
+      console.error(`❌ Failed to remove vote for "${modId}":`, err);
+    });
 
-  fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
-    method: "POST",
-    body: new URLSearchParams({
-      action: "vote",
-      name: modId,
-      votes: newVotes
-    })
-  })
-  .then(() => {
-    console.log(`✅ Vote for "${modId}" submitted successfully.`);
-  })
-  .catch(err => {
-    console.error(`❌ Failed to submit vote for "${modId}":`, err);
-  });
+  } else {
+    // ✅ Add vote
+    const newVotes = currentVotes + 1;
+    voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+    voteData[modId] = newVotes;
+    currentVotes = newVotes;
+
+    votedMods[modId] = true;
+    localStorage.setItem("votedMods", JSON.stringify(votedMods));
+
+    upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+    upvoteBtn.alt = "Voted";
+    upvoteBtn.style.opacity = "0.7";
+    upvoteBtn.title = "Click to remove vote";
+
+    fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
+      method: "POST",
+      body: new URLSearchParams({
+        action: "vote",
+        name: modId,
+        votes: newVotes
+      })
+    }).then(() => {
+      console.log(`✅ Vote for "${modId}" submitted successfully.`);
+    }).catch(err => {
+      console.error(`❌ Failed to submit vote for "${modId}":`, err);
+    });
+  }
 });
+
 
         voteContainer.appendChild(upvoteBtn);
         voteContainer.appendChild(voteCount);
