@@ -263,6 +263,37 @@ font-family:'Press Start 2P'
       color: #333;
       margin-bottom: 20px;
     }
+.nav-item {
+  position: relative;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.nav-item::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 5px 8px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.nav-item:hover::after {
+  opacity: 1;
+}
+body.mobile .nav-item::after {
+  display: none;
+}
+
   </style>
 </head>
 <body>
@@ -287,12 +318,24 @@ font-family:'Press Start 2P'
 
     <div class="header-right">
       <ul class="nav-links">
-    <li><a href="index.html" title="Go to Homepage"><i class="fas fa-home"></i></a></li>
-    <li><a href="mods.html" title="Browse Mods"><i class="fas fa-cubes"></i></a></li>
-    <li><a href="upload.html" title="Upload Your Addon"><i class="fas fa-upload"></i></a></li>
-    <li><a href="about.html" title="About Bloxd World"><i class="fas fa-info-circle"></i></a></li>
-<li><a href="leaderboard.html" title="Leaderboard"><i class="fas fa-trophy"></i></a></li>
-<li><a href="#" id="themeToggle" title="Toggle Theme"><i class="fas fa-moon"></i></a></li>
+<li class="nav-item" data-label="Go to Homepage">
+  <a href="index.html"><i class="fas fa-home"></i></a>
+</li>
+<li class="nav-item" data-label="Browse Mods">
+  <a href="mods.html"><i class="fas fa-cubes"></i></a>
+</li>
+<li class="nav-item" data-label="Upload Your Addon">
+  <a href="upload.html"><i class="fas fa-upload"></i></a>
+</li>
+<li class="nav-item" data-label="About Bloxd World">
+  <a href="about.html"><i class="fas fa-info-circle"></i></a>
+</li>
+<li class="nav-item" data-label="Leaderboard">
+  <a href="leaderboard.html"><i class="fas fa-trophy"></i></a>
+</li>
+<li class="nav-item" data-label="Toggle Theme">
+  <a href="#" id="themeToggle"><i class="fas fa-moon"></i></a>
+</li>
       </ul>
     </div>
   </div>
