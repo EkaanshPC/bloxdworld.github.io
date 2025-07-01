@@ -480,6 +480,10 @@ themeToggle.addEventListener("click", (e) => {
         el.style.setProperty('--mouse-y', `50%`);
       });
     });
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
   </script>
 </body>
 </html>
