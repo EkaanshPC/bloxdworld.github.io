@@ -263,7 +263,7 @@ themeToggle.addEventListener("click", (e) => {
 
 document.getElementById("sortVotes").addEventListener("click", () => {
   const sorted = [...allMods].sort((a,b) => 
-    (voteData[b["Addon Name"]] || 0) - (voteData[a["Addon Name"]] || 0)
+    (voteData[b["Addon ID"]] || 0) - (voteData[a["Addon ID"]] || 0)
   );
   renderMods(sorted);
 });
@@ -345,7 +345,7 @@ upvoteBtn.classList.add("vote-icon");
 
 
         const voteCount = document.createElement("span");
-        const modId = mod["Addon Name"];
+        const modId = mod["Addon ID"];
         let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
         voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
 
@@ -380,7 +380,7 @@ upvoteBtn.addEventListener("click", () => {
     fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
       method: "POST",
       body: new URLSearchParams({
-        name: modId,
+        addonId: modId,
         votes: newVotes
       })
     }).then(() => {
@@ -410,7 +410,7 @@ upvoteBtn.addEventListener("click", () => {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: new URLSearchParams({
-        name: modId,
+        addonId: modId,
         votes: newVotes
       })
     })
