@@ -550,6 +550,10 @@ fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://sc
       );
       renderMods(filtered);
     });
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
   </script>
 
 </body>
