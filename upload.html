@@ -310,7 +310,12 @@ body.dark-mode .vote-btn {
 </iframe>
 
   </div>
-<script>const themeToggle = document.getElementById("themeToggle");
+<script>
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
+const themeToggle = document.getElementById("themeToggle");
 
 // Apply saved theme on load
 if (localStorage.getItem("theme") === "dark") {
