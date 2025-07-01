@@ -263,36 +263,62 @@ font-family:'Press Start 2P'
       color: #333;
       margin-bottom: 20px;
     }
-.nav-item {
-  position: relative;
-  display: inline-block;
-  margin: 0 10px;
-}
+    ul.navbar {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 15px;
+      background: #222;
+      margin: 0;
+    }
 
-.nav-item::after {
-  content: attr(data-label);
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #222;
-  color: #fff;
-  padding: 5px 8px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  border-radius: 4px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-  z-index: 10;
-}
+    .nav-item a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: white;
+      position: relative;
+    }
 
-.nav-item:hover::after {
-  opacity: 1;
-}
-body.mobile .nav-item::after {
-  display: none;
-}
+    .nav-item i {
+      font-size: 1.5rem;
+    }
+
+    .nav-label {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      background: #333;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+      width: 100%;
+      text-align: center;
+    }
+
+    .nav-item:hover .nav-label {
+      opacity: 1;
+    }
+
+    /* Mobile behavior */
+    body.mobile .nav-label {
+      display: block;
+      opacity: 1;
+      position: static;
+      background: none;
+      color: #ccc;
+      padding: 0;
+    }
+
+    @media (max-width: 600px) {
+      ul.navbar {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+    }
 
   </style>
 </head>
@@ -317,26 +343,44 @@ body.mobile .nav-item::after {
     </div>
 
     <div class="header-right">
-      <ul class="nav-links">
-<li class="nav-item" data-label="Go to Homepage">
-  <a href="index.html"><i class="fas fa-home"></i></a>
-</li>
-<li class="nav-item" data-label="Browse Mods">
-  <a href="mods.html"><i class="fas fa-cubes"></i></a>
-</li>
-<li class="nav-item" data-label="Upload Your Addon">
-  <a href="upload.html"><i class="fas fa-upload"></i></a>
-</li>
-<li class="nav-item" data-label="About Bloxd World">
-  <a href="about.html"><i class="fas fa-info-circle"></i></a>
-</li>
-<li class="nav-item" data-label="Leaderboard">
-  <a href="leaderboard.html"><i class="fas fa-trophy"></i></a>
-</li>
-<li class="nav-item" data-label="Toggle Theme">
-  <a href="#" id="themeToggle"><i class="fas fa-moon"></i></a>
-</li>
-      </ul>
+  <ul class="navbar">
+    <li class="nav-item">
+      <a href="index.html">
+        <i class="fas fa-home"></i>
+        <span class="nav-label">Home</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="mods.html">
+        <i class="fas fa-cubes"></i>
+        <span class="nav-label">Mods</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="upload.html">
+        <i class="fas fa-upload"></i>
+        <span class="nav-label">Upload</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="about.html">
+        <i class="fas fa-info-circle"></i>
+        <span class="nav-label">About</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="leaderboard.html">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-label">Leaderboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span class="nav-label">Theme</span>
+      </a>
+    </li>
+  </ul>
     </div>
   </div>
 
