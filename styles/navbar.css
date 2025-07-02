@@ -1,55 +1,68 @@
-
 ul.navbar {
-      list-style: none;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      margin: 0;
-    }
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
 
-    .nav-item a {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: white;
-position:absolute;
-    }
+.nav-item {
+  position: relative; /* Needed for absolute positioning inside */
+}
 
-    .nav-item i {
-    }
+.nav-item a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  position: static; /* ❌ remove absolute */
+}
 
-    .nav-label {
-      margin-top: 4px;
-      font-size: 0.75rem;
-      background: #333;
-      color: #fff;
-      padding: 4px 8px;
-      border-radius: 4px;
-      opacity: 0;
-      transition: opacity 0.2s ease;
-      width: 100%;
-      text-align: center;
-position:absolute;
-    }
+.nav-item i {
+  font-size: 1.2rem;
+}
 
-    .nav-item:hover .nav-label {
-      opacity: 1;
-    }
+.nav-label {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  background: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  text-align: center;
+  white-space: nowrap;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 10;
+}
 
-    /* Mobile behavior */
-    body.mobile .nav-label {
-      display: block;
-      opacity: 1;
-      position: static;
-      background: none;
-      color: #ccc;
-      padding: 0;
-    }
+.nav-item:hover .nav-label {
+  opacity: 1;
+}
 
-    @media (max-width: 600px) {
-      ul.navbar {
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-    }
+/* Mobile behavior */
+body.mobile .nav-label {
+  display: block;
+  opacity: 1;
+  position: static;
+  background: none;
+  color: #ccc;
+  padding: 0;
+  transform: none;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  ul.navbar {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+}
+
