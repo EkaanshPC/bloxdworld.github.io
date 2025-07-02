@@ -11,6 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+.mod-of-the-day {
+  margin-bottom: 30px;
+}
+
+.mod-card.featured {
+  border: 2px solid gold;
+  background: #222;
+  padding: 16px;
+  border-radius: 8px;
+}
   </style>
 </head>
 <body>
@@ -74,6 +84,7 @@
   </ul>
     </div>
   </div>
+<div id="mod-of-the-day" class="mod-of-the-day"></div>
 
 <div class="mods-container">
   <div class="mods-header">🏆 Top Mods Leaderboard</div>
@@ -92,6 +103,34 @@ Promise.all([
   fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json())
 ])
 .then(([voteData, mods]) => {
+  const allMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
+
+  const topMods = [...allMods]
+    .filter(mod => voteData[mod["Addon ID"]])
+    .sort((a, b) => voteData[b["Addon ID"]] - voteData[a["Addon ID"]])
+    .slice(0, 10);
+
+  function getDailyMod(mods) {
+    const today = new Date().toISOString().split("T")[0];
+    const seed = parseInt(today.replace(/-/g, ""));
+    const index = seed % mods.length;
+    return mods[index];
+  }
+
+  const modOfTheDay = getDailyMod(topMods);
+
+  const modContainer = document.getElementById("mod-of-the-day");
+  if (modOfTheDay) {
+    modContainer.innerHTML = `
+      <div class="mods-header">🌟 Mod of the Day</div>
+      <div class="mod-card featured">
+        <h3>${modOfTheDay["Addon Name"] || "Unnamed Mod"}</h3>
+        <p>${modOfTheDay["About Addon / Description"] || "No description provided."}</p>
+        <p style="color: #888;">${voteData[modOfTheDay["Addon ID"]] || 0} vote(s)</p>
+      </div>
+    `;
+  }
+
   const modMap = {};
   mods.forEach(mod => {
     if (mod["Addon ID"] && mod["Addon Name"]) {
