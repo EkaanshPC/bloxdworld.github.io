@@ -532,7 +532,7 @@ upvoteBtn.classList.add("vote-icon");
 
         const voteCount = document.createElement("span");
         let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
-        voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
+        voteCount.textContent = `${currentVotes}`;
 
         if (votedMods[modId]) {
   upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
@@ -550,7 +550,7 @@ upvoteBtn.addEventListener("click", () => {
   if (hasVoted) {
     // 🔄 Remove vote
     const newVotes = currentVotes - 1;
-    voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+    voteCount.textContent = ` ${newVotes}`;
     voteData[modId] = newVotes;
     currentVotes = newVotes;
 
