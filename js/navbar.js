@@ -1,24 +1,25 @@
-if (!(/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))) {
+if (!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   for (let i = 1; i <= 6; i++) {
-    const mi = document.getElementById(`mi${i}`);
-    if (mi) mi.innerHTML = "";
+    const label = document.getElementById(`mi${i}`);
+    if (label) label.textContent = ""; // Clear label on desktop
 
-    const btn = document.getElementById(`i${i}`);
-    if (!btn) continue;
+    const link = document.getElementById(`i${i}`);
+    if (!link) continue;
 
-    btn.addEventListener("mouseenter", () => {
-      btn.textContent =
-        i === 1 ? "Home" :
-        i === 2 ? "Mods" :
-        i === 3 ? "Upload" :
-        i === 4 ? "About" :
-        i === 5 ? "Leaderboard" :
-        i === 6 ? "Toggle Dark Mode" :
+    // Hover to show label
+    link.addEventListener("mouseenter", () => {
+      label.textContent =
+        i === 1 ? "Theme" :
+        i === 2 ? "Leaderboard" :
+        i === 3 ? "About" :
+        i === 4 ? "Upload" :
+        i === 5 ? "Mods" :
+        i === 6 ? "Home" :
         "";
     });
 
-    btn.addEventListener("mouseleave", () => {
-      btn.textContent = ""; // or reset to icon if needed
+    // Unhover to hide label
+    link.addEventListener("mouseleave", () => {
+      label.textContent = "";
     });
   }
-}
