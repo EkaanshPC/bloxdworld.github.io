@@ -13,6 +13,7 @@ ul.navbar {
       align-items: center;
       text-decoration: none;
       color: white;
+position:absolute;
     }
 
     .nav-item i {
@@ -29,6 +30,7 @@ ul.navbar {
       transition: opacity 0.2s ease;
       width: 100%;
       text-align: center;
+position:absolute;
     }
 
     .nav-item:hover .nav-label {
