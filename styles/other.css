@@ -1,0 +1,227 @@
+html {
+  overflow-x: hidden;
+}
+.winner {
+  color: white;
+  background-color: yellow;
+  margin: 0 200px 0 200px;
+border: solid 1px black;
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.following-winners {
+  color: white;
+  background-color: orange;
+  margin: 0 150px 0 150px;
+border: solid 1px black;
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+.others {
+  color: white;
+  background-color: black;
+  margin: 0 100px 0 100px;
+border: solid 1px black;
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px  1px 0 black,
+     1px  1px 0 black;
+}
+
+body {
+  margin: 0;
+  font-family: 'Fredoka', sans-serif;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+
+
+/* Intro Section Layout */
+.intro-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.left-block {
+  width: 300px;
+  height: 335px;
+  background: linear-gradient(135deg, #00cfd1, #007c7e);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+.welcome-text-block {
+  flex: 1;
+  min-width: 250px;
+}
+
+.welcome-text {
+  font-size: 20px;
+  color: white;
+  background-color: #00cfd1;
+  border-top: 3px solid #00a7a9;
+  border-bottom: 3px solid #00a7a9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome-para {
+  padding: 20px 30px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: white;
+  background-color: #77f7f1;
+  border-bottom: 2px solid #00a7a9;
+  margin: 0 auto;
+  border-radius: 4px;
+  background-image: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), #8ffcfb, #00a7a9);
+  background-size: 200% 200%;
+  background-position: center;
+  transition: background-position 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.welcome-text::before,
+.welcome-para::before {
+  content: '';
+  position: absolute;
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  opacity: 1;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent 60%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.2s ease;
+  z-index: 0;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark-mode .mod-card {
+  background-color: #222;
+}
+
+body.dark-mode .mod-card p {
+  color: #ccc;
+}
+
+body.dark-mode .mod-card h3 {
+  color: #00e0e2;
+}
+
+body.dark-mode .mod-details pre {
+  background-color: #333;
+  color: #ddd;
+}
+
+
+body.dark-mode .search-bar {
+  background-color: #222;
+  color: #eee;
+  border-color: #555;
+}
+
+body.dark-mode .vote-btn {
+  background-color: #009fa1;
+}
+
+body.dark-mode .section h2 {
+  color: #00e0e2;
+  border-color: #444;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .mods-container {
+    padding: 10px;
+  }
+  .mod-card {
+    padding: 15px;
+  }
+  .search-bar {
+    width: 90%;
+  }
+}
+body.mobile .winner,
+body.mobile .following-winners,
+body.mobile .others {
+  margin: 10px 20px;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+body.mobile .mods-container,
+body.mobile .devlog-container {
+  padding: 10px;
+}
+
+body.mobile .mod-card {
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+}
+
+body.mobile .mod-card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+body.mobile .vote-icon {
+  width: 28px;
+  margin-right: 8px;
+}
+
+body.mobile .welcome-text {
+  font-size: 1rem;
+  padding: 10px;
+}
+
+body.mobile .welcome-para {
+  font-size: 0.95rem;
+  padding: 15px;
+}
+
+body.mobile .intro-section {
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+}
+
+body.mobile .left-block {
+  width: 90%;
+  height: auto;
+}
+
+body.mobile .search-bar {
+  width: 90%;
+  font-size: 1rem;
+}
