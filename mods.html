@@ -577,7 +577,7 @@ upvoteBtn.addEventListener("click", () => {
   } else {
     // ✅ Add vote
     const newVotes = currentVotes + 1;
-    voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+    voteCount.textContent = ` ${newVotes}`;
     voteData[modId] = newVotes;
     currentVotes = newVotes;
 
