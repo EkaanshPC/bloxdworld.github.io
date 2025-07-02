@@ -531,7 +531,6 @@ upvoteBtn.classList.add("vote-icon");
 
 
         const voteCount = document.createElement("span");
-        const modId = mod["Addon ID"];
         let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
         voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
 
