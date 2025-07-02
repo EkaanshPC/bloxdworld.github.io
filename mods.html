@@ -491,8 +491,10 @@ const modId = mod["Addon ID"];
           details.appendChild(codeBlock);
         }
 const copyBtn = document.createElement("button");
-copyBtn.textContent = "📋 Copy Link";
+copyBtn.textContent = "📋";
 copyBtn.className = "vote-btn";
+copyBtn.style.background = "none";
+copyBtn.style.border = "none";
 copyBtn.style.marginLeft = "10px";
 
 copyBtn.addEventListener("click", () => {
