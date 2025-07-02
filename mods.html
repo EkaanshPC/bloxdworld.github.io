@@ -474,7 +474,6 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
 
         const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
         const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
-
         details.appendChild(description);
         details.appendChild(author);
 
@@ -490,7 +489,25 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
           codeBlock.textContent = mod["Addon Code"];
           details.appendChild(codeBlock);
         }
+const copyBtn = document.createElement("button");
+copyBtn.textContent = "📋 Copy Link";
+copyBtn.className = "vote-btn";
+copyBtn.style.marginLeft = "10px";
 
+copyBtn.addEventListener("click", () => {
+  const shareURL = `https://bloxdworld.pages.dev/share?addonId=${modId}`;
+  navigator.clipboard.writeText(shareURL)
+    .then(() => {
+      copyBtn.textContent = "✅ Copied!";
+      setTimeout(() => {
+        copyBtn.textContent = "📋 Copy Link";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error("❌ Failed to copy:", err);
+      copyBtn.textContent = "⚠️ Failed";
+    });
+});
         const toggleBtn = document.createElement("button");
         toggleBtn.textContent = "Show More";
         toggleBtn.className = "vote-btn";
