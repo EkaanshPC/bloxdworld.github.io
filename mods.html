@@ -463,6 +463,7 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
       }
 
       mods.forEach(mod => {
+const modId = mod["Addon ID"];
         const card = document.createElement("div");
         card.className = "mod-card";
 
