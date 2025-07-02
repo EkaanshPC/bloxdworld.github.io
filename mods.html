@@ -495,17 +495,17 @@ copyBtn.textContent = "📋";
 copyBtn.className = "vote-btn";
 copyBtn.style.background = "none";
 copyBtn.style.border = "none";
-copyBtn.style.width="15px";
-copyBtn.style.height="15px";
+copyBtn.style.width="30px";
+copyBtn.style.height="30px";
 copyBtn.style.marginLeft = "10px";
 
 copyBtn.addEventListener("click", () => {
   const shareURL = `https://bloxdworld.pages.dev/share?addonId=${modId}`;
   navigator.clipboard.writeText(shareURL)
     .then(() => {
-      copyBtn.textContent = "✅ Copied!";
+      copyBtn.textContent = "✅";
       setTimeout(() => {
-        copyBtn.textContent = "📋 Copy Link";
+        copyBtn.textContent = "📋";
       }, 1500);
     })
     .catch(err => {
