@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="styles/header.css">
 <link rel="stylesheet" href="styles/devlogandindex.css">
 <link rel="stylesheet" href="styles/other.css">
+<link rel="stylesheet" href="styles/navbar.css">
   <meta charset="UTF-8">
   <title>Leaderboard | Bloxd World</title>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
@@ -125,7 +126,6 @@ Promise.all([
       <div class="mods-header">🌟 Mod of the Day</div>
       <div class="mod-card featured">
         <h3>${modOfTheDay["Addon Name"] || "Unnamed Mod"}</h3>
-        <p>${modOfTheDay["About Addon / Description"] || "No description provided."}</p>
         <p style="color: #888;">${voteData[modOfTheDay["Addon ID"]] || 0} vote(s)</p>
       </div>
     `;
