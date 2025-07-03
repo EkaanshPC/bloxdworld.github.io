@@ -101,24 +101,23 @@ const leaderboardContainer = document.getElementById("leaderboard-list");
 
 Promise.all([
   fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes")).then(res => res.json()),
-  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json())
+  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json()),
+  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%203").then(res => res.json())
 ])
-.then(([voteData, mods]) => {
+.then(([voteData, mods, dailyMods]) => {
   const allMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
 
-  const topMods = [...allMods]
-    .filter(mod => voteData[mod["Addon ID"]])
-    .sort((a, b) => voteData[b["Addon ID"]] - voteData[a["Addon ID"]])
-    .slice(0, 10);
+  // 🔍 Build a map of Addon ID → mod object
+  const modMap = {};
+  allMods.forEach(mod => {
+    if (mod["Addon ID"]) {
+      modMap[mod["Addon ID"]] = mod;
+    }
+  });
 
-  function getDailyMod(mods) {
-    const today = new Date().toISOString().split("T")[0];
-    const seed = parseInt(today.replace(/-/g, ""));
-    const index = seed % mods.length;
-    return mods[index];
-  }
-
-  const modOfTheDay = getDailyMod(topMods);
+  // 🎯 Get today's Mod of the Day from Form Responses 3 (latest entry)
+  const latestDaily = dailyMods[dailyMods.length - 1];
+  const modOfTheDay = latestDaily && modMap[latestDaily["Addon ID"]];
 
   const modContainer = document.getElementById("mod-of-the-day");
   if (modOfTheDay) {
@@ -129,19 +128,15 @@ Promise.all([
         <p style="color: #888;">${voteData[modOfTheDay["Addon ID"]] || 0} vote(s)</p>
       </div>
     `;
+  } else {
+    modContainer.innerHTML = `<p>⚠️ No Mod of the Day selected.</p>`;
   }
 
-  const modMap = {};
-  mods.forEach(mod => {
-    if (mod["Addon ID"] && mod["Addon Name"]) {
-      modMap[mod["Addon ID"]] = mod["Addon Name"];
-    }
-  });
-
+  // 🏆 Build leaderboard
   const sorted = Object.entries(voteData)
     .map(([addonId, votes]) => ({
       addonId,
-      name: modMap[addonId] || addonId, // fallback to ID if name missing
+      name: modMap[addonId]?.["Addon Name"] || addonId,
       votes: parseInt(votes)
     }))
     .sort((a, b) => b.votes - a.votes)
@@ -176,6 +171,7 @@ Promise.all([
   leaderboardContainer.textContent = "⚠️ Failed to load leaderboard.";
   console.error("Leaderboard error:", err);
 });
+
 const themeToggle = document.getElementById("themeToggle");
 
 // Apply saved theme on load
