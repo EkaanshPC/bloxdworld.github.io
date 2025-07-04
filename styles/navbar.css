@@ -25,23 +25,19 @@ ul.navbar {
 }
 
 .nav-label {
-  margin-top: 4px;
-  font-size: 0.75rem;
-  background: none;
+  margin: 0;
+  font-size: 0.85rem;
   color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  opacity: 1;
+  position: static;
+  transform: none;
   text-align: center;
   white-space: nowrap;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-  z-index: 10;
 }
+
 
 .nav-item:hover .nav-label {
   opacity: 1;
