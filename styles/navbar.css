@@ -17,7 +17,13 @@ ul.navbar {
   align-items: center;
   text-decoration: none;
   color: white;
-  position: static; /* ❌ remove absolute */
+  position: static;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.nav-item a:hover {
+  color: #00ffff; /* Optional: change color on hover */
+  text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
 }
 
 .nav-item i {
