@@ -46,6 +46,51 @@
   color: #333;
   line-height: 1.6;
 }
+.how-it-works {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 28px;
+  color: #007c7e;
+  margin-bottom: 20px;
+}
+
+.how-it-works ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.how-it-works li {
+  font-size: 18px;
+  margin: 12px 0;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+body.dark-mode .how-it-works {
+  background-color: #222;
+  color: #eee;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
+}
+
+body.dark-mode .how-it-works h2 {
+  color: #00e0e2;
+}
+
+body.dark-mode .how-it-works li {
+  color: #ccc;
+}
 
   </style>
 </head>
@@ -121,16 +166,29 @@
 <div class="cta-buttons">
   <a href="mods.html" class="cta-button">🔍 Browse Mods</a>
   <a href="upload.html" class="cta-button">📤 Submit a Mod</a>
-</div>
+</div><br>
 <p class="intro-text">
 <strong>How to use?<strong><br>
 1. Make a addon.<br>
 2. Copy your addon code.<br>
 3. Go to Bloxd World.<br>
 4. Go to Upload Page<br>
-5. Fill in the form, its recommended to fill<br>
-all fields and follow the rules.
+5. Fill in the form, its recommended to fill all fields and follow the rules.
 </p>
+<div class="cta-buttons">
+  <a href="upload.html" class="cta-button">Lets upload a mod!</a>
+</div>
+<br>
+<section class="how-it-works">
+  <h2>🧠 How It Works</h2>
+  <ul>
+    <li>🔍 Browse mods by category or search</li>
+    <li>⬆️ Upvote your favorites</li>
+    <li>📤 Submit your own mods</li>
+    <li>🏆 Climb the leaderboard</li>
+  </ul>
+</section>
+
 
   <!-- 💡 Mouse Tracking Script -->
   <script>
