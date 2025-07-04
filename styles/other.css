@@ -1,40 +1,64 @@
 html {
   overflow-x: hidden;
 }
-.winner {
-  color: white;
-  background-color: yellow;
-  margin: 0 200px 0 200px;
-border: solid 1px black;
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-}
-
-.following-winners {
-  color: white;
-  background-color: orange;
-  margin: 0 150px 0 150px;
-border: solid 1px black;
-  text-shadow:
-    -1px -1px 0 black,
-     1px -1px 0 black,
-    -1px  1px 0 black,
-     1px  1px 0 black;
-}
-
+/* Shared base style for leaderboard entries */
+.winner,
+.following-winners,
 .others {
   color: white;
-  background-color: black;
-  margin: 0 100px 0 100px;
-border: solid 1px black;
+  border: 1px solid black;
   text-shadow:
     -1px -1px 0 black,
      1px -1px 0 black,
     -1px  1px 0 black,
      1px  1px 0 black;
+  padding: 10px 20px;
+  margin: 10px auto;
+  max-width: 600px;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 1st place */
+.winner {
+  background-color: gold;
+  color: black;
+}
+
+/* 2nd & 3rd place */
+.following-winners {
+  background-color: orange;
+}
+
+/* Everyone else */
+.others {
+  background-color: #111;
+  color: #ccc;
+}
+/* Shared hover animation for all leaderboard entries */
+.winner,
+.following-winners,
+.others {
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.winner:hover,
+.following-winners:hover,
+.others:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+.winner:hover {
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6); /* gold glow */
+}
+
+.following-winners:hover {
+  box-shadow: 0 0 12px rgba(255, 165, 0, 0.6); /* orange glow */
+}
+
+.others:hover {
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3); /* soft white glow */
 }
 
 body {
