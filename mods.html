@@ -20,7 +20,15 @@ body.mobile .devlog-container {
   align-self: flex-start; /* Aligns the button to the left in a flex container */
   margin-top: 10px;       /* Optional spacing */
 }
-
+.mod-icon{
+width:140px;
+height:140px;
+}
+.mod-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 body.mobile .mod-card {
   padding: 12px;
   margin-bottom: 16px;
@@ -551,14 +559,33 @@ upvoteBtn.addEventListener("click", () => {
 
         voteContainer.appendChild(upvoteBtn);
         voteContainer.appendChild(voteCount);
+const card = document.createElement("div");
+card.className = "mod-card";
 
-        card.appendChild(title);
-        card.appendChild(category);
-        card.appendChild(toggleBtn);
-        card.appendChild(details);
-        card.appendChild(voteContainer);
-voteContainer.appendChild(copyBtn);
-        container.appendChild(card);
+const contentWrapper = document.createElement("div");
+contentWrapper.className = "mod-content";
+
+// Add title, category, toggleBtn, details, voteContainer to contentWrapper
+contentWrapper.appendChild(title);
+contentWrapper.appendChild(category);
+contentWrapper.appendChild(toggleBtn);
+contentWrapper.appendChild(details);
+contentWrapper.appendChild(voteContainer);
+
+// Add mod icon beside content
+if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
+  const icon = document.createElement("img");
+  icon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
+} else {
+const icon= document.createElement("img");
+icon.src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"
+}
+  icon.alt = "Mod Icon";
+  icon.className = "mod-icon";
+ card.appendChild(icon);
+card.appendChild(contentWrapper);
+container.appendChild(card);
+
       });
     }
 
