@@ -36,6 +36,7 @@ ul.navbar {
   transform: none;
   text-align: center;
   white-space: nowrap;
+  margin-left:3px;
 }
 
 
