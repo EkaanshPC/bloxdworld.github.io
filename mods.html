@@ -225,6 +225,35 @@ body.dark-mode .vote-btn {
     width: 90%;
   }
 }
+#sortVotes {
+  display: block;
+  margin: 10px auto 30px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007c7e;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sortVotes:hover {
+  background-color: #009fa1;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Optional: dark mode support */
+body.dark #sortVotes {
+  background-color: #005f61;
+  color: #eee;
+}
+
+body.dark #sortVotes:hover {
+  background-color: #008b8d;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+
   </style>
 </head>
 <body>
