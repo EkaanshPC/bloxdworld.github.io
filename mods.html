@@ -570,17 +570,18 @@ contentWrapper.appendChild(toggleBtn);
 contentWrapper.appendChild(details);
 contentWrapper.appendChild(voteContainer);
 
-// Add mod icon beside content
+let icon = document.createElement("img");
+
 if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
-  const icon = document.createElement("img");
   icon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
 } else {
-const icon= document.createElement("img");
-icon.src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"
+  icon.src = "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png";
 }
-  icon.alt = "Mod Icon";
-  icon.className = "mod-icon";
- card.appendChild(icon);
+
+icon.alt = "Mod Icon";
+icon.className = "mod-icon";
+
+card.appendChild(icon);
 card.appendChild(contentWrapper);
 container.appendChild(card);
 
