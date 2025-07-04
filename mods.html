@@ -138,6 +138,9 @@ display: flex;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   gap: 16px;
+max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
 
 .mod-card:hover {
@@ -178,6 +181,9 @@ text-align:left;
   border-radius: 6px;
   overflow-x: auto;
   margin-top: 10px;
+  word-break: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
 }
 
 .vote-btn {
@@ -274,6 +280,23 @@ body.dark #sortVotes {
 body.dark #sortVotes:hover {
   background-color: #008b8d;
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+@media (max-width: 600px) {
+  .mod-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mod-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .mod-content {
+    align-items: center;
+    text-align: center;
+  }
 }
 
   </style>
