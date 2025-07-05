@@ -16,7 +16,22 @@ body.mobile .mods-container,
 body.mobile .devlog-container {
   padding: 10px;
 }
-
+.mod-card button {
+  align-self: flex-start; /* Aligns the button to the left in a flex container */
+  margin-top: 10px;       /* Optional spacing */
+}
+.mod-icon{
+width:140px;
+height:140px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.mod-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 body.mobile .mod-card {
   padding: 12px;
   margin-bottom: 16px;
@@ -72,54 +87,103 @@ body.mobile .search-bar {
   color: #00a7a9;
   text-align: center;
 }
-
-.search-bar {
+/* Shared base style */
+.search-bar,
+#categoryFilter {
   display: block;
-  margin: 0 auto 30px;
-  padding: 10px;
+  margin: 0 auto 20px;
+  padding: 10px 12px;
   font-size: 16px;
   width: 300px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  outline: none;
 }
 
+/* Glow on hover and focus */
+.search-bar:hover,
+.search-bar:focus,
+#categoryFilter:hover,
+#categoryFilter:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+/* Optional: dark mode support */
+body.dark .search-bar,
+body.dark #categoryFilter {
+  background-color: #222;
+  color: #eee;
+  border-color: #444;
+}
+
+body.dark .search-bar:hover,
+body.dark .search-bar:focus,
+body.dark #categoryFilter:hover,
+body.dark #categoryFilter:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+
 .mod-card {
+display: flex;
   background: white;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  gap: 16px;
+max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
 }
+
+.mod-card:hover {
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.6), 0 0 24px rgba(0, 255, 255, 0.4);
+}
+
 
 .mod-card h3 {
   margin-top: 0;
+text-align:left;
   color: #007c7e;
 }
 
 .mod-card p {
   margin: 10px 0 0;
+text-align:left;
   color: #333;
 }
 
 .mod-card img {
   max-width: 100%;
+text-align:left;
   border-radius: 6px;
   margin-top: 10px;
 }
 
 .mod-details {
+text-align:left;
   display: none;
   margin-top: 10px;
 }
 
 .mod-details pre {
+text-align:left;
   font-family: 'Courier New', monospace;
   background-color: #f5f5f5;
   padding: 10px;
   border-radius: 6px;
   overflow-x: auto;
   margin-top: 10px;
+  word-break: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
 }
 
 .vote-btn {
@@ -130,7 +194,14 @@ body.mobile .search-bar {
   background-color: #007c7e;
   color: white;
   cursor: pointer;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
+
+.vote-btn:hover {
+  background-color: #009fa1;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
 
 img.vote-icon:hover {
   transform: scale(1.1);
@@ -182,6 +253,52 @@ body.dark-mode .vote-btn {
     width: 90%;
   }
 }
+#sortVotes {
+  display: block;
+  margin: 10px auto 30px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007c7e;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sortVotes:hover {
+  background-color: #009fa1;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Optional: dark mode support */
+body.dark #sortVotes {
+  background-color: #005f61;
+  color: #eee;
+}
+
+body.dark #sortVotes:hover {
+  background-color: #008b8d;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+@media (max-width: 600px) {
+  .mod-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mod-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .mod-content {
+    align-items: center;
+    text-align: center;
+  }
+}
+
   </style>
 </head>
 <body>
@@ -261,6 +378,7 @@ body.dark-mode .vote-btn {
   </div>
 
   <script>
+console.log("Referrer:", document.referrer);
 const themeToggle = document.getElementById("themeToggle");
 
 // Apply saved theme on load
@@ -311,13 +429,16 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
     function renderMods(mods) {
       const container = document.getElementById("mods-list");
       container.innerHTML = "";
-
+  if (sharedAddonId) {
+    mods = mods.filter(mod => mod["Addon ID"] === sharedAddonId);
+  }
       if (mods.length === 0) {
         container.appendChild(createTextElement("p", "No mods found."));
         return;
       }
 
       mods.forEach(mod => {
+const modId = mod["Addon ID"];
         const card = document.createElement("div");
         card.className = "mod-card";
 
@@ -329,7 +450,6 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
 
         const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
         const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
-
         details.appendChild(description);
         details.appendChild(author);
 
@@ -345,7 +465,30 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
           codeBlock.textContent = mod["Addon Code"];
           details.appendChild(codeBlock);
         }
+const copyBtn = document.createElement("button");
+copyBtn.textContent = "📋";
+copyBtn.className = "vote-btn";
+copyBtn.style.background = "none";
+copyBtn.style.border = "none";
+copyBtn.style.width="30px";
+copyBtn.style.height="30px";
+copyBtn.style.fontSize="30px";
+copyBtn.style.marginLeft = "10px";
 
+copyBtn.addEventListener("click", () => {
+  const shareURL = `https://bloxdworld.pages.dev/share?addonId=${modId}`;
+  navigator.clipboard.writeText(shareURL)
+    .then(() => {
+      copyBtn.textContent = "✅";
+      setTimeout(() => {
+        copyBtn.textContent = "📋";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error("❌ Failed to copy:", err);
+      copyBtn.textContent = "⚠️ Failed";
+    });
+});
         const toggleBtn = document.createElement("button");
         toggleBtn.textContent = "Show More";
         toggleBtn.className = "vote-btn";
@@ -368,9 +511,8 @@ upvoteBtn.classList.add("vote-icon");
 
 
         const voteCount = document.createElement("span");
-        const modId = mod["Addon ID"];
         let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
-        voteCount.textContent = ` ${currentVotes} vote${currentVotes === 1 ? "" : "s"}`;
+        voteCount.textContent = `${currentVotes}`;
 
         if (votedMods[modId]) {
   upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
@@ -388,7 +530,7 @@ upvoteBtn.addEventListener("click", () => {
   if (hasVoted) {
     // 🔄 Remove vote
     const newVotes = currentVotes - 1;
-    voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+    voteCount.textContent = ` ${newVotes}`;
     voteData[modId] = newVotes;
     currentVotes = newVotes;
 
@@ -415,7 +557,7 @@ upvoteBtn.addEventListener("click", () => {
   } else {
     // ✅ Add vote
     const newVotes = currentVotes + 1;
-    voteCount.textContent = ` ${newVotes} vote${newVotes === 1 ? "" : "s"}`;
+    voteCount.textContent = ` ${newVotes}`;
     voteData[modId] = newVotes;
     currentVotes = newVotes;
 
@@ -450,13 +592,31 @@ upvoteBtn.addEventListener("click", () => {
         voteContainer.appendChild(upvoteBtn);
         voteContainer.appendChild(voteCount);
 
-        card.appendChild(title);
-        card.appendChild(category);
-        card.appendChild(toggleBtn);
-        card.appendChild(details);
-        card.appendChild(voteContainer);
+const contentWrapper = document.createElement("div");
+contentWrapper.className = "mod-content";
 
-        container.appendChild(card);
+// Add title, category, toggleBtn, details, voteContainer to contentWrapper
+contentWrapper.appendChild(title);
+contentWrapper.appendChild(category);
+contentWrapper.appendChild(toggleBtn);
+contentWrapper.appendChild(details);
+contentWrapper.appendChild(voteContainer);
+
+let icon = document.createElement("img");
+
+if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
+  icon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
+} else {
+  icon.src = "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png";
+}
+
+icon.alt = "Mod Icon";
+icon.className = "mod-icon";
+
+card.appendChild(icon);
+card.appendChild(contentWrapper);
+container.appendChild(card);
+
       });
     }
 
@@ -469,17 +629,7 @@ Promise.all([
   }
 
   allMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
-  if (sharedAddonId) {
-  const sharedMod = allMods.find(mod => mod["Addon ID"] === sharedAddonId);
-  if (sharedMod) {
-    renderMods([sharedMod]);
-  } else {
-    const container = document.getElementById("mods-list");
-    container.innerHTML = "<p>❌ Addon not found.</p>";
-  }
-} else {
   renderMods(allMods);
-}
 })
 .catch(err => {
   const container = document.getElementById("mods-list");
@@ -491,6 +641,7 @@ fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://sc
   .then(res => res.json())
   .then(votes => {
     voteData = votes;
+    renderMods(allMods);
   })
   .catch(err => {
     console.error("❌ Failed to fetch votes:", err);
@@ -503,12 +654,22 @@ fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://sc
         (mod["About Addon / Description"] || "").toLowerCase().includes(query) ||
         (mod["Author Name (leave blank for your username to be displayed anonymous)"] || "").toLowerCase().includes(query)
       );
+      renderMods(filtered);
     });
 if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   document.body.classList.add("mobile");
 }
 
   </script>
-
+<footer class="site-footer">
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/about">About</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
+</footer>
 </body>
 </html>
