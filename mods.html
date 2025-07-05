@@ -298,17 +298,9 @@ body.dark #sortVotes:hover {
     text-align: center;
   }
 }
-.ai-summary.show {
-  display: block;
-  opacity: 1;
-}
-
-.ai-summary {
-  opacity: 0;
-}
-
 /* AI summary styling */
 .ai-summary {
+  opacity: 0;
   display: none;
   font-style: italic;
   color: #00cccc;
@@ -324,6 +316,10 @@ body.dark #sortVotes:hover {
   word-wrap: break-word;
 }
 
+.ai-summary.show {
+  display: block;
+  opacity: 1;
+}
   </style>
 </head>
 <body>
