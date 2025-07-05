@@ -483,7 +483,8 @@ let aiSummaryLoaded = false;
 
 // Show/hide AI summary on hover
 card.addEventListener("mouseenter", () => {
-  aiSummary.classList.add("show");
+aiSummary.style.display = "block"; // override inline display:none
+aiSummary.classList.add("show");
 
   if (!aiSummaryLoaded) {
     aiSummary.textContent = "🧠 Loading AI summary...";
