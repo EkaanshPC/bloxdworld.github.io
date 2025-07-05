@@ -298,6 +298,31 @@ body.dark #sortVotes:hover {
     text-align: center;
   }
 }
+.ai-summary.show {
+  display: block;
+  opacity: 1;
+}
+
+.ai-summary {
+  opacity: 0;
+}
+
+/* AI summary styling */
+.ai-summary {
+  display: none;
+  font-style: italic;
+  color: #00cccc;
+  background: rgba(0, 255, 255, 0.05);
+  border-left: 3px solid #00cccc;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border-radius: 4px;
+  transition: opacity 0.3s ease;
+  font-size: 0.95em;
+  line-height: 1.4;
+  max-width: 100%;
+  word-wrap: break-word;
+}
 
   </style>
 </head>
@@ -448,6 +473,49 @@ const modId = mod["Addon ID"];
         const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
         details.appendChild(description);
         details.appendChild(author);
+// 🧠 AI summary element (hidden by default)
+const aiSummary = createTextElement("p", "");
+aiSummary.style.display = "none";
+aiSummary.style.fontStyle = "italic";
+aiSummary.style.color = "#00aaaa";
+aiSummary.style.marginTop = "8px";
+aiSummary.className = "ai-summary";
+details.appendChild(aiSummary);
+
+// Cache to avoid re-fetching
+let aiSummaryLoaded = false;
+
+// Show/hide AI summary on hover
+card.addEventListener("mouseenter", () => {
+  aiSummary.classList.add("show");
+
+  if (!aiSummaryLoaded) {
+    aiSummary.textContent = "🧠 Loading AI summary...";
+
+    fetch("https://tooltip-ai-proxy.ekaanshagarwal19564.workers.dev/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        label: `Mod Name: ${mod["Addon Name"] || "Unnamed"}, Description: ${mod["About Addon / Description"] || "None"}, Code: ${mod["Addon Code"] || "N/A"}, Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      const content = data.choices?.[0]?.message?.content || "No summary available.";
+      aiSummary.textContent = `🧠 ${content}`;
+      aiSummaryLoaded = true;
+    })
+    .catch(err => {
+      console.error("❌ Failed to fetch AI summary:", err);
+      aiSummary.textContent = "⚠️ AI summary unavailable.";
+    });
+  }
+});
+
+card.addEventListener("mouseleave", () => {
+  aiSummary.style.display = "none";
+aiSummary.classList.remove("show");
+});
 
         if (mod["Image (upload image to imgur, put the link here.)"]) {
           const img = document.createElement("img");
