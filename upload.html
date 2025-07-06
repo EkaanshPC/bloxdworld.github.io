@@ -162,12 +162,15 @@ themeToggle.addEventListener("click", (e) => {
   const authArea = document.getElementById("authArea");
 
   async function handleOAuthRedirect() {
-    if (window.location.hash.includes("access_token")) {
-      console.log("🔑 Found access_token! Running session refresh...");
-      await client.auth.getSession(); // Triggers parsing the hash internally
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
+  const { error } = await client.auth.exchangeCodeForSession(window.location.href);
+  if (error) {
+    console.error("❌ Error exchanging code for session:", error);
+  } else {
+    console.log("✅ Session exchange complete!");
   }
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
 
   async function renderUser() {
     const { data: { user } } = await client.auth.getUser();
