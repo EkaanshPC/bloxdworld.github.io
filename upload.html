@@ -163,7 +163,12 @@ themeToggle.addEventListener("click", (e) => {
  const authArea = document.getElementById("authArea");
 
   async function checkUser() {
-    await client.auth.getSessionFromUrl();
+    // ✅ Restore session from URL if redirected from Google
+    const { error } = await client.auth.getSessionFromUrl({ storeSession: true });
+    if (!error) {
+      // ✅ Clean up the URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
 
     const { data: { user } } = await client.auth.getUser();
 
@@ -208,6 +213,7 @@ themeToggle.addEventListener("click", (e) => {
   }
 
   checkUser();
+
 </script>
 
 </body>
