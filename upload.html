@@ -160,57 +160,36 @@ themeToggle.addEventListener("click", (e) => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const client = supabase.createClient(
-    "https://pxmsgzfufvwxpnyeobwk.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // your anon key
-  );
-
   const authArea = document.getElementById("authArea");
 
   async function checkUser() {
-    // ✅ Grab session from URL hash if present
+    // 🧹 Always grab the session if hash is there!
     if (window.location.hash.includes("access_token")) {
-      await client.auth.getSession(); // hydrate session
-      window.history.replaceState({}, document.title, window.location.pathname); // clean URL
+      console.log("🐙 Found access_token! Getting session...");
+      await client.auth.getSession();
+      window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     const { data: { user } } = await client.auth.getUser();
+    console.log("✅ User:", user);
 
     if (user) {
-      const { email, user_metadata } = user;
-      const avatar = user_metadata.avatar_url || "";
-      const name = user_metadata.full_name || email;
-
       authArea.innerHTML = `
-        <li class="nav-item" style="display: flex; align-items: center; gap: 0.5rem;">
-          <img src="${avatar}" alt="avatar" width="24" style="border-radius: 50%;" />
-          <span class="nav-label" style="font-size: 0.8rem;">${name}</span>
-        </li>
-        <li class="nav-item">
-          <a href="#" id="logoutBtn">
-            <i class="fas fa-sign-out-alt"></i>
-            <span class="nav-label">Logout</span>
-          </a>
+        <li>
+          <span>👤 ${user.email}</span>
+          <a href="#" id="logoutBtn">🚪 Logout</a>
         </li>
       `;
-
       document.getElementById("logoutBtn").onclick = async (e) => {
         e.preventDefault();
         await client.auth.signOut();
-        location.href = "/";
       };
     } else {
       authArea.innerHTML = `
-        <li class="nav-item">
-          <a href="#" id="loginBtn">
-            <i class="fas fa-sign-in-alt"></i>
-            <span class="nav-label">Login</span>
-          </a>
+        <li>
+          <a href="#" id="loginBtn">🔑 Login</a>
         </li>
       `;
-
       document.getElementById("loginBtn").onclick = async (e) => {
         e.preventDefault();
         await client.auth.signInWithOAuth({ provider: "google" });
@@ -218,13 +197,12 @@ themeToggle.addEventListener("click", (e) => {
     }
   }
 
-  // ✅ Listen for login/logout events
-  client.auth.onAuthStateChange((_event, session) => {
-    console.log("Auth state changed:", _event);
+  // 🟢 Listen for auth state changes too!
+  client.auth.onAuthStateChange((_event, _session) => {
+    console.log("⚡ Auth state changed:", _event);
     checkUser();
   });
 
-  // ✅ Initial check on page load
   checkUser();
 </script>
 
