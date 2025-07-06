@@ -46,16 +46,16 @@ async function renderUser() {
   if (user) {
     console.log("✅ Logged in user:", user);
     authArea.innerHTML = `
-      <li>
         <span style="color:white">${user.email}</span>
         <a href="#" id="logoutBtn">🚪 Logout</a>
-      </li>
     `;
     document.getElementById("logoutBtn").onclick = async (e) => {
       e.preventDefault();
       console.log("🚪 Logging out...");
       await client.auth.signOut();
-      // Optional: force page reload
+    authArea.innerHTML = `
+      <li><a href="#" id="loginBtn">🔑 Login with Google</a></li>
+    `;
       location.reload();
     };
   } else {
