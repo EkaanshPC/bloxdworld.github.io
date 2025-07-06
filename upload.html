@@ -163,6 +163,11 @@ themeToggle.addEventListener("click", (e) => {
   const authArea = document.getElementById("authArea");
 
   async function checkUser() {
+    // ✅ Clean up access_token from URL if present
+    if (window.location.hash.includes("access_token")) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
     const { data: { user } } = await client.auth.getUser();
 
     if (user) {
