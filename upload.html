@@ -161,16 +161,26 @@ themeToggle.addEventListener("click", (e) => {
   );
   const authArea = document.getElementById("authArea");
 
-  async function handleOAuthRedirect() {
-  const { error } = await client.auth.exchangeCodeForSession(window.location.href);
-  if (error) {
-    console.error("❌ Error exchanging code for session:", error);
-  } else {
-    console.log("✅ Session exchange complete!");
+async function handleOAuthRedirect() {
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get("code");
+
+  if (code) {
+    console.log("🎉 Found code param:", code);
+
+    const { data, error } = await client.auth.exchangeCodeForSession(code);
+    if (error) {
+      console.error("❌ Error exchanging code:", error.message);
+    } else {
+      console.log("✅ Session established:", data.session);
+    }
+
+    // Clean up the URL
+    window.history.replaceState({}, document.title, window.location.pathname);
   }
-  window.history.replaceState({}, document.title, window.location.pathname);
 }
 
+handleOAuthRedirect();
 
   async function renderUser() {
     const { data: { user } } = await client.auth.getUser();
