@@ -151,5 +151,69 @@ themeToggle.addEventListener("click", (e) => {
     <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
   </nav>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  const supabase = supabase.createClient(
+    "https://pxmsgzfufvwxpnyeobwk.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
+  );
+
+  const loginBtn = document.createElement("button");
+  loginBtn.textContent = "Sign in with Google";
+  loginBtn.style.marginRight = "1rem";
+  loginBtn.style.padding = "0.5rem 1rem";
+  loginBtn.style.fontFamily = "Fredoka, sans-serif";
+
+  const logoutBtn = document.createElement("button");
+  logoutBtn.textContent = "Logout";
+  logoutBtn.style.display = "none";
+  logoutBtn.style.padding = "0.5rem 1rem";
+  logoutBtn.style.fontFamily = "Fredoka, sans-serif";
+
+  const userInfo = document.createElement("div");
+  userInfo.style.marginTop = "1rem";
+
+  const headerRight = document.querySelector(".header-right");
+  headerRight.appendChild(loginBtn);
+  headerRight.appendChild(logoutBtn);
+  headerRight.appendChild(userInfo);
+
+  async function checkUser() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      const { email, user_metadata } = user;
+      const avatar = user_metadata.avatar_url || "";
+      const name = user_metadata.full_name || email;
+
+      loginBtn.style.display = "none";
+      logoutBtn.style.display = "inline-block";
+      userInfo.innerHTML = `
+        <p style="font-family: Fredoka, sans-serif;">👋 Hello, <strong>${name}</strong></p>
+        <img src="${avatar}" alt="avatar" width="48" style="border-radius: 50%;" />
+      `;
+
+      // Optional: Show upload form only if logged in
+      document.querySelector(".upload-container").style.display = "block";
+    } else {
+      loginBtn.style.display = "inline-block";
+      logoutBtn.style.display = "none";
+      userInfo.innerHTML = "";
+
+      // Optional: Hide upload form if not logged in
+      document.querySelector(".upload-container").style.display = "none";
+    }
+  }
+
+  loginBtn.onclick = async () => {
+    await supabase.auth.signInWithOAuth({ provider: "google" });
+  };
+
+  logoutBtn.onclick = async () => {
+    await supabase.auth.signOut();
+    location.reload();
+  };
+
+  checkUser();
+</script>
 </body>
 </html>
