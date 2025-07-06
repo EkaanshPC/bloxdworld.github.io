@@ -160,9 +160,11 @@ themeToggle.addEventListener("click", (e) => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
 
-  const authArea = document.getElementById("authArea");
+ const authArea = document.getElementById("authArea");
 
   async function checkUser() {
+    await client.auth.getSessionFromUrl();
+
     const { data: { user } } = await client.auth.getUser();
 
     if (user) {
@@ -186,7 +188,7 @@ themeToggle.addEventListener("click", (e) => {
       document.getElementById("logoutBtn").onclick = async (e) => {
         e.preventDefault();
         await client.auth.signOut();
-        location.reload();
+        location.href = "/";
       };
     } else {
       authArea.innerHTML = `
