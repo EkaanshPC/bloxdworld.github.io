@@ -45,8 +45,7 @@
     if (user) {
       console.log("✅ Logged in user:", user);
       authArea.innerHTML = `
-        <li><span>${user.email}</span></li>
-        <li><a href="#" id="logoutBtn">🚪 Logout</a></li>
+        <li><span style="color:white">${user.email}</span><a href="#" id="logoutBtn">🚪 Logout</a></li>
       `;
       document.getElementById("logoutBtn").onclick = async (e) => {
         e.preventDefault();
