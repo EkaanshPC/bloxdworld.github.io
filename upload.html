@@ -96,6 +96,8 @@
         <span class="nav-label">Theme</span>
       </a>
     </li>
+<li class="nav-item" id="authArea">
+</li>
   </ul>
     </div>
   </div>
@@ -158,25 +160,29 @@ themeToggle.addEventListener("click", (e) => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
 
-  const loginBtn = document.createElement("button");
-  loginBtn.textContent = "Sign in with Google";
-  loginBtn.style.marginRight = "1rem";
-  loginBtn.style.padding = "0.5rem 1rem";
-  loginBtn.style.fontFamily = "Fredoka, sans-serif";
+  const authArea = document.getElementById("authArea");
 
-  const logoutBtn = document.createElement("button");
-  logoutBtn.textContent = "Logout";
-  logoutBtn.style.display = "none";
-  logoutBtn.style.padding = "0.5rem 1rem";
-  logoutBtn.style.fontFamily = "Fredoka, sans-serif";
+  const loginBtn = document.createElement("a");
+  loginBtn.href = "#";
+  loginBtn.className = "nav-item";
+  loginBtn.innerHTML = `
+    <i class="fas fa-sign-in-alt"></i>
+    <span class="nav-label">Login</span>
+  `;
 
-  const userInfo = document.createElement("div");
-  userInfo.style.marginTop = "1rem";
+  const logoutBtn = document.createElement("a");
+  logoutBtn.href = "#";
+  logoutBtn.className = "nav-item";
+  logoutBtn.innerHTML = `
+    <i class="fas fa-sign-out-alt"></i>
+    <span class="nav-label">Logout</span>
+  `;
 
-  const headerRight = document.querySelector(".header-right");
-  headerRight.appendChild(loginBtn);
-  headerRight.appendChild(logoutBtn);
-  headerRight.appendChild(userInfo);
+  const userDisplay = document.createElement("div");
+  userDisplay.style.display = "flex";
+  userDisplay.style.alignItems = "center";
+  userDisplay.style.gap = "0.5rem";
+  userDisplay.style.marginLeft = "1rem";
 
   async function checkUser() {
     const { data: { user } } = await supabase.auth.getUser();
@@ -187,33 +193,42 @@ themeToggle.addEventListener("click", (e) => {
 
       loginBtn.style.display = "none";
       logoutBtn.style.display = "inline-block";
-      userInfo.innerHTML = `
-        <p style="font-family: Fredoka, sans-serif;">👋 Hello, <strong>${name}</strong></p>
-        <img src="${avatar}" alt="avatar" width="48" style="border-radius: 50%;" />
+
+      userDisplay.innerHTML = `
+        <img src="${avatar}" alt="avatar" width="32" style="border-radius: 50%;" />
+        <span style="font-family: Fredoka, font-size: 0.9rem;">${name}</span>
       `;
+
+      authArea.innerHTML = "";
+      authArea.appendChild(userDisplay);
+      authArea.appendChild(logoutBtn);
 
       // Optional: Show upload form only if logged in
       document.querySelector(".upload-container").style.display = "block";
     } else {
-      loginBtn.style.display = "inline-block";
+      authArea.innerHTML = "";
+      authArea.appendChild(loginBtn);
       logoutBtn.style.display = "none";
-      userInfo.innerHTML = "";
+      userDisplay.innerHTML = "";
 
       // Optional: Hide upload form if not logged in
       document.querySelector(".upload-container").style.display = "none";
     }
   }
 
-  loginBtn.onclick = async () => {
+  loginBtn.onclick = async (e) => {
+    e.preventDefault();
     await supabase.auth.signInWithOAuth({ provider: "google" });
   };
 
-  logoutBtn.onclick = async () => {
+  logoutBtn.onclick = async (e) => {
+    e.preventDefault();
     await supabase.auth.signOut();
     location.reload();
   };
 
   checkUser();
 </script>
+
 </body>
 </html>
