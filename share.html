@@ -5,6 +5,12 @@
 
   <meta charset="UTF-8">
   <title>Mods | Bloxd World</title>
+<meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
+<meta id="data-title" property="og:title" content="Bloxd World – Share and Discover Mods">
+<meta id="data-desc" property="og:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations.">
+<meta id="data-image" property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png">
+<meta id="data-url" property="og:url" content="https://bloxdworld.pages.dev">
+<meta name="twitter:card" content="summary_large_image">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="styles/earth-cube.css">
@@ -443,12 +449,14 @@ const modId = mod["Addon ID"];
         card.className = "mod-card";
 
         const title = createTextElement("h3", mod["Addon Name"] || "Unnamed Mod");
+document.getElementById("data-title").content=mod["Addon Name"] || "Unnamed Mod"
         const category = createTextElement("p", `Category: ${mod["Category (what type of mod is this?)"] || "Uncategorized"}`);
 
         const details = document.createElement("div");
         details.className = "mod-details";
 
         const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
+document.getElementById("data-desc").content=mod["About Addon / Description"] || "No description provided."
         const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
         details.appendChild(description);
         details.appendChild(author);
@@ -458,6 +466,7 @@ const modId = mod["Addon ID"];
           img.src = mod["Image (upload image to imgur, put the link here.)"];
           img.alt = "Mod Image";
           details.appendChild(img);
+document.getElementById("data-image").content=mod["Image (upload image to imgur, put the link here.)"]
         }
 
         if (mod["Addon Code"]) {
@@ -466,6 +475,7 @@ const modId = mod["Addon ID"];
           details.appendChild(codeBlock);
         }
 const copyBtn = document.createElement("button");
+document.getElementById("data-url").content=`https://bloxdworld.pages.dev/share?addonId=${modId}`
 copyBtn.textContent = "📋";
 copyBtn.className = "vote-btn";
 copyBtn.style.background = "none";
@@ -477,6 +487,7 @@ copyBtn.style.marginLeft = "10px";
 
 copyBtn.addEventListener("click", () => {
   const shareURL = `https://bloxdworld.pages.dev/share?addonId=${modId}`;
+
   navigator.clipboard.writeText(shareURL)
     .then(() => {
       copyBtn.textContent = "✅";
