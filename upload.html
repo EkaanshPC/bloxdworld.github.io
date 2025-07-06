@@ -160,16 +160,9 @@ themeToggle.addEventListener("click", (e) => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
 
- const authArea = document.getElementById("authArea");
+  const authArea = document.getElementById("authArea");
 
   async function checkUser() {
-    // ✅ Restore session from URL if redirected from Google
-    const { error } = await client.auth.getSessionFromUrl({ storeSession: true });
-    if (!error) {
-      // ✅ Clean up the URL
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
-
     const { data: { user } } = await client.auth.getUser();
 
     if (user) {
