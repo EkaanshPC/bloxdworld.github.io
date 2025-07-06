@@ -159,26 +159,24 @@ themeToggle.addEventListener("click", (e) => {
     "https://pxmsgzfufvwxpnyeobwk.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
-
   const authArea = document.getElementById("authArea");
 
-  async function checkUser() {
-    // 🧹 Always grab the session if hash is there!
+  async function handleOAuthRedirect() {
     if (window.location.hash.includes("access_token")) {
-      console.log("🐙 Found access_token! Getting session...");
-      await client.auth.getSession();
+      console.log("🔑 Found access_token! Running session refresh...");
+      await client.auth.getSession(); // Triggers parsing the hash internally
       window.history.replaceState({}, document.title, window.location.pathname);
     }
+  }
 
+  async function renderUser() {
     const { data: { user } } = await client.auth.getUser();
     console.log("✅ User:", user);
 
     if (user) {
       authArea.innerHTML = `
-        <li>
-          <span>👤 ${user.email}</span>
-          <a href="#" id="logoutBtn">🚪 Logout</a>
-        </li>
+        <li><span>${user.email}</span></li>
+        <li><a href="#" id="logoutBtn">🚪 Logout</a></li>
       `;
       document.getElementById("logoutBtn").onclick = async (e) => {
         e.preventDefault();
@@ -186,9 +184,7 @@ themeToggle.addEventListener("click", (e) => {
       };
     } else {
       authArea.innerHTML = `
-        <li>
-          <a href="#" id="loginBtn">🔑 Login</a>
-        </li>
+        <li><a href="#" id="loginBtn">🔑 Login</a></li>
       `;
       document.getElementById("loginBtn").onclick = async (e) => {
         e.preventDefault();
@@ -197,13 +193,13 @@ themeToggle.addEventListener("click", (e) => {
     }
   }
 
-  // 🟢 Listen for auth state changes too!
-  client.auth.onAuthStateChange((_event, _session) => {
-    console.log("⚡ Auth state changed:", _event);
-    checkUser();
+  client.auth.onAuthStateChange(async (_event, session) => {
+    console.log("⚡ Auth state changed:", _event, session);
+    await renderUser();
   });
 
-  checkUser();
+  // Run the combo on page load:
+  handleOAuthRedirect().then(renderUser);
 </script>
 
 </body>
