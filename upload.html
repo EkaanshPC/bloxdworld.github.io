@@ -160,12 +160,20 @@ themeToggle.addEventListener("click", (e) => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const client = supabase.createClient(
+    "https://pxmsgzfufvwxpnyeobwk.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." // your anon key
+  );
+
   const authArea = document.getElementById("authArea");
 
   async function checkUser() {
-    // ✅ Clean up access_token from URL if present
+    // ✅ Grab session from URL hash if present
     if (window.location.hash.includes("access_token")) {
-      window.history.replaceState({}, document.title, window.location.pathname);
+      await client.auth.getSession(); // hydrate session
+      window.history.replaceState({}, document.title, window.location.pathname); // clean URL
     }
 
     const { data: { user } } = await client.auth.getUser();
@@ -210,8 +218,14 @@ themeToggle.addEventListener("click", (e) => {
     }
   }
 
-  checkUser();
+  // ✅ Listen for login/logout events
+  client.auth.onAuthStateChange((_event, session) => {
+    console.log("Auth state changed:", _event);
+    checkUser();
+  });
 
+  // ✅ Initial check on page load
+  checkUser();
 </script>
 
 </body>
