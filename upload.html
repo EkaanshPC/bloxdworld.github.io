@@ -155,77 +155,55 @@ themeToggle.addEventListener("click", (e) => {
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 <script>
-  const supabase = supabase.createClient(
+  const client = supabase.createClient(
     "https://pxmsgzfufvwxpnyeobwk.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
   );
 
   const authArea = document.getElementById("authArea");
 
-  const loginBtn = document.createElement("a");
-  loginBtn.href = "#";
-  loginBtn.className = "nav-item";
-  loginBtn.innerHTML = `
-    <i class="fas fa-sign-in-alt"></i>
-    <span class="nav-label">Login</span>
-  `;
-
-  const logoutBtn = document.createElement("a");
-  logoutBtn.href = "#";
-  logoutBtn.className = "nav-item";
-  logoutBtn.innerHTML = `
-    <i class="fas fa-sign-out-alt"></i>
-    <span class="nav-label">Logout</span>
-  `;
-
-  const userDisplay = document.createElement("div");
-  userDisplay.style.display = "flex";
-  userDisplay.style.alignItems = "center";
-  userDisplay.style.gap = "0.5rem";
-  userDisplay.style.marginLeft = "1rem";
-
   async function checkUser() {
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user } } = await client.auth.getUser();
+
     if (user) {
       const { email, user_metadata } = user;
       const avatar = user_metadata.avatar_url || "";
       const name = user_metadata.full_name || email;
 
-      loginBtn.style.display = "none";
-      logoutBtn.style.display = "inline-block";
-
-      userDisplay.innerHTML = `
-        <img src="${avatar}" alt="avatar" width="32" style="border-radius: 50%;" />
-        <span style="font-family: Fredoka, font-size: 0.9rem;">${name}</span>
+      authArea.innerHTML = `
+        <li class="nav-item" style="display: flex; align-items: center; gap: 0.5rem;">
+          <img src="${avatar}" alt="avatar" width="24" style="border-radius: 50%;" />
+          <span class="nav-label" style="font-size: 0.8rem;">${name}</span>
+        </li>
+        <li class="nav-item">
+          <a href="#" id="logoutBtn">
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="nav-label">Logout</span>
+          </a>
+        </li>
       `;
 
-      authArea.innerHTML = "";
-      authArea.appendChild(userDisplay);
-      authArea.appendChild(logoutBtn);
-
-      // Optional: Show upload form only if logged in
-      document.querySelector(".upload-container").style.display = "block";
+      document.getElementById("logoutBtn").onclick = async (e) => {
+        e.preventDefault();
+        await client.auth.signOut();
+        location.reload();
+      };
     } else {
-      authArea.innerHTML = "";
-      authArea.appendChild(loginBtn);
-      logoutBtn.style.display = "none";
-      userDisplay.innerHTML = "";
+      authArea.innerHTML = `
+        <li class="nav-item">
+          <a href="#" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i>
+            <span class="nav-label">Login</span>
+          </a>
+        </li>
+      `;
 
-      // Optional: Hide upload form if not logged in
-      document.querySelector(".upload-container").style.display = "none";
+      document.getElementById("loginBtn").onclick = async (e) => {
+        e.preventDefault();
+        await client.auth.signInWithOAuth({ provider: "google" });
+      };
     }
   }
-
-  loginBtn.onclick = async (e) => {
-    e.preventDefault();
-    await supabase.auth.signInWithOAuth({ provider: "google" });
-  };
-
-  logoutBtn.onclick = async (e) => {
-    e.preventDefault();
-    await supabase.auth.signOut();
-    location.reload();
-  };
 
   checkUser();
 </script>
