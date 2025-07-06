@@ -40,22 +40,25 @@ async function handleOAuthRedirect() {
 // ✅ 3️⃣ Render UI based on user state
 async function renderUser() {
   console.log("🎭 renderUser() called");
-  const { data: { user }, error } = await client.auth.getUser();
-  console.log("🗝️ getUser() response:", user, error);
+
+  const { data: { session }, error: sessionError } = await client.auth.getSession();
+  console.log("💾 getSession() response:", session, sessionError);
+
+  const user = session?.user;
+  console.log("🗝️ Current user:", user);
 
   if (user) {
     console.log("✅ Logged in user:", user);
     authArea.innerHTML = `
+      <li>
         <span style="color:white">${user.email}</span>
         <a href="#" id="logoutBtn">🚪 Logout</a>
+      </li>
     `;
     document.getElementById("logoutBtn").onclick = async (e) => {
       e.preventDefault();
       console.log("🚪 Logging out...");
       await client.auth.signOut();
-    authArea.innerHTML = `
-      <li><a href="#" id="loginBtn">🔑 Login with Google</a></li>
-    `;
       location.reload();
     };
   } else {
@@ -72,6 +75,7 @@ async function renderUser() {
     };
   }
 }
+
 
 // ✅ 4️⃣ React to auth state changes
 client.auth.onAuthStateChange(async (_event, session) => {
