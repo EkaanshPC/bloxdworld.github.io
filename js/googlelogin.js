@@ -65,22 +65,25 @@ async function renderUser(sessionFromEvent) {
         <a href="#" id="logoutBtn">🚪 Logout</a>
       </li>
     `;
-    document.getElementById("logoutBtn").onclick = async (e) => {
-      e.preventDefault();
-      console.log("🚪 Logging out...");
-      await client.auth.signOut();
-      // UI will update via onAuthStateChange
-    };
+document.getElementById("logoutBtn").onclick = async (e) => {
+  e.preventDefault();
+  console.log("🚪 Logging out...");
+  await client.auth.signOut();
+  setTimeout(() => renderUser(), 100); // Fallback in case event doesn't fire
+};
   } else {
     console.log("🙅 No user logged in.");
     authArea.innerHTML = `
       <li><a href="#" id="loginBtn">🔑 Login with Google</a></li>
     `;
-    document.getElementById("loginBtn").onclick = async (e) => {
-      e.preventDefault();
-      console.log("🔑 Starting OAuth sign in...");
-      await client.auth.signInWithOAuth({ provider: "google" });
-    };
+document.getElementById("loginBtn").onclick = async (e) => {
+  e.preventDefault();
+  console.log("🔑 Starting OAuth sign in...");
+  await client.auth.signInWithOAuth({
+    provider: "google",
+    options: { prompt: "select_account" }
+  });
+};
   }
 }
 
