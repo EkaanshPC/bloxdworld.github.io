@@ -79,11 +79,20 @@ document.getElementById("logoutBtn").onclick = async (e) => {
 document.getElementById("loginBtn").onclick = async (e) => {
   e.preventDefault();
   console.log("🔑 Starting OAuth sign in...");
+
+  // 🔄 Clear any lingering session before redirect
+  await client.auth.signOut();
+
+  // 🔐 Force Google to show account picker
   await client.auth.signInWithOAuth({
     provider: "google",
-    options: { prompt: "select_account consent" }
+    options: {
+      prompt: "select_account consent" // ✅ Force account switch
+    }
   });
 };
+    console.log("🔑 Login button set up.");
+    
   }
 }
 
@@ -94,12 +103,23 @@ client.auth.onAuthStateChange(async (_event, session) => {
   // 🧹 Clean up hash AFTER session is valid
   if (session === null && window.location.hash.includes("access_token")) {
     console.log("🧹 Cleaning up #access_token from URL");
+  
     window.location.hash = "";
+
+    return; // Don't render UI if we're clearing the hash
+  }
+  if (session === null) {
+    console.log("🙅 No session found.");
+    authArea.innerHTML = "<li>Not logged in</li>";
+    return;
   }
 
   await renderUser(session);
+  console.log("🔄 User UI re-rendered.");
 });
 
 // ✅ 5️⃣ Run on page load
 console.log("🏃 Running handleOAuthRedirect() & renderUser()...");
 handleOAuthRedirect().then(() => renderUser());
+
+// ✅ 6️⃣ Handle page reloads
