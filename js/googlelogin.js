@@ -58,12 +58,13 @@ async function renderUser(sessionFromEvent) {
         <a href="#" id="logoutBtn">🚪 Logout</a>
       </li>
     `;
-    document.getElementById("logoutBtn").onclick = async (e) => {
-      e.preventDefault();
-      console.log("🚪 Logging out...");
-      await client.auth.signOut();
-      location.reload();
-    };
+document.getElementById("logoutBtn").onclick = async (e) => {
+  e.preventDefault();
+  console.log("🚪 Logging out...");
+  await client.auth.signOut();
+  // Wait for signOut to complete, then re-render UI
+  await renderUser();
+};
   } else {
     console.log("🙅 No user logged in.");
     authArea.innerHTML = `
