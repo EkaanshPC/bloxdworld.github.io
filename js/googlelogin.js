@@ -60,10 +60,8 @@ async function renderUser(sessionFromEvent) {
   if (user) {
     console.log("✅ Logged in user:", user);
     authArea.innerHTML = `
-      <li>
         <span style="color:white">${user.email}</span>
         <a href="#" id="logoutBtn">🚪 Logout</a>
-      </li>
     `;
 document.getElementById("logoutBtn").onclick = async (e) => {
   e.preventDefault();
@@ -110,7 +108,7 @@ client.auth.onAuthStateChange(async (_event, session) => {
   }
   if (session === null) {
     console.log("🙅 No session found.");
-    authArea.innerHTML = "<li>Not logged in</li>";
+    authArea.innerHTML = "<li style=\"color:white;\">Not logged in</li>";
     return;
   }
 
