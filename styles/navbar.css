@@ -1,7 +1,7 @@
 ul.navbar {
   list-style: none;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start; /* <-- changed from center */
   gap: 10px;
   margin: 0;
   padding: 0;
