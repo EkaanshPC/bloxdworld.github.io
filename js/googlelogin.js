@@ -1,16 +1,23 @@
 console.log("🔥 Script loaded!");
 
-// ✅ 1️⃣ Initialize Supabase client
+// ✅ 1️⃣ Initialize Supabase client with persistent session
 const client = supabase.createClient(
   "https://pxmsgzfufvwxpnyeobwk.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U",
+  {
+    auth: {
+      persistSession: true,         // ✅ Keeps user logged in across reloads
+      autoRefreshToken: true,       // ✅ Refreshes JWTs automatically
+      storage: localStorage         // ✅ Stores session in browser
+    }
+  }
 );
 
 const authArea = document.getElementById("authArea");
 authArea.innerHTML = "<li>Loading...</li>";
 console.log("⚙️ Supabase client initialized:", client);
 
-// ✅ 2️⃣ Handle URL stuff
+// ✅ 2️⃣ Handle OAuth redirect (PKCE or implicit)
 async function handleOAuthRedirect() {
   console.log("🐱 handleOAuthRedirect() called");
   const params = new URLSearchParams(window.location.search);
@@ -22,7 +29,6 @@ async function handleOAuthRedirect() {
 
   if (code) {
     console.log("🎉 Found ?code param:", code);
-    // For PKCE flow
     const { data, error } = await client.auth.exchangeCodeForSession(code);
     if (error) {
       console.error("❌ Error exchanging code:", error.message);
@@ -31,14 +37,14 @@ async function handleOAuthRedirect() {
     }
     window.history.replaceState({}, document.title, window.location.pathname);
   } else if (hash.includes("access_token")) {
-    console.log("🎉 Found #access_token — LET Supabase handle it automatically.");
-    // DO NOT clean hash now — wait for auth event!
+    console.log("🎉 Found #access_token — letting Supabase handle it.");
+    // Let Supabase handle it internally
   } else {
     console.log("⚠️ No OAuth params found.");
   }
 }
 
-// ✅ 3️⃣ Render UI based on user state
+// ✅ 3️⃣ Render UI based on user session
 async function renderUser(sessionFromEvent) {
   console.log("🎭 renderUser() called");
   let session = sessionFromEvent;
@@ -47,6 +53,7 @@ async function renderUser(sessionFromEvent) {
     session = data.session;
     console.log("💾 getSession() response:", session, error);
   }
+
   const user = session?.user;
   console.log("🗝️ Current user:", user);
 
@@ -62,8 +69,7 @@ async function renderUser(sessionFromEvent) {
       e.preventDefault();
       console.log("🚪 Logging out...");
       await client.auth.signOut();
-      // Do NOT call renderUser() or reload here!
-      // UI will update via onAuthStateChange.
+      // UI will update via onAuthStateChange
     };
   } else {
     console.log("🙅 No user logged in.");
@@ -73,14 +79,12 @@ async function renderUser(sessionFromEvent) {
     document.getElementById("loginBtn").onclick = async (e) => {
       e.preventDefault();
       console.log("🔑 Starting OAuth sign in...");
-      await client.auth.signInWithOAuth({
-        provider: "google",
-      });
+      await client.auth.signInWithOAuth({ provider: "google" });
     };
   }
 }
 
-// ✅ 4️⃣ React to auth state changes
+// ✅ 4️⃣ Listen for auth state changes
 client.auth.onAuthStateChange(async (_event, session) => {
   console.log("⚡ Auth state changed:", _event, session);
 
