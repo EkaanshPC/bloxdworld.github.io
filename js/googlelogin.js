@@ -58,12 +58,13 @@ async function renderUser(sessionFromEvent) {
         <a href="#" id="logoutBtn">🚪 Logout</a>
       </li>
     `;
-document.getElementById("logoutBtn").onclick = async (e) => {
-  e.preventDefault();
-  console.log("🚪 Logging out...");
-  await client.auth.signOut();
-  // Do NOT call renderUser() here!
-};
+    document.getElementById("logoutBtn").onclick = async (e) => {
+      e.preventDefault();
+      console.log("🚪 Logging out...");
+      await client.auth.signOut();
+      // Do NOT call renderUser() or reload here!
+      // UI will update via onAuthStateChange.
+    };
   } else {
     console.log("🙅 No user logged in.");
     authArea.innerHTML = `
@@ -84,7 +85,7 @@ client.auth.onAuthStateChange(async (_event, session) => {
   console.log("⚡ Auth state changed:", _event, session);
 
   // 🧹 Clean up hash AFTER session is valid
-  if (session && window.location.hash.includes("access_token")) {
+  if (session === null && window.location.hash.includes("access_token")) {
     console.log("🧹 Cleaning up #access_token from URL");
     window.location.hash = "";
   }
