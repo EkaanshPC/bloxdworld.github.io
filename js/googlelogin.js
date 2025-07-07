@@ -61,7 +61,7 @@ async function renderUser(sessionFromEvent) {
     console.log("✅ Logged in user:", user);
     authArea.innerHTML = `
         <span style="color:white">${user.email}</span>
-        <a href="#" id="logoutBtn">🚪 Logout</a>
+        <a style= "display:inline-block;" href="#" id="logoutBtn">🚪 Logout</a>
     `;
 document.getElementById("logoutBtn").onclick = async (e) => {
   e.preventDefault();
