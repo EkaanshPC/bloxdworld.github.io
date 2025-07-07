@@ -23,3 +23,4 @@ if (!/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
       label.textContent = "";
     });
   }
+  }

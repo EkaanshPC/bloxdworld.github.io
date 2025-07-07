@@ -14,6 +14,7 @@ const client = supabase.createClient(
 );
 
 const authArea = document.getElementById("authArea");
+
 authArea.innerHTML = "<li>Loading...</li>";
 console.log("⚙️ Supabase client initialized:", client);
 
