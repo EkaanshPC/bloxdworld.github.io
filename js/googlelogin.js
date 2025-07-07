@@ -81,7 +81,7 @@ document.getElementById("loginBtn").onclick = async (e) => {
   console.log("🔑 Starting OAuth sign in...");
   await client.auth.signInWithOAuth({
     provider: "google",
-    options: { prompt: "select_account" }
+    options: { prompt: "select_account consent" }
   });
 };
   }
