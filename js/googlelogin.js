@@ -59,10 +59,15 @@ async function renderUser(sessionFromEvent) {
 
   if (user) {
     console.log("✅ Logged in user:", user);
-    authArea.innerHTML = `
-        <span style="color:white">${user.email}</span>
-        <a style= "display:inline-block;" href="#" id="logoutBtn">🚪 Logout</a>
-    `;
+const email = user.email;
+const [local, domain] = email.split("@");
+const shortLocal = local.length > 7 ? local.slice(0, 7) + "..." : local;
+const shortEmail = `${shortLocal}@${domain}`;
+
+authArea.innerHTML = `
+    <span style="color:white">${shortEmail}</span>
+    <a style="display:inline-block;" href="#" id="logoutBtn">🚪 Logout</a>
+`;
 document.getElementById("logoutBtn").onclick = async (e) => {
   e.preventDefault();
   console.log("🚪 Logging out...");
