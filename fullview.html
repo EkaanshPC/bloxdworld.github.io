@@ -167,7 +167,20 @@ body.dark-mode .how-it-works li {
 <p style="text-align: left; background-color:#ccc;color:black;border: solid 2px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
   <script>
 const themeToggle = document.getElementById("themeToggle");
-
+const urlParams = new URLSearchParams(window.location.search);
+const sharedAddonId = urlParams.get("addonId");
+if(urlParams.has("addonId")) {
+  // Fetch and display the shared addon details
+  fetch(`https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("uploadDate").textContent = data.uploadDate;
+      document.getElementById("uploaderName").textContent = data.uploaderName;
+      document.getElementById("category").textContent = data.category;
+      document.getElementById("codeSnippet").textContent = data.codeSnippet;
+    })
+    .catch(error => console.error('Error fetching addon:', error));
+}
 // Apply saved theme on load
 if (localStorage.getItem("theme") === "dark") {
   document.body.classList.add("dark-mode");
@@ -206,7 +219,6 @@ themeToggle.addEventListener("click", (e) => {
 if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   document.body.classList.add("mobile");
 }
-
   </script>
 <footer class="site-footer">
   <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
