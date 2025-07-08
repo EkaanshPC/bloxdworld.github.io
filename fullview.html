@@ -161,8 +161,12 @@ body.dark-mode .how-it-works li {
   </ul>
     </div>
   </div>
-<h1 style="text-align: left;">Lorem ipsum dolor sit amet</h1>
+  <div id="nameHolder">
+    <img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png" alt="Mod Icon" class="modIcon">
+<h1 style="text-align: left; display:inline-block">Lorem ipsum dolor sit amet</h1>
+  </div>
 <p style="text-align: left;">Uploaded on: <span id="uploadDate">October 1, 2023</span> | Made by: <span id="uploaderName">John Doe</span> | Category: <span id="category">Other</span></p>
+<div id="imageHolder"></div>
 <h3 style="text-align: left;">Consectetur adipiscing elit</h3>
 <p style="text-align: left; background-color:#ccc;color:black;border: solid 2px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
   <script>
@@ -174,6 +178,23 @@ if(urlParams.has("addonId")) {
   fetch(`https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201`)
     .then(response => response.json())
     .then(data => {
+        if(mod["Image (upload image to imgur, put the link here.)"]){
+            let imageHolder = document.getElementById("imageHolder");
+            let img = document.createElement("img");
+            img.src = mod["Image (upload image to imgur, put the link here.)"];
+            img.alt = "Mod Image";
+            img.style.width = "100%"; // Adjust as needed
+            img.style.borderRadius = "8px"; // Optional styling
+            imageHolder.appendChild(img);
+        }
+        if(mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]){
+            let modIcon = document.querySelector(".modIcon");
+            modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
+            modIcon.alt = "Mod Icon";
+            modIcon.style.width = "50px"; // Adjust as needed
+            modIcon.style.height = "50px"; // Adjust as needed
+            modIcon.style.borderRadius = "25%"; // Optional styling for a circular icon
+        }
       let modId = data.filter(mod => mod["Addon ID"] === sharedAddonId);
       document.getElementById("uploadDate").textContent = modId[0]["Timestamp"];
       document.getElementById("uploaderName").textContent = modId[0]["Author Name (leave blank for your username to be displayed anonymous)"];
