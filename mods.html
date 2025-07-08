@@ -497,14 +497,7 @@ const formattedTimestamp = mod["Timestamp"];
 
 
         const author = createTextElement("p", `Made by: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
-author.style.fontStyle = "italic";
-        author.style.color = "white";
-        author.style.marginTop = "4px";
-        author.style.backgroundColor = "cyan";
-        author.style.padding = "4px 8px";
-        author.style.borderRadius = "4px";
-        author.style.border = "1px solid #ddd";
-        
+        author.style.color = "cyan";
         details.appendChild(description);
         description.className = "mod-description";
         details.appendChild(author);
