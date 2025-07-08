@@ -161,7 +161,7 @@ body.dark-mode .how-it-works li {
   </ul>
     </div>
   </div>
-  <div id="nameHolder">
+  <div id="nameHolder" style="align-items: left;">
     <img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png" alt="Mod Icon" class="modIcon">
 <h1 style="text-align: left; display:inline-block">Lorem ipsum dolor sit amet</h1>
   </div>
@@ -191,9 +191,9 @@ if(urlParams.has("addonId")) {
             let modIcon = document.querySelector(".modIcon");
             modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
             modIcon.alt = "Mod Icon";
-            modIcon.style.width = "50px"; // Adjust as needed
-            modIcon.style.height = "50px"; // Adjust as needed
             modIcon.style.borderRadius = "25%"; // Optional styling for a circular icon
+            modIcon.style.width="140px";
+            modIcon.style.height="140px";
         }
       let modId = data.filter(mod => mod["Addon ID"] === sharedAddonId);
       document.getElementById("uploadDate").textContent = modId[0]["Timestamp"];
