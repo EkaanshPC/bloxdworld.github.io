@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/earth-cube.css">
+<link rel="stylesheet" href="styles/header.css">
+<link rel="stylesheet" href="styles/devlogandindex.css">
+<link rel="stylesheet" href="styles/other.css">
+<link rel="stylesheet" href="styles/navbar.css">
+  <meta charset="UTF-8">
+  <title>About | Bloxd World</title>
+<meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
+<meta property="og:title" content="About Bloxd World">
+<meta property="og:description" content="Be up-to-date to Bloxd World's Roadmap and devlog!">
+<meta property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png">
+<meta property="og:url" content="https://bloxdworld.pages.dev/about">
+<meta name="twitter:card" content="summary_large_image">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+
+  </style>
+</head>
+<body>
+
+  <!-- 🧠 Header -->
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd <br>World</div>
+    </div>
+
+   <div class="header-right">
+  <ul class="navbar">
+    <li class="nav-item">
+      <a id="i6" href="index.html">
+        <i class="fas fa-home"></i>
+        <span id="mi6" class="nav-label">Home</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a id="i5" href="mods.html">
+        <i class="fas fa-cubes"></i>
+        <span id="mi5" class="nav-label">Mods</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a id="i4" href="upload.html">
+        <i class="fas fa-upload"></i>
+        <span id="mi4" class="nav-label">Upload</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a id="i3" href="about.html">
+        <i class="fas fa-info-circle"></i>
+        <span id="mi3" class="nav-label">About</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a  id="i2" href="leaderboard.html">
+        <i class="fas fa-trophy"></i>
+        <span id="mi2"class="nav-label">Leaderboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span id="mi1" class="nav-label">Theme</span>
+      </a>
+    </li>
+    <li class="nav-item" id="authArea"></li>
+  </ul>
+    </div>
+  </div>
+
+
+  <!-- 💡 Mouse Tracking Script -->
+  <script>
+const themeToggle = document.getElementById("themeToggle");
+
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
+
+// Toggle and save preference
+themeToggle.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+
+  // Save preference
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
+
+    const targets = document.querySelectorAll('.welcome-text, .welcome-para');
+
+    targets.forEach(el => {
+      el.addEventListener('mousemove', e => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        el.style.setProperty('--mouse-x', `${x}px`);
+        el.style.setProperty('--mouse-y', `${y}px`);
+      });
+
+      el.addEventListener('mouseleave', () => {
+        el.style.setProperty('--mouse-x', `50%`);
+        el.style.setProperty('--mouse-y', `50%`);
+      });
+    });
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+  </script>
+<footer class="site-footer">
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/about">About</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/googlelogin.js"></script>
+</body>
+</html>
