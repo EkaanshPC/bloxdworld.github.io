@@ -487,24 +487,7 @@ const modId = mod["Addon ID"];
         const details = document.createElement("div");
         details.className = "mod-details";
         const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
-const rawTimestamp = mod["Timestamp"];
-let formattedTimestamp = "";
-if (rawTimestamp) {
-  // Convert "MM/DD/YYYY HH:MM:SS" to "YYYY-MM-DDTHH:MM:SS"
-  const [datePart, timePart] = rawTimestamp.split(" ");
-  const [month, day, year] = datePart.split("/");
-  // Pad month and day if needed
-  const isoString = `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}T${timePart}`;
-  const date = new Date(isoString);
-  formattedTimestamp = `${date.toLocaleDateString("en-US", {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })}, ${date.toLocaleTimeString("en-US", {
-    hour: '2-digit',
-    minute: '2-digit'
-  })}`;
-}
+const formattedTimestamp = mod["Timestamp"];
         if (formattedTimestamp) {
           const dateElem = createTextElement("p", `Uploaded: ${formattedTimestamp}`);
           details.appendChild(dateElem);
