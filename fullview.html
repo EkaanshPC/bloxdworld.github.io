@@ -349,15 +349,6 @@ function formatModDescription(rawText) {
        .replace(/>/g, "&gt;");
 
   let formatted = escapeHTML(rawText);
-formatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-  '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
-);
-
-formatted = formatted.replace(/^#{2,6}\s*(.*?)\s*#{2,6}(?=\s*$)/gm, (match, title) => {
-  const level = Math.min((match.match(/^#+/)?.[0].length || 2), 6);
-  return `<h${level}>${title.trim()}</h${level}>`;
-});
-
 
   // Step 4: Inline formatting
   formatted = formatted
