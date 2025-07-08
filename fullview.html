@@ -341,7 +341,7 @@ if (sharedAddonId) {
       document.getElementById("codeSnippet").textContent = mod["Addon Code"];
       document.title = `${mod["Addon Name"]} - Bloxd World`;
       document.querySelector("h1").textContent = mod["Addon Name"];
-      function formatModDescription(rawText) {
+function formatModDescription(rawText) {
   // Escape HTML to prevent XSS
   const escapeHTML = (str) =>
     str.replace(/&/g, "&amp;")
@@ -355,17 +355,21 @@ if (sharedAddonId) {
     return `<pre><code>${code}</code></pre>`;
   });
 
+  // Convert [text](url) into <a href="url">text</a>
+safeText = safeText.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
   // Apply inline formatting
   safeText = safeText
     .replace(/\*(.*?)\*/g, "<strong>$1</strong>")     // *bold*
     .replace(/\/(.*?)\//g, "<em>$1</em>")             // /italic/
     .replace(/_(.*?)_/g, "<u>$1</u>");                // _underline_
 
-  // Optional: convert line breaks to <br> for better formatting
+  // Convert line breaks to <br>
   safeText = safeText.replace(/\n/g, "<br>");
 
   return safeText;
 }
+
+
 
 // Usage
 const rawDescription = mod["About Addon / Description"];
