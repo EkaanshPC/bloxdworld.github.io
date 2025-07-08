@@ -342,32 +342,25 @@ if (sharedAddonId) {
       document.title = `${mod["Addon Name"]} - Bloxd World`;
       document.querySelector("h1").textContent = mod["Addon Name"];
 function formatModDescription(rawText) {
-  // Step 1: Convert [text](url) into <a> tags BEFORE escaping
-  let formatted = rawText.replace(
-/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
-'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+  // Step 1: Convert [text](url) into <a> tags
+  let formatted = rawText.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
   );
 
-  // Step 2: Escape remaining HTML to prevent XSS
-  const escapeHTML = (str) =>
-    str.replace(/&/g, "&amp;")
-       .replace(/</g, "&lt;")
-       .replace(/>/g, "&gt;");
+  // Step 2: Escape everything EXCEPT <a> tags
+  formatted = formatted
+    .replace(/&(?!amp;|lt;|gt;|quot;|#39;)/g, "&amp;")
+    .replace(/<(?!\/?a(?=>|\s.*>))/g, "&lt;")
+    .replace(/(?<!<a[^>]*)>/g, "&gt;");
 
-  formatted = formatted.replace(/<(?!\/?a(?=>|\s.*>))/g, "&lt;"); // escape all tags except <a>
-  formatted = formatted.replace(/(?<!<a[^>]*)>/g, "&gt;");        // escape > unless inside <a>
-
-  // Step 3: Code blocks (```...```)
-  formatted = formatted.replace(/```([\s\S]*?)```/g, (_, code) => {
-    return `<pre><code>${code}</code></pre>`;
+  // Step 3: Headings like ## Title ##
+  formatted = formatted.replace(/^#{2,6}\s*(.*?)\s*#{2,6}$/gm, (match, title) => {
+    const level = Math.min((match.match(/^#+/)?.[0].length || 2), 6);
+    return `<h${level}>${title.trim()}</h${level}>`;
   });
 
   // Step 4: Inline formatting
   formatted = formatted
-.replace(/^#{2,6}\s*(.*?)\s*#{2,6}$/gm, (match, title) => {
-  const level = Math.min((match.match(/^#+/)?.[0].length || 2), 6);
-  return `<h${level}>${title.trim()}</h${level}>`;
-})
     .replace(/\*(.*?)\*/g, "<strong>$1</strong>")     // *bold*
     .replace(/\/(.*?)\//g, "<em>$1</em>")             // /italic/
     .replace(/_(.*?)_/g, "<u>$1</u>")                 // _underline_
