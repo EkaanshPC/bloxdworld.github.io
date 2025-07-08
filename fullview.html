@@ -342,16 +342,18 @@ if (sharedAddonId) {
       document.title = `${mod["Addon Name"]} - Bloxd World`;
       document.querySelector("h1").textContent = mod["Addon Name"];
 function formatModDescription(rawText) {
-  // Step 1: Convert [text](url) into <a> tags
-  let formatted = rawText.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+  // Step 1: Escape HTML first
+  const escapeHTML = (str) =>
+    str.replace(/&/g, "&amp;")
+       .replace(/</g, "&lt;")
+       .replace(/>/g, "&gt;");
+
+  let formatted = escapeHTML(rawText);
+
+  // Step 2: Restore [text](url) as <a> (after escaping)
+  formatted = formatted.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
     '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
   );
-
-  // Step 2: Escape everything EXCEPT <a> tags
-  formatted = formatted
-    .replace(/&(?!amp;|lt;|gt;|quot;|#39;)/g, "&amp;")
-    .replace(/<(?!\/?a(?=>|\s.*>))/g, "&lt;")
-    .replace(/(?<!<a[^>]*)>/g, "&gt;");
 
   // Step 3: Headings like ## Title ##
   formatted = formatted.replace(/^#{2,6}\s*(.*?)\s*#{2,6}$/gm, (match, title) => {
