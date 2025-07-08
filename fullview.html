@@ -364,9 +364,10 @@ function formatModDescription(rawText) {
 
   // Step 4: Inline formatting
   formatted = formatted
-.replace(/##\s*(.*?)\s*##/g, "<h2>$1</h2>")           // ## Title ##
-    .replace(/###\s*(.*?)\s*###/g, "<h3>$1</h3>")     // ### Subtitle ###    
-    .replace(/####\s*(.*?)\s*####/g, "<h4>$1</h4>")   // #### Sub-subtitle ####
+.replace(/^#{2,6}\s*(.*?)\s*#{2,6}$/gm, (match, title) => {
+  const level = Math.min((match.match(/^#+/)?.[0].length || 2), 6);
+  return `<h${level}>${title.trim()}</h${level}>`;
+})
     .replace(/\*(.*?)\*/g, "<strong>$1</strong>")     // *bold*
     .replace(/\/(.*?)\//g, "<em>$1</em>")             // /italic/
     .replace(/_(.*?)_/g, "<u>$1</u>")                 // _underline_
