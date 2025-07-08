@@ -173,38 +173,49 @@ body.dark-mode .how-it-works li {
 const themeToggle = document.getElementById("themeToggle");
 const urlParams = new URLSearchParams(window.location.search);
 const sharedAddonId = urlParams.get("addonId");
-if(urlParams.has("addonId")) {
-  // Fetch and display the shared addon details
-  fetch(`https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201`)
+
+if (sharedAddonId) {
+  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201")
     .then(response => response.json())
     .then(data => {
-        if(mod["Image (upload image to imgur, put the link here.)"]){
-            let imageHolder = document.getElementById("imageHolder");
-            let img = document.createElement("img");
-            img.src = mod["Image (upload image to imgur, put the link here.)"];
-            img.alt = "Mod Image";
-            img.style.width = "100%"; // Adjust as needed
-            img.style.borderRadius = "8px"; // Optional styling
-            imageHolder.appendChild(img);
-        }
-        if(mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]){
-            let modIcon = document.querySelector(".modIcon");
-            modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
-            modIcon.alt = "Mod Icon";
-            modIcon.style.borderRadius = "25%"; // Optional styling for a circular icon
-            modIcon.style.width="140px";
-            modIcon.style.height="140px";
-        }
-      let modId = data.filter(mod => mod["Addon ID"] === sharedAddonId);
-      document.getElementById("uploadDate").textContent = modId[0]["Timestamp"];
-      document.getElementById("uploaderName").textContent = modId[0]["Author Name (leave blank for your username to be displayed anonymous)"];
-      document.getElementById("category").textContent = modId[0]["Category (what type of mod is this?)"];
-      document.getElementById("codeSnippet").textContent = modId[0]["Addon Code"];
-      document.title = `${modId[0]["Addon Name"]} - Bloxd World`;
-      document.querySelector("h1").textContent = modId[0]["Addon Name"];
-      document.querySelector("h3").textContent = modId[0]["About Addon / Description"];
+      const mod = data.find(mod => mod["Addon ID"] === sharedAddonId);
+
+      if (!mod) {
+        console.error("Addon not found.");
+        return;
+      }
+
+      // 🖼️ Add mod image if available
+      if (mod["Image (upload image to imgur, put the link here.)"]) {
+        const imageHolder = document.getElementById("imageHolder");
+        const img = document.createElement("img");
+        img.src = mod["Image (upload image to imgur, put the link here.)"];
+        img.alt = "Mod Image";
+        img.style.width = "100%";
+        img.style.borderRadius = "8px";
+        imageHolder.appendChild(img);
+      }
+
+      // 🧱 Add mod icon if available
+      if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
+        const modIcon = document.querySelector(".modIcon");
+        modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
+        modIcon.alt = "Mod Icon";
+        modIcon.style.borderRadius = "25%";
+        modIcon.style.width = "140px";
+        modIcon.style.height = "140px";
+      }
+
+      // 📝 Fill in mod details
+      document.getElementById("uploadDate").textContent = mod["Timestamp"];
+      document.getElementById("uploaderName").textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"];
+      document.getElementById("category").textContent = mod["Category (what type of mod is this?)"];
+      document.getElementById("codeSnippet").textContent = mod["Addon Code"];
+      document.title = `${mod["Addon Name"]} - Bloxd World`;
+      document.querySelector("h1").textContent = mod["Addon Name"];
+      document.querySelector("h3").textContent = mod["About Addon / Description"];
     })
-    .catch(error => console.error('Error fetching addon:', error));
+    .catch(error => console.error("Error fetching addon:", error));
 }
 // Apply saved theme on load
 if (localStorage.getItem("theme") === "dark") {
