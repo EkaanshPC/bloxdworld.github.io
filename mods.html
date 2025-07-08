@@ -22,6 +22,31 @@ body.mobile .mods-container,
 body.mobile .devlog-container {
   padding: 10px;
 }
+#pagination {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#pagination button {
+  margin: 0 4px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background: #eee;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#pagination button:hover {
+  background: #ddd;
+}
+
+#pagination .active {
+  background: #00c2ff;
+  color: white;
+  font-weight: bold;
+}
 .mod-card button {
   align-self: flex-start; /* Aligns the button to the left in a flex container */
   margin-top: 10px;       /* Optional spacing */
@@ -471,31 +496,41 @@ function renderPagination(totalMods) {
 
   const totalPages = Math.ceil(totalMods / modsPerPage);
 
+  // ← Previous button
   const prevBtn = document.createElement("button");
-  prevBtn.textContent = "← Previous";
+  prevBtn.textContent = "←";
   prevBtn.disabled = currentPage === 1;
   prevBtn.onclick = () => {
     currentPage--;
     renderMods(allMods);
   };
+  paginationContainer.appendChild(prevBtn);
 
+  // 🔢 Numbered page buttons
+  for (let i = 1; i <= totalPages; i++) {
+    const pageBtn = document.createElement("button");
+    pageBtn.textContent = i;
+    pageBtn.className = "page-btn";
+    if (i === currentPage) {
+      pageBtn.classList.add("active");
+    }
+    pageBtn.onclick = () => {
+      currentPage = i;
+      renderMods(allMods);
+    };
+    paginationContainer.appendChild(pageBtn);
+  }
+
+  // → Next button
   const nextBtn = document.createElement("button");
-  nextBtn.textContent = "Next →";
+  nextBtn.textContent = "→";
   nextBtn.disabled = currentPage === totalPages;
   nextBtn.onclick = () => {
     currentPage++;
     renderMods(allMods);
   };
-
-  const pageInfo = document.createElement("span");
-  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-  pageInfo.style.margin = "0 12px";
-
-  paginationContainer.appendChild(prevBtn);
-  paginationContainer.appendChild(pageInfo);
   paginationContainer.appendChild(nextBtn);
 }
-
     function createTextElement(tag, text) {
       const el = document.createElement(tag);
       el.textContent = text;
