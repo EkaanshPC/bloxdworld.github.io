@@ -480,7 +480,15 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
 
       mods.forEach(mod => {
 const modId = mod["Addon ID"];
+
         const card = document.createElement("div");
+        card.addEventListener("click", (e) => {
+  const isInteractive = e.target.closest("button") || e.target.closest("img.vote-icon");
+  if (isInteractive) return;
+
+  window.location.href = `https://bloxdworld.pages.dev/fullview?addonId=${modId}`;
+});
+
         card.className = "mod-card";
 
         const title = createTextElement("h3", mod["Addon Name"] || "Unnamed Mod");
@@ -689,10 +697,9 @@ voteContainer.appendChild(copyBtn);
 const contentWrapper = document.createElement("div");
 contentWrapper.className = "mod-content";
 
-// Add title, category, toggleBtn, details, voteContainer to contentWrapper
+// Add title, category, details, voteContainer to contentWrapper
 contentWrapper.appendChild(title);
 contentWrapper.appendChild(category);
-contentWrapper.appendChild(toggleBtn);
 contentWrapper.appendChild(details);
 contentWrapper.appendChild(voteContainer);
 
