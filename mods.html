@@ -495,8 +495,10 @@ function renderPagination(totalMods) {
   paginationContainer.innerHTML = "";
 
   const totalPages = Math.ceil(totalMods / modsPerPage);
+  const maxVisiblePages = 5; // how many numbered buttons to show at once
+  const pageBuffer = Math.floor(maxVisiblePages / 2);
 
-  // ← Previous button
+  // ← Previous
   const prevBtn = document.createElement("button");
   prevBtn.textContent = "←";
   prevBtn.disabled = currentPage === 1;
@@ -506,22 +508,40 @@ function renderPagination(totalMods) {
   };
   paginationContainer.appendChild(prevBtn);
 
-  // 🔢 Numbered page buttons
-  for (let i = 1; i <= totalPages; i++) {
-    const pageBtn = document.createElement("button");
-    pageBtn.textContent = i;
-    pageBtn.className = "page-btn";
-    if (i === currentPage) {
-      pageBtn.classList.add("active");
-    }
-    pageBtn.onclick = () => {
-      currentPage = i;
-      renderMods(allMods);
-    };
-    paginationContainer.appendChild(pageBtn);
+  // Smart range logic
+  let startPage = Math.max(1, currentPage - pageBuffer);
+  let endPage = Math.min(totalPages, currentPage + pageBuffer);
+
+  if (currentPage <= pageBuffer) {
+    endPage = Math.min(totalPages, maxVisiblePages);
   }
 
-  // → Next button
+  if (currentPage + pageBuffer >= totalPages) {
+    startPage = Math.max(1, totalPages - maxVisiblePages + 1);
+  }
+
+  // Show first page + ellipsis if needed
+  if (startPage > 1) {
+    paginationContainer.appendChild(createPageButton(1));
+    if (startPage > 2) {
+      paginationContainer.appendChild(createEllipsis());
+    }
+  }
+
+  // Show middle range
+  for (let i = startPage; i <= endPage; i++) {
+    paginationContainer.appendChild(createPageButton(i));
+  }
+
+  // Show last page + ellipsis if needed
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      paginationContainer.appendChild(createEllipsis());
+    }
+    paginationContainer.appendChild(createPageButton(totalPages));
+  }
+
+  // → Next
   const nextBtn = document.createElement("button");
   nextBtn.textContent = "→";
   nextBtn.disabled = currentPage === totalPages;
@@ -530,6 +550,30 @@ function renderPagination(totalMods) {
     renderMods(allMods);
   };
   paginationContainer.appendChild(nextBtn);
+}
+
+// Helper: create a numbered page button
+function createPageButton(pageNum) {
+  const btn = document.createElement("button");
+  btn.textContent = pageNum;
+  btn.className = "page-btn";
+  if (pageNum === currentPage) {
+    btn.classList.add("active");
+  }
+  btn.onclick = () => {
+    currentPage = pageNum;
+    renderMods(allMods);
+  };
+  return btn;
+}
+
+// Helper: create an ellipsis
+function createEllipsis() {
+  const span = document.createElement("span");
+  span.textContent = "…";
+  span.style.margin = "0 6px";
+  span.style.color = "#888";
+  return span;
 }
     function createTextElement(tag, text) {
       const el = document.createElement(tag);
@@ -549,7 +593,7 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
   const end = start + modsPerPage;
   const modsToShow = mods.slice(start, end);
 
-      mods.forEach(mod => {
+      modsToShow.forEach(mod => {
 const modId = mod["Addon ID"];
 
         const card = document.createElement("div");
