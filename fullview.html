@@ -342,33 +342,41 @@ if (sharedAddonId) {
       document.title = `${mod["Addon Name"]} - Bloxd World`;
       document.querySelector("h1").textContent = mod["Addon Name"];
 function formatModDescription(rawText) {
-  // Escape HTML to prevent XSS
+  // Step 1: Convert [text](url) into <a> tags BEFORE escaping
+  let formatted = rawText.replace(
+/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+
+  // Step 2: Escape remaining HTML to prevent XSS
   const escapeHTML = (str) =>
     str.replace(/&/g, "&amp;")
        .replace(/</g, "&lt;")
        .replace(/>/g, "&gt;");
 
-  let safeText = escapeHTML(rawText);
+  formatted = formatted.replace(/<(?!\/?a(?=>|\s.*>))/g, "&lt;"); // escape all tags except <a>
+  formatted = formatted.replace(/(?<!<a[^>]*)>/g, "&gt;");        // escape > unless inside <a>
 
-  // Handle ```code``` blocks first (multiline or inline)
-  safeText = safeText.replace(/```([\s\S]*?)```/g, (_, code) => {
+  // Step 3: Code blocks (```...```)
+  formatted = formatted.replace(/```([\s\S]*?)```/g, (_, code) => {
     return `<pre><code>${code}</code></pre>`;
   });
 
-  // Convert [text](url) into <a href="url">text</a>
-safeText = safeText.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
-  // Apply inline formatting
-  safeText = safeText
+  // Step 4: Inline formatting
+  formatted = formatted
+.replace(/##\s*(.*?)\s*##/g, "<h2>$1</h2>")           // ## Title ##
+    .replace(/###\s*(.*?)\s*###/g, "<h3>$1</h3>")     // ### Subtitle ###    
+    .replace(/####\s*(.*?)\s*####/g, "<h4>$1</h4>")   // #### Sub-subtitle ####
     .replace(/\*(.*?)\*/g, "<strong>$1</strong>")     // *bold*
     .replace(/\/(.*?)\//g, "<em>$1</em>")             // /italic/
-    .replace(/_(.*?)_/g, "<u>$1</u>");                // _underline_
+    .replace(/_(.*?)_/g, "<u>$1</u>")                 // _underline_
+    .replace(/`([^`]+)`/g, "<code>$1</code>");        // `inline code`
 
-  // Convert line breaks to <br>
-  safeText = safeText.replace(/\n/g, "<br>");
+  // Step 5: Line breaks
+  formatted = formatted.replace(/\n/g, "<br>");
 
-  return safeText;
+  return formatted;
 }
-
 
 
 // Usage
