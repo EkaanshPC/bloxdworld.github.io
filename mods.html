@@ -500,8 +500,8 @@ if (rawTimestamp) {
     minute: '2-digit'
   })}`;
 }
-        if (formattedDate) {
-          const dateElem = createTextElement("p", `Uploaded: ${formattedDate}`);
+        if (formattedTimestamp) {
+          const dateElem = createTextElement("p", `Uploaded: ${formattedTimestamp}`);
           details.appendChild(dateElem);
         }
 
