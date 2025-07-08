@@ -197,11 +197,12 @@ if (sharedAddonId) {
         imageHolder.appendChild(img);
       }
         const modIcon = document.querySelector(".modIcon");
-      // 🧱 Add mod icon if available
-      if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
-        modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
         modIcon.alt = "Mod Icon";
         modIcon.style.borderRadius = "25%";
+        modIcon.style.margin = "3px 0 0 3px";
+      // 🖼️ Add mod icon if available
+      if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
+        modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
       }
         modIcon.style.width = "50px";
         modIcon.style.height = "50px";
