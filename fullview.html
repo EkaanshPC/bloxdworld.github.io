@@ -174,10 +174,14 @@ if(urlParams.has("addonId")) {
   fetch(`https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201`)
     .then(response => response.json())
     .then(data => {
-      document.getElementById("uploadDate").textContent = data.uploadDate;
-      document.getElementById("uploaderName").textContent = data.uploaderName;
-      document.getElementById("category").textContent = data.category;
-      document.getElementById("codeSnippet").textContent = data.codeSnippet;
+      let modId = mods.filter(mod => mod["Addon ID"] === sharedAddonId);
+      document.getElementById("uploadDate").textContent = modId[0]["Timestamp"];
+      document.getElementById("uploaderName").textContent = modId[0]["Author Name (leave blank for your username to be displayed anonymous)"];
+      document.getElementById("category").textContent = modId[0]["Category (what type of mod is this?)"];
+      document.getElementById("codeSnippet").textContent = modId[0]["Addon Code"];
+      document.title = `${modId[0]["Addon Name"]} - Bloxd World`;
+      document.querySelector("h1").textContent = modId[0]["Addon Name"];
+      document.querySelector("h3").textContent = modId[0]["About Addon / Description"];
     })
     .catch(error => console.error('Error fetching addon:', error));
 }
