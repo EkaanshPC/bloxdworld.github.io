@@ -163,12 +163,13 @@ body.dark-mode .how-it-works li {
   </div>
   <div id="nameHolder" style="align-items: left;">
     <img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png" alt="Mod Icon" class="modIcon">
-<h1 style="text-align: left; display:inline-block">Lorem ipsum dolor sit amet</h1>
+<h1 style="text-align: left;">Lorem ipsum dolor sit amet</h1>
   </div>
 <p style="text-align: left;">Uploaded on: <span id="uploadDate">October 1, 2023</span> | Made by: <span id="uploaderName">John Doe</span> | Category: <span id="category">Other</span></p>
 <div id="imageHolder"></div>
 <h3 style="text-align: left;">Consectetur adipiscing elit</h3>
-<p style="text-align: left; background-color:#ccc;color:black;border: solid 2px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
+<p style="text-align: left; background-color:#ccc;color:black;border: solid 1px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
+<p>Copy code to clipboard: <button id="copyButton">Copy</button></p>
   <script>
 const themeToggle = document.getElementById("themeToggle");
 const urlParams = new URLSearchParams(window.location.search);
@@ -202,8 +203,8 @@ if (sharedAddonId) {
         modIcon.alt = "Mod Icon";
         modIcon.style.borderRadius = "25%";
       }
-        modIcon.style.width = "70px";
-        modIcon.style.height = "70px";
+        modIcon.style.width = "25px";
+        modIcon.style.height = "25px";
       // 📝 Fill in mod details
       document.getElementById("uploadDate").textContent = mod["Timestamp"];
       document.getElementById("uploaderName").textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"];
@@ -211,7 +212,44 @@ if (sharedAddonId) {
       document.getElementById("codeSnippet").textContent = mod["Addon Code"];
       document.title = `${mod["Addon Name"]} - Bloxd World`;
       document.querySelector("h1").textContent = mod["Addon Name"];
-      document.querySelector("h3").textContent = mod["About Addon / Description"];
+document.querySelector("h1").style.height = "25px";
+      function formatModDescription(rawText) {
+  // Escape HTML to prevent XSS
+  const escapeHTML = (str) =>
+    str.replace(/&/g, "&amp;")
+       .replace(/</g, "&lt;")
+       .replace(/>/g, "&gt;");
+
+  let safeText = escapeHTML(rawText);
+
+  // Handle ```code``` blocks first (multiline or inline)
+  safeText = safeText.replace(/```([\s\S]*?)```/g, (_, code) => {
+    return `<pre><code>${code}</code></pre>`;
+  });
+
+  // Apply inline formatting
+  safeText = safeText
+    .replace(/\*(.*?)\*/g, "<strong>$1</strong>")     // *bold*
+    .replace(/\/(.*?)\//g, "<em>$1</em>")             // /italic/
+    .replace(/_(.*?)_/g, "<u>$1</u>");                // _underline_
+
+  // Optional: convert line breaks to <br> for better formatting
+  safeText = safeText.replace(/\n/g, "<br>");
+
+  return safeText;
+}
+
+// Usage
+const rawDescription = mod["About Addon / Description"];
+document.querySelector("h3").innerHTML = formatModDescription(rawDescription);
+
+      document.getElementById("copyButton").addEventListener("click", () => {
+        navigator.clipboard.writeText(mod["Addon Code"]).then(() => {
+          alert("Code copied to clipboard!");
+        }).catch(err => {
+          console.error("Failed to copy code: ", err);
+        });
+      });
     })
     .catch(error => console.error("Error fetching addon:", error));
 }
