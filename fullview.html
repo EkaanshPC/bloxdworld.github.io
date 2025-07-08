@@ -96,7 +96,96 @@ body.dark-mode .how-it-works h2 {
 body.dark-mode .how-it-works li {
   color: #ccc;
 }
+/* Container for the mod title and icon */
+#nameHolder {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
 
+.modIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Mod title */
+#nameHolder h1 {
+  margin: 0;
+  font-size: 1.8em;
+  font-weight: 600;
+  color: #222;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Metadata line */
+p span#uploadDate,
+p span#uploaderName,
+p span#category {
+  font-weight: 500;
+  color: #444;
+}
+
+p {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 0.95em;
+  color: #555;
+  margin: 8px 0;
+}
+
+/* Mod image */
+#imageHolder img {
+  width: 100%;
+  border-radius: 12px;
+  margin: 16px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Description block */
+h3 {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #333;
+  background: #f7f7f7;
+  padding: 16px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Code snippet */
+#codeSnippet {
+  background-color: #1e1e1e;
+  color: #dcdcdc;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  margin-top: 12px;
+}
+
+/* Copy button */
+#copyButton {
+  background: #00c2ff;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: background 0.2s ease;
+}
+
+#copyButton:hover {
+  background: #009ed8;
+}
   </style>
 </head>
 <body>
@@ -192,20 +281,14 @@ if (sharedAddonId) {
         const img = document.createElement("img");
         img.src = mod["Image (upload image to imgur, put the link here.)"];
         img.alt = "Mod Image";
-        img.style.width = "100%";
-        img.style.borderRadius = "8px";
         imageHolder.appendChild(img);
       }
         const modIcon = document.querySelector(".modIcon");
         modIcon.alt = "Mod Icon";
-        modIcon.style.borderRadius = "25%";
-        modIcon.style.margin = "3px 0 0 3px";
       // 🖼️ Add mod icon if available
       if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
         modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
       }
-        modIcon.style.width = "50px";
-        modIcon.style.height = "50px";
       // 📝 Fill in mod details
       document.getElementById("uploadDate").textContent = mod["Timestamp"];
       document.getElementById("uploaderName").textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"];
@@ -213,7 +296,6 @@ if (sharedAddonId) {
       document.getElementById("codeSnippet").textContent = mod["Addon Code"];
       document.title = `${mod["Addon Name"]} - Bloxd World`;
       document.querySelector("h1").textContent = mod["Addon Name"];
-document.querySelector("h1").style.height = "25px";
       function formatModDescription(rawText) {
   // Escape HTML to prevent XSS
   const escapeHTML = (str) =>
