@@ -421,8 +421,11 @@ body.dark #sortVotes:hover {
 <button id="sortVotes">Sort by Votes</button>
     <div id="mods-list">Loading. Please Wait</div>
   </div>
+  <div id="pagination" style="text-align: center; margin-top: 20px;"></div>
 
   <script>
+    let currentPage = 1;
+const modsPerPage = 10;
 console.log("Referrer:", document.referrer);
 const themeToggle = document.getElementById("themeToggle");
 
@@ -462,6 +465,36 @@ document.getElementById("categoryFilter").addEventListener("change", e => {
 
     let allMods = [];
     let voteData = {};
+function renderPagination(totalMods) {
+  const paginationContainer = document.getElementById("pagination");
+  paginationContainer.innerHTML = "";
+
+  const totalPages = Math.ceil(totalMods / modsPerPage);
+
+  const prevBtn = document.createElement("button");
+  prevBtn.textContent = "← Previous";
+  prevBtn.disabled = currentPage === 1;
+  prevBtn.onclick = () => {
+    currentPage--;
+    renderMods(allMods);
+  };
+
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "Next →";
+  nextBtn.disabled = currentPage === totalPages;
+  nextBtn.onclick = () => {
+    currentPage++;
+    renderMods(allMods);
+  };
+
+  const pageInfo = document.createElement("span");
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+  pageInfo.style.margin = "0 12px";
+
+  paginationContainer.appendChild(prevBtn);
+  paginationContainer.appendChild(pageInfo);
+  paginationContainer.appendChild(nextBtn);
+}
 
     function createTextElement(tag, text) {
       const el = document.createElement(tag);
@@ -477,6 +510,9 @@ const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
         container.appendChild(createTextElement("p", "No mods found."));
         return;
       }
+  const start = (currentPage - 1) * modsPerPage;
+  const end = start + modsPerPage;
+  const modsToShow = mods.slice(start, end);
 
       mods.forEach(mod => {
 const modId = mod["Addon ID"];
@@ -720,7 +756,9 @@ container.appendChild(card);
 
       });
     }
-
+    
+      renderPagination(mods.length);
+    
 Promise.all([
   fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json())
 ])
