@@ -100,26 +100,28 @@ body.dark-mode .how-it-works li {
 #nameHolder {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .modIcon {
-    margin:3px 0 0 3px;
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  background-color: #f0f0f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
 /* Mod title */
 #nameHolder h1 {
   margin: 0;
-  font-size: 1.8em;
+  font-size: 2em;
   font-weight: 600;
-  color: #222;
-  font-family: 'Segoe UI', sans-serif;
+  color: #1a1a1a;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 /* Metadata line */
@@ -127,91 +129,94 @@ p span#uploadDate,
 p span#uploaderName,
 p span#category {
   font-weight: 500;
-  color: #444;
+  color: #666;
 }
 
 p {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
   font-size: 0.95em;
-  color: #555;
+  color: #444;
   margin: 8px 0;
 }
 
 /* Mod image */
 #imageHolder img {
   width: 100%;
-  border-radius: 12px;
-  margin: 16px 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
 }
 
 /* Description block */
 h4 {
-  font-size: 1.1em;
-  line-height: 1.6;
-  color: #333;
-  background: #f7f7f7;
-  padding: 16px;
-  border-radius: 8px;
+  font-size: 1.05em;
+  line-height: 1.7;
+  color: #2c2c2c;
+  background: #f9f9f9;
+  padding: 18px;
+  border-radius: 10px;
   white-space: pre-wrap;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  border: 1px solid #e5e5e5;
 }
 
 /* Code snippet */
 #codeSnippet {
-  background-color: #1e1e1e;
-  color: #dcdcdc;
+  background-color: #282c34;
+  color: #e6e6e6;
   border: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-family: 'Courier New', monospace;
+  padding: 14px;
+  border-radius: 8px;
+  font-family: 'Fira Code', 'Courier New', monospace;
   font-size: 0.95em;
   overflow-x: auto;
   white-space: pre-wrap;
-  margin-top: 12px;
+  margin-top: 16px;
 }
 
 /* Copy button */
 #copyButton {
-  background: #00c2ff;
+  background: #00b894;
   color: white;
   border: none;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 6px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   margin-left: 8px;
   transition: background 0.2s ease;
 }
 
 #copyButton:hover {
-  background: #009ed8;
+  background: #009e7a;
 }
 .dark-mode #nameHolder h1 {
-  color: #f0f0f0;
+  color: #f2f2f2;
 }
 
 .dark-mode .modIcon {
-  box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+  background-color: #2a2a2a;
+  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.05);
 }
 
 .dark-mode p span#uploadDate,
 .dark-mode p span#uploaderName,
 .dark-mode p span#category {
-  color: #ccc;
+  color: #aaa;
 }
 
 .dark-mode p {
-  color: #bbb;
+  color: #ccc;
 }
 
 .dark-mode #imageHolder img {
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
 }
 
 .dark-mode h4 {
-  background: #2a2a2a;
-  color: #e0e0e0;
+  background: #1e1e1e;
+  color: #ddd;
+  border: 1px solid #333;
 }
 
 .dark-mode #codeSnippet {
@@ -220,12 +225,11 @@ h4 {
 }
 
 .dark-mode #copyButton {
-  background: #007acc;
-  color: white;
+  background: #007f6e;
 }
 
 .dark-mode #copyButton:hover {
-  background: #005fa3;
+  background: #005f52;
 }
   </style>
 </head>
