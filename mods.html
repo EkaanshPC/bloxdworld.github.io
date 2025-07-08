@@ -577,7 +577,7 @@ copyBtn.style.fontSize="30px";
 copyBtn.style.marginLeft = "10px";
 
 copyBtn.addEventListener("click", () => {
-  const shareURL = `https://bloxdworld.pages.dev/share?addonId=${modId}`;
+  const shareURL = `https://bloxdworld.pages.dev/fullview?addonId=${modId}`;
   navigator.clipboard.writeText(shareURL)
     .then(() => {
       copyBtn.textContent = "✅";
