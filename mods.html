@@ -753,11 +753,9 @@ icon.className = "mod-icon";
 card.appendChild(icon);
 card.appendChild(contentWrapper);
 container.appendChild(card);
-
       });
+renderPagination(mods.length);
     }
-    
-      renderPagination(mods.length);
     
 Promise.all([
   fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json())
