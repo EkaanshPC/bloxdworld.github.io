@@ -470,9 +470,30 @@ const modId = mod["Addon ID"];
 
         const details = document.createElement("div");
         details.className = "mod-details";
-
         const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
-        const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
+        const timestamp = new Date(mod["Timestamp"]);
+        const formattedDate = timestamp.toLocaleDateString("en-US", {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        if (formattedDate) {
+          const dateElem = createTextElement("p", `Uploaded: ${formattedDate}`);
+          details.appendChild(dateElem);
+        }
+
+
+        const author = createTextElement("p", `Made by: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
+author.style.fontStyle = "italic";
+        author.style.color = "#555";
+        author.style.marginTop = "4px";
+        author.style.backgroundColor = "#f9f9f9";
+        author.style.padding = "4px 8px";
+        author.style.borderRadius = "4px";
+        author.style.border = "1px solid #ddd";
+        
         details.appendChild(description);
         details.appendChild(author);
 // 🧠 AI summary element (hidden by default)
