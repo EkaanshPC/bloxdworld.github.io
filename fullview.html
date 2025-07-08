@@ -195,17 +195,15 @@ if (sharedAddonId) {
         img.style.borderRadius = "8px";
         imageHolder.appendChild(img);
       }
-
+        const modIcon = document.querySelector(".modIcon");
       // 🧱 Add mod icon if available
       if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
-        const modIcon = document.querySelector(".modIcon");
         modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
         modIcon.alt = "Mod Icon";
         modIcon.style.borderRadius = "25%";
+      }
         modIcon.style.width = "140px";
         modIcon.style.height = "140px";
-      }
-
       // 📝 Fill in mod details
       document.getElementById("uploadDate").textContent = mod["Timestamp"];
       document.getElementById("uploaderName").textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"];
