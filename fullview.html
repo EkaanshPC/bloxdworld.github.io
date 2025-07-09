@@ -306,6 +306,27 @@ h4 {
 .dark-mode .day-value {
     color: #eee;
 }
+.info-box {
+    margin: 30px;
+    background-color: blue;
+    color: white;
+    text-shadow:
+        -1px -1px 0 #000,
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+    padding: 15px;
+    border-radius: 5px;
+}
+.blue-box::before {
+    content: "ℹ️";
+
+    position: absolute;
+    left: 10px;
+    font-size: 1.5em;
+    line-height: 1;
+    color: inherit;
+}
   </style>
 </head>
 <body>
@@ -379,6 +400,7 @@ h4 {
 <h4 style="text-align: left; font-weight:normal;">Consectetur adipiscing elit</h4>
 <p style="text-align: left; background-color:#ccc;color:black;border: solid 1px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
 <p>Copy code to clipboard: <button id="copyButton">Copy</button></p>
+<p class="info-box">No more info about the mod is provided yet.</p>
 <div id="analytics-data">
         <h3>Mod Analytics (Last 5 Days)</h3>
         <div class="analytics-bars-container">
@@ -555,6 +577,7 @@ function loadAddonDetails(sharedAddonId) {
     const codeSnippetEl = document.getElementById("codeSnippet");
     const imageHolderEl = document.getElementById("imageHolder");
     const modIconEl = document.querySelector(".modIcon");
+    const otherInfoEl = document.querySelector(".info-box");
 
     if (modTitleEl) modTitleEl.textContent = 'Loading Mod Name...';
     if (uploadDateEl) uploadDateEl.textContent = '...';
@@ -564,6 +587,7 @@ function loadAddonDetails(sharedAddonId) {
     if (codeSnippetEl) codeSnippetEl.textContent = 'Loading code...';
     if (imageHolderEl) imageHolderEl.innerHTML = ''; 
     if (modIconEl) modIconEl.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+    if (otherInfoEl) otherInfoEl.textContent = 'Loading additional info...';
 
     for (let i = 1; i <= 5; i++) {
         const fillEl = document.getElementById(`day${i}Fill`);
@@ -627,6 +651,9 @@ function loadAddonDetails(sharedAddonId) {
             if (codeSnippetEl) codeSnippetEl.textContent = mod["Addon Code"] || 'No code provided.';
             document.title = `${mod["Addon Name"] || 'Mod'} - Bloxd World`;
             if (modTitleEl) modTitleEl.textContent = mod["Addon Name"] || 'Untitled Mod';
+            if (otherInfoEl) {
+                otherInfoEl.textContent = mod["Other Info"] || 'No additional information provided.';
+            }
 
             const rawDescription = mod["About Addon / Description"];
             if (descriptionEl) {
