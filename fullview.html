@@ -231,6 +231,81 @@ h4 {
 .dark-mode #copyButton:hover {
   background: #005f52;
 }
+/* Container for all 5 day bars */
+.analytics-bars-container {
+    display: flex; /* Arrange bars horizontally */
+    gap: 15px; /* Space between bars */
+    align-items: flex-end; /* Align bars to the bottom */
+    height: 200px; /* Give space for bars to grow */
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+/* Wrapper for each day's label, bar, and value */
+.day-bar-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack label, bar, value vertically */
+    align-items: center;
+    justify-content: flex-end; /* Push content to the bottom */
+    height: 100%; /* Take full height of .analytics-bars-container */
+    min-width: 40px; /* Ensure a minimum width for each bar column */
+}
+
+.day-label {
+    font-size: 0.8em;
+    color: #555;
+    margin-bottom: 5px;
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+/* Styles for the actual bar (outer container) */
+.progress-bar-container {
+    width: 25px; /* Width of the individual bar */
+    height: 100%; /* Fill the height of its parent (.day-bar-wrapper) */
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden; /* Keep fill within rounded corners */
+    position: relative;
+    flex-grow: 1; /* Allow container to grow if needed */
+    margin-bottom: 5px; /* Space between bar and value */
+}
+
+/* Styles for the bar's fill (inner element) */
+.progress-bar-fill {
+    width: 100%;
+    height: 0%; /* Initial height, will be updated by JS */
+    background-color: #6a0dad; /* A nice purple for analytics bars */
+    position: absolute;
+    bottom: 0; /* IMPORTANT: Makes it fill from the bottom up */
+    left: 0;
+    transition: height 0.5s ease-in-out; /* Smooth transition */
+    border-radius: 5px;
+}
+
+.day-value {
+    font-size: 0.9em;
+    font-weight: bold;
+    color: #333;
+    flex-shrink: 0; /* Prevent value from shrinking */
+}
+.dark-mode .analytics-bars-container {
+    background-color: #222;
+    border: 1px solid #444;
+}
+.dark-mode .day-label {
+    color: #bbb;
+}
+.dark-mode .progress-bar-container {
+    background-color: #333;
+}
+.dark-mode .progress-bar-fill {
+    background-color: #9b59b6; /* A lighter purple for dark mode */
+}
+.dark-mode .day-value {
+    color: #eee;
+}
   </style>
 </head>
 <body>
@@ -304,16 +379,50 @@ h4 {
 <h4 style="text-align: left; font-weight:normal;">Consectetur adipiscing elit</h4>
 <p style="text-align: left; background-color:#ccc;color:black;border: solid 1px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
 <p>Copy code to clipboard: <button id="copyButton">Copy</button></p>
-<div class="modAnalytics">
-  <h2>MOD ANALYTICS</h2>
-  <h4>Performance of mod in last 5 days</h4>
-  <div class="analyticsChart">
-  <button id="day1" style="background-color:red;height:1px;border:none;width:10px; margin-right:3px;"></button>
-  <button id="day2" style="background-color:orange;height:1px;border:none;width:10px;margin-right:3px;"></button>
-  <button id="day3" style="background-color:yellow;height:1px;border:none;width:10px;margin-right:3px;"></button>
-  <button id="day4" style="background-color:green;height:1px;border:none;width:10px;margin-right:3px;"></button>
-  <button id="day5" style="background-color:rgb(0, 255, 242);height:1px;border:none;width:10px;margin-right:3px;"></button>
-</div>
+<div id="analytics-data">
+        <h3>Mod Analytics (Last 5 Days)</h3>
+        <div class="analytics-bars-container">
+            <div class="day-bar-wrapper">
+                <span class="day-label">Day 1</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="day1Fill"></div>
+                </div>
+                <span class="day-value" id="day1Value">N/A</span>
+            </div>
+
+            <div class="day-bar-wrapper">
+                <span class="day-label">Day 2</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="day2Fill"></div>
+                </div>
+                <span class="day-value" id="day2Value">N/A</span>
+            </div>
+
+            <div class="day-bar-wrapper">
+                <span class="day-label">Day 3</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="day3Fill"></div>
+                </div>
+                <span class="day-value" id="day3Value">N/A</span>
+            </div>
+
+            <div class="day-bar-wrapper">
+                <span class="day-label">Day 4</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="day4Fill"></div>
+                </div>
+                <span class="day-value" id="day4Value">N/A</span>
+            </div>
+
+            <div class="day-bar-wrapper">
+                <span class="day-label">Day 5</span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="day5Fill"></div>
+                </div>
+                <span class="day-value" id="day5Value">N/A</span>
+            </div>
+        </div>
+    </div>
   <script>
 const themeToggle = document.getElementById("themeToggle");
 const urlParams = new URLSearchParams(window.location.search);
@@ -372,13 +481,16 @@ function formatModDescription(rawText) {
 
   return formatted;
 }
-// --- Function to update day-by-day analytics (Place this before loadAddonDetails) ---
+// --- Function to update day-by-day analytics (Updated) ---
 function updateDayAnalytics(mod) {
     if (!mod || typeof mod !== 'object' || !mod["Mod Analytics"]) {
         console.warn("Invalid mod object or missing 'Mod Analytics' data for analytics display:", mod);
+        // Reset bars to 0% and values to N/A
         for (let i = 1; i <= 5; i++) {
-            const el = document.getElementById(`day${i}`);
-            if (el) el.textContent = "N/A";
+            const fillEl = document.getElementById(`day${i}Fill`);
+            const valueEl = document.getElementById(`day${i}Value`);
+            if (fillEl) fillEl.style.height = '0%';
+            if (valueEl) valueEl.textContent = "N/A";
         }
         return;
     }
@@ -388,9 +500,12 @@ function updateDayAnalytics(mod) {
         analyticsData = JSON.parse(mod["Mod Analytics"]);
     } catch (e) {
         console.error("Failed to parse 'Mod Analytics' JSON for analytics display:", e);
+        // Reset bars to 0% and values to Error
         for (let i = 1; i <= 5; i++) {
-            const el = document.getElementById(`day${i}`);
-            if (el) el.textContent = "Error";
+            const fillEl = document.getElementById(`day${i}Fill`);
+            const valueEl = document.getElementById(`day${i}Value`);
+            if (fillEl) fillEl.style.height = '0%';
+            if (valueEl) valueEl.textContent = "Error";
         }
         return;
     }
@@ -406,23 +521,44 @@ function updateDayAnalytics(mod) {
     const lastFiveDayNumbers = dayNumbers.slice(-5);
     const valuesForDisplay = lastFiveDayNumbers.map(dayNum => analyticsData[`Day ${dayNum}`]);
 
+    // Calculate the maximum value among the last 5 days
+    // This is crucial for scaling the bar heights proportionally.
+    // If all values are 0, max will be 0 to avoid division by zero.
+    const numericValues = valuesForDisplay.filter(val => typeof val === 'number' && !isNaN(val));
+    const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0;
+    // You could also set a fixed maximum if you know, e.g., const maxValue = 100;
+
+    // Pad with "N/A" if there are fewer than 5 days, and ensure numeric values for calculation
     const paddedValues = Array(5).fill("N/A");
     for (let i = 0; i < valuesForDisplay.length; i++) {
         paddedValues[5 - valuesForDisplay.length + i] = valuesForDisplay[i];
     }
 
+    // Update the HTML elements (both bar height and text value)
     for (let i = 0; i < 5; i++) {
-        const elementId = `day${i + 1}`;
-        const el = document.getElementById(elementId);
-        if (el) {
-            el.textContent = paddedValues[i];
+        const fillElementId = `day${i + 1}Fill`;
+        const valueElementId = `day${i + 1}Value`;
+
+        const fillEl = document.getElementById(fillElementId);
+        const valueEl = document.getElementById(valueElementId);
+
+        if (fillEl && valueEl) {
+            const currentDayValue = paddedValues[i];
+            let percentage = 0;
+
+            if (typeof currentDayValue === 'number' && !isNaN(currentDayValue) && maxValue > 0) {
+                percentage = (currentDayValue / maxValue) * 100;
+            } else if (maxValue === 0 && currentDayValue === 0) {
+                percentage = 0; // If max is 0 and current is 0, bar is 0%
+            }
+
+            fillEl.style.height = `${percentage}%`;
+            valueEl.textContent = currentDayValue === "N/A" ? "N/A" : currentDayValue; // Display the actual number or N/A
         } else {
-            console.warn(`Analytics element with ID '${elementId}' not found.`);
+            console.warn(`Analytics elements (fill or value) for day${i + 1} not found.`);
         }
     }
 }
-
-
 // --- Main function to load addon details (Your existing code with improvements) ---
 function loadAddonDetails(sharedAddonId) {
     if (!sharedAddonId) {
