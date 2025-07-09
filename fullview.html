@@ -304,6 +304,16 @@ h4 {
 <h4 style="text-align: left; font-weight:normal;">Consectetur adipiscing elit</h4>
 <p style="text-align: left; background-color:#ccc;color:black;border: solid 1px rgb(94, 87, 87);" id="codeSnippet">console.log('Hello, world!');</p>
 <p>Copy code to clipboard: <button id="copyButton">Copy</button></p>
+<div class="modAnalytics">
+  <h2>MOD ANALYTICS</h2>
+  <h4>Performance of mod in last 5 days</h4>
+  <div class="analyticsChart">
+  <button id="day1" style="background-color:red;height:1px;border:none;width:10px; margin-right:3px;"></button>
+  <button id="day2" style="background-color:orange;height:1px;border:none;width:10px;margin-right:3px;"></button>
+  <button id="day3" style="background-color:yellow;height:1px;border:none;width:10px;margin-right:3px;"></button>
+  <button id="day4" style="background-color:green;height:1px;border:none;width:10px;margin-right:3px;"></button>
+  <button id="day5" style="background-color:rgb(0, 255, 242);height:1px;border:none;width:10px;margin-right:3px;"></button>
+</div>
   <script>
 const themeToggle = document.getElementById("themeToggle");
 const urlParams = new URLSearchParams(window.location.search);
@@ -362,7 +372,66 @@ function formatModDescription(rawText) {
 
   return formatted;
 }
+// --- Function to update day-by-day analytics (Place this before loadAddonDetails) ---
+function updateDayAnalytics(mod) {
+    if (!mod || typeof mod !== 'object' || !mod["Mod Analytics"]) {
+        console.warn("Invalid mod object or missing 'Mod Analytics' data for analytics display:", mod);
+        for (let i = 1; i <= 5; i++) {
+            const el = document.getElementById(`day${i}`);
+            if (el) el.textContent = "N/A";
+        }
+        return;
+    }
 
+    let analyticsData;
+    try {
+        analyticsData = JSON.parse(mod["Mod Analytics"]);
+    } catch (e) {
+        console.error("Failed to parse 'Mod Analytics' JSON for analytics display:", e);
+        for (let i = 1; i <= 5; i++) {
+            const el = document.getElementById(`day${i}`);
+            if (el) el.textContent = "Error";
+        }
+        return;
+    }
+
+    const dayNumbers = Object.keys(analyticsData)
+        .map(key => {
+            const match = key.match(/^Day (\d+)$/);
+            return match ? parseInt(match[1], 10) : NaN;
+        })
+        .filter(num => !isNaN(num))
+        .sort((a, b) => a - b);
+
+    const lastFiveDayNumbers = dayNumbers.slice(-5);
+    const valuesForDisplay = lastFiveDayNumbers.map(dayNum => analyticsData[`Day ${dayNum}`]);
+
+    const paddedValues = Array(5).fill("N/A");
+    for (let i = 0; i < valuesForDisplay.length; i++) {
+        paddedValues[5 - valuesForDisplay.length + i] = valuesForDisplay[i];
+    }
+
+    for (let i = 0; i < 5; i++) {
+        const elementId = `day${i + 1}`;
+        const el = document.getElementById(elementId);
+        if (el) {
+            el.textContent = paddedValues[i];
+        } else {
+            console.warn(`Analytics element with ID '${elementId}' not found.`);
+        }
+    }
+}
+
+
+// --- Main function to load addon details (Your existing code with improvements) ---
+function loadAddonDetails(sharedAddonId) {
+    if (!sharedAddonId) {
+        console.error("No Addon ID provided to load details.");
+        document.querySelector('body').innerHTML = '<p>No mod selected to display. Please provide an ID in the URL (e.g., ?id=your_mod_id).</p>';
+        return;
+    }
+            // ⭐ INTEGRATION POINT: Call updateDayAnalytics here!
+            updateDayAnalytics(mod);
 
 // Usage
 const rawDescription = mod["About Addon / Description"];
@@ -375,7 +444,7 @@ document.querySelector("h4").innerHTML = formatModDescription(rawDescription);
           console.error("Failed to copy code: ", err);
         });
       });
-    })
+    }})
     .catch(error => console.error("Error fetching addon:", error));
 }
 // Apply saved theme on load

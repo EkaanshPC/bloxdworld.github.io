@@ -125,5 +125,4 @@ client.auth.onAuthStateChange(async (_event, session) => {
 // ✅ 5️⃣ Run on page load
 console.log("🏃 Running handleOAuthRedirect() & renderUser()...");
 handleOAuthRedirect().then(() => renderUser());
-
-// ✅ 6️⃣ Handle page reloads
+console.log("🚀 Initialization complete.");
