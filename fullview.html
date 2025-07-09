@@ -424,69 +424,39 @@ h4 {
         </div>
     </div>
   <script>
-const themeToggle = document.getElementById("themeToggle");
-const urlParams = new URLSearchParams(window.location.search);
-const sharedAddonId = urlParams.get("addonId");
-
-if (sharedAddonId) {
-  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201")
-    .then(response => response.json())
-    .then(data => {
-      const mod = data.find(mod => mod["Addon ID"] === sharedAddonId);
-
-      if (!mod) {
-        console.error("Addon not found.");
-        return;
-      }
-
-      // 🖼️ Add mod image if available
-      if (mod["Image (upload image to imgur, put the link here.)"]) {
-        const imageHolder = document.getElementById("imageHolder");
-        const img = document.createElement("img");
-        img.src = mod["Image (upload image to imgur, put the link here.)"];
-        img.alt = "Mod Image";
-        imageHolder.appendChild(img);
-      }
-        const modIcon = document.querySelector(".modIcon");
-        modIcon.alt = "Mod Icon";
-      // 🖼️ Add mod icon if available
-      if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
-        modIcon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
-      }
-      // 📝 Fill in mod details
-      document.getElementById("uploadDate").textContent = mod["Timestamp"];
-      document.getElementById("uploaderName").textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"];
-      document.getElementById("category").textContent = mod["Category (what type of mod is this?)"];
-      document.getElementById("codeSnippet").textContent = mod["Addon Code"];
-      document.title = `${mod["Addon Name"]} - Bloxd World`;
-      document.querySelector("h1").textContent = mod["Addon Name"];
+// --- Helper function: formatModDescription ---
+// This function should be defined once, globally, or within a scope that can access it.
 function formatModDescription(rawText) {
-  // Step 1: Escape HTML first
-  const escapeHTML = (str) =>
-    str.replace(/&/g, "&amp;")
-       .replace(/</g, "&lt;")
-       .replace(/>/g, "&gt;");
+    if (typeof rawText !== 'string') {
+        return '';
+    }
 
-  let formatted = escapeHTML(rawText);
+    const escapeHTML = (str) =>
+        str.replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
 
-  // Step 4: Inline formatting
-  formatted = formatted
-    .replace(/\*(.*?)\*/g, "<strong>$1</strong>")     // *bold*
-    .replace(/\/(.*?)\//g, "<em>$1</em>")             // /italic/
-    .replace(/_(.*?)_/g, "<u>$1</u>")                 // _underline_
-    .replace(/`([^`]+)`/g, "<code>$1</code>");        // `inline code`
+    let formatted = escapeHTML(rawText);
 
-  // Step 5: Line breaks
-  formatted = formatted.replace(/\n/g, "<br>");
+    formatted = formatted
+        .replace(/\*(.*?)\*/g, "<strong>$1</strong>")
+        .replace(/\/(.*?)\//g, "<em>$1</em>")
+        .replace(/_(.*?)_/g, "<u>$1</u>")
+        .replace(/`([^`]+)`/g, "<code>$1</code>");
 
-  return formatted;
+    formatted = formatted.replace(/\n/g, "<br>");
+
+    return formatted;
 }
-// --- Function to update day-by-day analytics with vertical bars (with Debugging) ---
+
+// --- Helper function: updateDayAnalytics (with debugging) ---
+// This function should also be defined once, globally.
 function updateDayAnalytics(mod) {
     console.log("DEBUG: updateDayAnalytics function called.");
     console.log("DEBUG: Input 'mod' object:", mod);
 
-    // Select all the fill and value elements for initial clearing/setup
     const fillElements = [];
     const valueElements = [];
     for (let i = 1; i <= 5; i++) {
@@ -496,8 +466,6 @@ function updateDayAnalytics(mod) {
     console.log("DEBUG: HTML fill elements found:", fillElements);
     console.log("DEBUG: HTML value elements found:", valueElements);
 
-
-    // Basic input validation and clearing if data is invalid/missing
     if (!mod || typeof mod !== 'object' || !mod["Mod Analytics"]) {
         console.warn("DEBUG: Invalid mod object or missing 'Mod Analytics' data for analytics display. Clearing bars.");
         fillElements.forEach(el => { if (el) el.style.height = '0%'; });
@@ -516,7 +484,6 @@ function updateDayAnalytics(mod) {
         return;
     }
 
-    // Extract, filter, and sort day numbers
     const dayNumbers = Object.keys(analyticsData)
         .map(key => {
             const match = key.match(/^Day (\d+)$/);
@@ -526,27 +493,23 @@ function updateDayAnalytics(mod) {
         .sort((a, b) => a - b);
     console.log("DEBUG: Extracted and sorted day numbers:", dayNumbers);
 
-    // Get the values for the last 5 relevant days
     const lastFiveDayNumbers = dayNumbers.slice(-5);
     console.log("DEBUG: Last five day numbers selected:", lastFiveDayNumbers);
 
     const valuesForDisplay = lastFiveDayNumbers.map(dayNum => analyticsData[`Day ${dayNum}`]);
     console.log("DEBUG: Raw values for display (from analyticsData):", valuesForDisplay);
 
-    // Calculate the maximum value among the last 5 days for scaling bars
     const numericValues = valuesForDisplay.filter(val => typeof val === 'number' && !isNaN(val));
     const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0;
     console.log("DEBUG: Numeric values used for maxValue calculation:", numericValues);
     console.log("DEBUG: Calculated maxValue for scaling:", maxValue);
 
-    // Pad with "N/A" if there are fewer than 5 days, ensuring correct order for display
     const paddedValues = Array(5).fill("N/A");
     for (let i = 0; i < valuesForDisplay.length; i++) {
         paddedValues[5 - valuesForDisplay.length + i] = valuesForDisplay[i];
     }
     console.log("DEBUG: Padded values for final display (with N/A):", paddedValues);
 
-    // Update the HTML elements (both bar height and text value)
     for (let i = 0; i < 5; i++) {
         const fillEl = fillElements[i];
         const valueEl = valueElements[i];
@@ -558,9 +521,9 @@ function updateDayAnalytics(mod) {
             if (typeof currentDayValue === 'number' && !isNaN(currentDayValue) && maxValue > 0) {
                 percentage = (currentDayValue / maxValue) * 100;
             } else if (maxValue === 0 && currentDayValue === 0) {
-                percentage = 0; // Handle case where all values are zero
+                percentage = 0;
             } else {
-                percentage = 0; // If N/A or Error, default to 0% height
+                percentage = 0;
             }
             console.log(`DEBUG: Day ${i + 1} - Value: ${currentDayValue}, Percentage: ${percentage}%`);
 
@@ -573,7 +536,9 @@ function updateDayAnalytics(mod) {
     console.log("DEBUG: updateDayAnalytics function finished.");
 }
 
-// --- Main function to load addon details ---
+
+// --- Main function: loadAddonDetails ---
+// This function wraps the fetch logic and UI updates.
 function loadAddonDetails(sharedAddonId) {
     // Initial loading state or error message if no ID
     const mainContentArea = document.querySelector('main');
@@ -585,61 +550,179 @@ function loadAddonDetails(sharedAddonId) {
         return;
     }
 
+    // Show loading state by resetting content or setting loading text
+    // Assuming the initial HTML structure is still in the DOM and we're just filling it.
+    // If your `mainContentArea.innerHTML = '<p>Loading...</p>';` completely replaces the HTML,
+    // you'll need to re-inject the detailed structure here first.
+    const modTitleEl = document.querySelector('h1');
+    const uploadDateEl = document.getElementById("uploadDate");
+    const uploaderNameEl = document.getElementById("uploaderName");
+    const categoryEl = document.getElementById("category");
+    const descriptionEl = document.querySelector("h4");
+    const codeSnippetEl = document.getElementById("codeSnippet");
+    const imageHolderEl = document.getElementById("imageHolder");
+    const modIconEl = document.querySelector(".modIcon");
+
+    if (modTitleEl) modTitleEl.textContent = 'Loading Mod Name...';
+    if (uploadDateEl) uploadDateEl.textContent = '...';
+    if (uploaderNameEl) uploaderNameEl.textContent = '...';
+    if (categoryEl) categoryEl.textContent = '...';
+    if (descriptionEl) descriptionEl.textContent = 'Loading description...';
+    if (codeSnippetEl) codeSnippetEl.textContent = 'Loading code...';
+    if (imageHolderEl) imageHolderEl.innerHTML = ''; // Clear existing image
+    if (modIconEl) modIconEl.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; // Clear existing icon
+
+    // Also clear analytics bars during loading
+    for (let i = 1; i <= 5; i++) {
+        const fillEl = document.getElementById(`day${i}Fill`);
+        const valueEl = document.getElementById(`day${i}Value`);
+        if (fillEl) fillEl.style.height = '0%';
+        if (valueEl) valueEl.textContent = "N/A";
+    }
+
+    fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!Array.isArray(data)) {
+                throw new Error("API did not return an array of mod data.");
+            }
+
+            const mod = data.find(mod => mod["Addon ID"] === sharedAddonId);
+
+            if (!mod) {
+                console.error(`Addon with ID "${sharedAddonId}" not found.`);
+                if (mainContentArea) {
+                    mainContentArea.innerHTML = `<p>Addon "${sharedAddonId}" not found.</p>`;
+                }
+                return;
+            }
+
             // ⭐ INTEGRATION POINT: Call updateDayAnalytics here!
             updateDayAnalytics(mod);
 
-// Usage
-const rawDescription = mod["About Addon / Description"];
-document.querySelector("h4").innerHTML = formatModDescription(rawDescription);
+            // 🖼️ Add mod image if available
+            if (imageHolderEl) {
+                if (mod["Image (upload image to imgur, put the link here.)"]) {
+                    let img = imageHolderEl.querySelector('img');
+                    if (!img) {
+                        img = document.createElement("img");
+                        imageHolderEl.appendChild(img);
+                    }
+                    img.src = mod["Image (upload image to imgur, put the link here.)"];
+                    img.alt = `${mod["Addon Name"] || 'Mod'} Main Image`;
+                } else {
+                    imageHolderEl.innerHTML = '';
+                }
+            }
 
-      document.getElementById("copyButton").addEventListener("click", () => {
-        navigator.clipboard.writeText(mod["Addon Code"]).then(() => {
-          alert("Code copied to clipboard!");
-        }).catch(err => {
-          console.error("Failed to copy code: ", err);
+            // 🖼️ Add mod icon if available
+            if (modIconEl) {
+                if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
+                    modIconEl.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
+                    modIconEl.alt = `${mod["Addon Name"] || 'Mod'} Icon`;
+                } else {
+                    modIconEl.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+                    modIconEl.alt = 'Default Mod Icon';
+                }
+            }
+
+            // 📝 Fill in mod details
+            if (uploadDateEl) uploadDateEl.textContent = mod["Timestamp"] || 'N/A';
+            if (uploaderNameEl) uploaderNameEl.textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"] || 'Anonymous';
+            if (categoryEl) categoryEl.textContent = mod["Category (what type of mod is this?)"] || 'Uncategorized';
+            if (codeSnippetEl) codeSnippetEl.textContent = mod["Addon Code"] || 'No code provided.';
+            document.title = `${mod["Addon Name"] || 'Mod'} - Bloxd World`;
+            if (modTitleEl) modTitleEl.textContent = mod["Addon Name"] || 'Untitled Mod';
+
+            const rawDescription = mod["About Addon / Description"];
+            if (descriptionEl) {
+                descriptionEl.innerHTML = formatModDescription(rawDescription || 'No description provided.');
+            }
+
+            const copyButton = document.getElementById("copyButton");
+            if (copyButton) {
+                // Remove existing listener before adding a new one to prevent duplicates
+                const newCopyButton = copyButton.cloneNode(true); // Creates a copy without listeners
+                copyButton.parentNode.replaceChild(newCopyButton, copyButton); // Replaces old button with new
+                newCopyButton.addEventListener("click", () => {
+                    navigator.clipboard.writeText(mod["Addon Code"] || '').then(() => {
+                        alert("Code copied to clipboard!");
+                    }).catch(err => {
+                        console.error("Failed to copy code: ", err);
+                        alert("Failed to copy code. Please try again or copy manually.");
+                    });
+                });
+            } else {
+                console.warn("Copy button with ID 'copyButton' not found.");
+            }
+
+        })
+        .catch(error => {
+            console.error("Error fetching or processing addon:", error);
+            if (mainContentArea) {
+                mainContentArea.innerHTML = `<p style="color: red;">Failed to load mod details. Please try again later. (${error.message})</p>`;
+            }
         });
-      });
-    }})
-    .catch(error => console.error("Error fetching addon:", error));
-}
-// Apply saved theme on load
-if (localStorage.getItem("theme") === "dark") {
-  document.body.classList.add("dark-mode");
 }
 
-// Toggle and save preference
-themeToggle.addEventListener("click", (e) => {
-  e.preventDefault();
-  document.body.classList.toggle("dark-mode");
 
-  // Save preference
-  if (document.body.classList.contains("dark-mode")) {
-    localStorage.setItem("theme", "dark");
-  } else {
-    localStorage.setItem("theme", "light");
-  }
-});
+// --- DOMContentLoaded Event Listener (to start everything) ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Other non-mod-specific page initializations can go here
+    const themeToggle = document.getElementById("themeToggle");
+    if (themeToggle) { // Check if themeToggle exists
+        if (localStorage.getItem("theme") === "dark") {
+            document.body.classList.add("dark-mode");
+        }
+
+        themeToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            document.body.classList.toggle("dark-mode");
+            if (document.body.classList.contains("dark-mode")) {
+                localStorage.setItem("theme", "dark");
+            } else {
+                localStorage.setItem("theme", "light");
+            }
+        });
+    } else {
+        console.warn("Theme toggle button not found with ID 'themeToggle'.");
+    }
+
 
     const targets = document.querySelectorAll('.welcome-text, .welcome-para');
+    if (targets.length > 0) { // Check if targets exist
+        targets.forEach(el => {
+            el.addEventListener('mousemove', e => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                el.style.setProperty('--mouse-x', `${x}px`);
+                el.style.setProperty('--mouse-y', `${y}px`);
+            });
 
-    targets.forEach(el => {
-      el.addEventListener('mousemove', e => {
-        const rect = el.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+            el.addEventListener('mouseleave', () => {
+                el.style.setProperty('--mouse-x', `50%`);
+                el.style.setProperty('--mouse-y', `50%`);
+            });
+        });
+    }
 
-        el.style.setProperty('--mouse-x', `${x}px`);
-        el.style.setProperty('--mouse-y', `${y}px`);
-      });
 
-      el.addEventListener('mouseleave', () => {
-        el.style.setProperty('--mouse-x', `50%`);
-        el.style.setProperty('--mouse-y', `50%`);
-      });
-    });
-if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  document.body.classList.add("mobile");
-}
+    if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+        document.body.classList.add("mobile");
+    }
+
+    // --- Start loading addon details ---
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedAddonId = urlParams.get("id"); // Using "id" as per previous discussion for clarity
+
+    loadAddonDetails(sharedAddonId); // Call the main function to load details
+});
   </script>
 <footer class="site-footer">
   <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
