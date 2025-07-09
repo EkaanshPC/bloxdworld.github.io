@@ -231,59 +231,56 @@ h4 {
 .dark-mode #copyButton:hover {
   background: #005f52;
 }
-/* Container for all 5 day bars */
+
 .analytics-bars-container {
-    display: flex; /* Arrange bars horizontally */
-    gap: 15px; /* Space between bars */
-    align-items: flex-end; /* Align bars to the bottom */
-    height: 200px; /* Give space for bars to grow */
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+    height: 200px;
     padding: 10px;
     background-color: #f0f0f0;
     border-radius: 8px;
     border: 1px solid #e0e0e0;
     justify-content: center;
-    max-width: 500px; /* Or a fixed width like 300px, adjust as needed */
-    margin: 0 auto;   /* This is the key to centering a block-level element */
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-/* Wrapper for each day's label, bar, and value */
 .day-bar-wrapper {
     display: flex;
-    flex-direction: column; /* Stack label, bar, value vertically */
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-end; /* Push content to the bottom */
-    height: 100%; /* Take full height of .analytics-bars-container */
-    min-width: 40px; /* Ensure a minimum width for each bar column */
+    justify-content: flex-end;
+    height: 100%;
+    min-width: 40px;
 }
 
 .day-label {
     font-size: 0.8em;
     color: #555;
     margin-bottom: 5px;
-    flex-shrink: 0; /* Prevent label from shrinking */
+    flex-shrink: 0;
 }
 
-/* Styles for the actual bar (outer container) */
 .progress-bar-container {
-    width: 25px; /* Width of the individual bar */
-    height: 100%; /* Fill the height of its parent (.day-bar-wrapper) */
+    width: 25px;
+    height: 100%;
     background-color: #ddd;
     border-radius: 5px;
-    overflow: hidden; /* Keep fill within rounded corners */
+    overflow: hidden;
     position: relative;
-    flex-grow: 1; /* Allow container to grow if needed */
-    margin-bottom: 5px; /* Space between bar and value */
+    flex-grow: 1;
+    margin-bottom: 5px;
 }
 
-/* Styles for the bar's fill (inner element) */
 .progress-bar-fill {
     width: 100%;
-    height: 0%; /* Initial height, will be updated by JS */
-    background-color: #6a0dad; /* A nice purple for analytics bars */
+    height: 0%;
+    background-color: #6a0dad;
     position: absolute;
-    bottom: 0; /* IMPORTANT: Makes it fill from the bottom up */
+    bottom: 0;
     left: 0;
-    transition: height 0.5s ease-in-out; /* Smooth transition */
+    transition: height 0.5s ease-in-out;
     border-radius: 5px;
 }
 
@@ -291,7 +288,7 @@ h4 {
     font-size: 0.9em;
     font-weight: bold;
     color: #333;
-    flex-shrink: 0; /* Prevent value from shrinking */
+    flex-shrink: 0;
 }
 .dark-mode .analytics-bars-container {
     background-color: #222;
@@ -304,7 +301,7 @@ h4 {
     background-color: #333;
 }
 .dark-mode .progress-bar-fill {
-    background-color: #9b59b6; /* A lighter purple for dark mode */
+    background-color: #9b59b6;
 }
 .dark-mode .day-value {
     color: #eee;
@@ -427,8 +424,7 @@ h4 {
         </div>
     </div>
   <script>
-// --- Helper function: formatModDescription ---
-// This function should be defined once, globally, or within a scope that can access it.
+
 function formatModDescription(rawText) {
     if (typeof rawText !== 'string') {
         return '';
@@ -454,8 +450,7 @@ function formatModDescription(rawText) {
     return formatted;
 }
 
-// --- Helper function: updateDayAnalytics (with debugging) ---
-// This function should also be defined once, globally.
+
 function updateDayAnalytics(mod) {
     console.log("DEBUG: updateDayAnalytics function called.");
     console.log("DEBUG: Input 'mod' object:", mod);
@@ -540,10 +535,9 @@ function updateDayAnalytics(mod) {
 }
 
 
-// --- Main function: loadAddonDetails ---
-// This function wraps the fetch logic and UI updates.
+
 function loadAddonDetails(sharedAddonId) {
-    // Initial loading state or error message if no ID
+
     const mainContentArea = document.querySelector('main');
     if (!sharedAddonId) {
         console.error("No Addon ID provided to load details.");
@@ -553,10 +547,6 @@ function loadAddonDetails(sharedAddonId) {
         return;
     }
 
-    // Show loading state by resetting content or setting loading text
-    // Assuming the initial HTML structure is still in the DOM and we're just filling it.
-    // If your `mainContentArea.innerHTML = '<p>Loading...</p>';` completely replaces the HTML,
-    // you'll need to re-inject the detailed structure here first.
     const modTitleEl = document.querySelector('h1');
     const uploadDateEl = document.getElementById("uploadDate");
     const uploaderNameEl = document.getElementById("uploaderName");
@@ -572,10 +562,9 @@ function loadAddonDetails(sharedAddonId) {
     if (categoryEl) categoryEl.textContent = '...';
     if (descriptionEl) descriptionEl.textContent = 'Loading description...';
     if (codeSnippetEl) codeSnippetEl.textContent = 'Loading code...';
-    if (imageHolderEl) imageHolderEl.innerHTML = ''; // Clear existing image
-    if (modIconEl) modIconEl.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='; // Clear existing icon
+    if (imageHolderEl) imageHolderEl.innerHTML = ''; 
+    if (modIconEl) modIconEl.src = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 
-    // Also clear analytics bars during loading
     for (let i = 1; i <= 5; i++) {
         const fillEl = document.getElementById(`day${i}Fill`);
         const valueEl = document.getElementById(`day${i}Value`);
@@ -605,10 +594,8 @@ function loadAddonDetails(sharedAddonId) {
                 return;
             }
 
-            // ⭐ INTEGRATION POINT: Call updateDayAnalytics here!
             updateDayAnalytics(mod);
 
-            // 🖼️ Add mod image if available
             if (imageHolderEl) {
                 if (mod["Image (upload image to imgur, put the link here.)"]) {
                     let img = imageHolderEl.querySelector('img');
@@ -623,7 +610,6 @@ function loadAddonDetails(sharedAddonId) {
                 }
             }
 
-            // 🖼️ Add mod icon if available
             if (modIconEl) {
                 if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
                     modIconEl.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
@@ -634,7 +620,7 @@ function loadAddonDetails(sharedAddonId) {
                 }
             }
 
-            // 📝 Fill in mod details
+
             if (uploadDateEl) uploadDateEl.textContent = mod["Timestamp"] || 'N/A';
             if (uploaderNameEl) uploaderNameEl.textContent = mod["Author Name (leave blank for your username to be displayed anonymous)"] || 'Anonymous';
             if (categoryEl) categoryEl.textContent = mod["Category (what type of mod is this?)"] || 'Uncategorized';
@@ -649,9 +635,8 @@ function loadAddonDetails(sharedAddonId) {
 
             const copyButton = document.getElementById("copyButton");
             if (copyButton) {
-                // Remove existing listener before adding a new one to prevent duplicates
-                const newCopyButton = copyButton.cloneNode(true); // Creates a copy without listeners
-                copyButton.parentNode.replaceChild(newCopyButton, copyButton); // Replaces old button with new
+                const newCopyButton = copyButton.cloneNode(true);
+                copyButton.parentNode.replaceChild(newCopyButton, copyButton);
                 newCopyButton.addEventListener("click", () => {
                     navigator.clipboard.writeText(mod["Addon Code"] || '').then(() => {
                         alert("Code copied to clipboard!");
@@ -674,11 +659,9 @@ function loadAddonDetails(sharedAddonId) {
 }
 
 
-// --- DOMContentLoaded Event Listener (to start everything) ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Other non-mod-specific page initializations can go here
     const themeToggle = document.getElementById("themeToggle");
-    if (themeToggle) { // Check if themeToggle exists
+    if (themeToggle) {
         if (localStorage.getItem("theme") === "dark") {
             document.body.classList.add("dark-mode");
         }
@@ -698,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     const targets = document.querySelectorAll('.welcome-text, .welcome-para');
-    if (targets.length > 0) { // Check if targets exist
+    if (targets.length > 0) {
         targets.forEach(el => {
             el.addEventListener('mousemove', e => {
                 const rect = el.getBoundingClientRect();
@@ -720,11 +703,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add("mobile");
     }
 
-    // --- Start loading addon details ---
     const urlParams = new URLSearchParams(window.location.search);
-    const sharedAddonId = urlParams.get("addonId"); // Using "id" as per previous discussion for clarity
+    const sharedAddonId = urlParams.get("addonId");
 
-    loadAddonDetails(sharedAddonId); // Call the main function to load details
+    loadAddonDetails(sharedAddonId);
 });
   </script>
 <footer class="site-footer">
