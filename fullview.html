@@ -719,7 +719,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Start loading addon details ---
     const urlParams = new URLSearchParams(window.location.search);
-    const sharedAddonId = urlParams.get("id"); // Using "id" as per previous discussion for clarity
+    const sharedAddonId = urlParams.get("addonId"); // Using "id" as per previous discussion for clarity
 
     loadAddonDetails(sharedAddonId); // Call the main function to load details
 });
