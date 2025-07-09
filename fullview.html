@@ -481,8 +481,11 @@ function formatModDescription(rawText) {
 
   return formatted;
 }
-// --- Function to update day-by-day analytics with vertical bars ---
+// --- Function to update day-by-day analytics with vertical bars (with Debugging) ---
 function updateDayAnalytics(mod) {
+    console.log("DEBUG: updateDayAnalytics function called.");
+    console.log("DEBUG: Input 'mod' object:", mod);
+
     // Select all the fill and value elements for initial clearing/setup
     const fillElements = [];
     const valueElements = [];
@@ -490,10 +493,13 @@ function updateDayAnalytics(mod) {
         fillElements.push(document.getElementById(`day${i}Fill`));
         valueElements.push(document.getElementById(`day${i}Value`));
     }
+    console.log("DEBUG: HTML fill elements found:", fillElements);
+    console.log("DEBUG: HTML value elements found:", valueElements);
+
 
     // Basic input validation and clearing if data is invalid/missing
     if (!mod || typeof mod !== 'object' || !mod["Mod Analytics"]) {
-        console.warn("Invalid mod object or missing 'Mod Analytics' data for analytics display:", mod);
+        console.warn("DEBUG: Invalid mod object or missing 'Mod Analytics' data for analytics display. Clearing bars.");
         fillElements.forEach(el => { if (el) el.style.height = '0%'; });
         valueElements.forEach(el => { if (el) el.textContent = "N/A"; });
         return;
@@ -502,8 +508,9 @@ function updateDayAnalytics(mod) {
     let analyticsData;
     try {
         analyticsData = JSON.parse(mod["Mod Analytics"]);
+        console.log("DEBUG: Parsed 'Mod Analytics' data:", analyticsData);
     } catch (e) {
-        console.error("Failed to parse 'Mod Analytics' JSON for analytics display:", e);
+        console.error("DEBUG: Failed to parse 'Mod Analytics' JSON for analytics display:", e);
         fillElements.forEach(el => { if (el) el.style.height = '0%'; });
         valueElements.forEach(el => { if (el) el.textContent = "Error"; });
         return;
@@ -517,21 +524,27 @@ function updateDayAnalytics(mod) {
         })
         .filter(num => !isNaN(num))
         .sort((a, b) => a - b);
+    console.log("DEBUG: Extracted and sorted day numbers:", dayNumbers);
 
     // Get the values for the last 5 relevant days
     const lastFiveDayNumbers = dayNumbers.slice(-5);
+    console.log("DEBUG: Last five day numbers selected:", lastFiveDayNumbers);
+
     const valuesForDisplay = lastFiveDayNumbers.map(dayNum => analyticsData[`Day ${dayNum}`]);
+    console.log("DEBUG: Raw values for display (from analyticsData):", valuesForDisplay);
 
     // Calculate the maximum value among the last 5 days for scaling bars
     const numericValues = valuesForDisplay.filter(val => typeof val === 'number' && !isNaN(val));
-    const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0; // Avoid division by zero
+    const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0;
+    console.log("DEBUG: Numeric values used for maxValue calculation:", numericValues);
+    console.log("DEBUG: Calculated maxValue for scaling:", maxValue);
 
     // Pad with "N/A" if there are fewer than 5 days, ensuring correct order for display
     const paddedValues = Array(5).fill("N/A");
     for (let i = 0; i < valuesForDisplay.length; i++) {
-        // Place values at the end of the padded array to represent the latest days
         paddedValues[5 - valuesForDisplay.length + i] = valuesForDisplay[i];
     }
+    console.log("DEBUG: Padded values for final display (with N/A):", paddedValues);
 
     // Update the HTML elements (both bar height and text value)
     for (let i = 0; i < 5; i++) {
@@ -549,15 +562,16 @@ function updateDayAnalytics(mod) {
             } else {
                 percentage = 0; // If N/A or Error, default to 0% height
             }
+            console.log(`DEBUG: Day ${i + 1} - Value: ${currentDayValue}, Percentage: ${percentage}%`);
 
             fillEl.style.height = `${percentage}%`;
             valueEl.textContent = currentDayValue === "N/A" ? "N/A" : currentDayValue;
         } else {
-            console.warn(`Analytics elements (fill or value) for day ${i + 1} not found. Please check HTML IDs.`);
+            console.warn(`DEBUG: Analytics elements (fill or value) for day ${i + 1} not found. Check HTML IDs.`);
         }
     }
+    console.log("DEBUG: updateDayAnalytics function finished.");
 }
-
 
 // --- Main function to load addon details ---
 function loadAddonDetails(sharedAddonId) {
