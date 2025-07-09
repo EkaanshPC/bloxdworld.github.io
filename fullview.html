@@ -481,17 +481,21 @@ function formatModDescription(rawText) {
 
   return formatted;
 }
-// --- Function to update day-by-day analytics (Updated) ---
+// --- Function to update day-by-day analytics with vertical bars ---
 function updateDayAnalytics(mod) {
+    // Select all the fill and value elements for initial clearing/setup
+    const fillElements = [];
+    const valueElements = [];
+    for (let i = 1; i <= 5; i++) {
+        fillElements.push(document.getElementById(`day${i}Fill`));
+        valueElements.push(document.getElementById(`day${i}Value`));
+    }
+
+    // Basic input validation and clearing if data is invalid/missing
     if (!mod || typeof mod !== 'object' || !mod["Mod Analytics"]) {
         console.warn("Invalid mod object or missing 'Mod Analytics' data for analytics display:", mod);
-        // Reset bars to 0% and values to N/A
-        for (let i = 1; i <= 5; i++) {
-            const fillEl = document.getElementById(`day${i}Fill`);
-            const valueEl = document.getElementById(`day${i}Value`);
-            if (fillEl) fillEl.style.height = '0%';
-            if (valueEl) valueEl.textContent = "N/A";
-        }
+        fillElements.forEach(el => { if (el) el.style.height = '0%'; });
+        valueElements.forEach(el => { if (el) el.textContent = "N/A"; });
         return;
     }
 
@@ -500,16 +504,12 @@ function updateDayAnalytics(mod) {
         analyticsData = JSON.parse(mod["Mod Analytics"]);
     } catch (e) {
         console.error("Failed to parse 'Mod Analytics' JSON for analytics display:", e);
-        // Reset bars to 0% and values to Error
-        for (let i = 1; i <= 5; i++) {
-            const fillEl = document.getElementById(`day${i}Fill`);
-            const valueEl = document.getElementById(`day${i}Value`);
-            if (fillEl) fillEl.style.height = '0%';
-            if (valueEl) valueEl.textContent = "Error";
-        }
+        fillElements.forEach(el => { if (el) el.style.height = '0%'; });
+        valueElements.forEach(el => { if (el) el.textContent = "Error"; });
         return;
     }
 
+    // Extract, filter, and sort day numbers
     const dayNumbers = Object.keys(analyticsData)
         .map(key => {
             const match = key.match(/^Day (\d+)$/);
@@ -518,29 +518,25 @@ function updateDayAnalytics(mod) {
         .filter(num => !isNaN(num))
         .sort((a, b) => a - b);
 
+    // Get the values for the last 5 relevant days
     const lastFiveDayNumbers = dayNumbers.slice(-5);
     const valuesForDisplay = lastFiveDayNumbers.map(dayNum => analyticsData[`Day ${dayNum}`]);
 
-    // Calculate the maximum value among the last 5 days
-    // This is crucial for scaling the bar heights proportionally.
-    // If all values are 0, max will be 0 to avoid division by zero.
+    // Calculate the maximum value among the last 5 days for scaling bars
     const numericValues = valuesForDisplay.filter(val => typeof val === 'number' && !isNaN(val));
-    const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0;
-    // You could also set a fixed maximum if you know, e.g., const maxValue = 100;
+    const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0; // Avoid division by zero
 
-    // Pad with "N/A" if there are fewer than 5 days, and ensure numeric values for calculation
+    // Pad with "N/A" if there are fewer than 5 days, ensuring correct order for display
     const paddedValues = Array(5).fill("N/A");
     for (let i = 0; i < valuesForDisplay.length; i++) {
+        // Place values at the end of the padded array to represent the latest days
         paddedValues[5 - valuesForDisplay.length + i] = valuesForDisplay[i];
     }
 
     // Update the HTML elements (both bar height and text value)
     for (let i = 0; i < 5; i++) {
-        const fillElementId = `day${i + 1}Fill`;
-        const valueElementId = `day${i + 1}Value`;
-
-        const fillEl = document.getElementById(fillElementId);
-        const valueEl = document.getElementById(valueElementId);
+        const fillEl = fillElements[i];
+        const valueEl = valueElements[i];
 
         if (fillEl && valueEl) {
             const currentDayValue = paddedValues[i];
@@ -549,23 +545,32 @@ function updateDayAnalytics(mod) {
             if (typeof currentDayValue === 'number' && !isNaN(currentDayValue) && maxValue > 0) {
                 percentage = (currentDayValue / maxValue) * 100;
             } else if (maxValue === 0 && currentDayValue === 0) {
-                percentage = 0; // If max is 0 and current is 0, bar is 0%
+                percentage = 0; // Handle case where all values are zero
+            } else {
+                percentage = 0; // If N/A or Error, default to 0% height
             }
 
             fillEl.style.height = `${percentage}%`;
-            valueEl.textContent = currentDayValue === "N/A" ? "N/A" : currentDayValue; // Display the actual number or N/A
+            valueEl.textContent = currentDayValue === "N/A" ? "N/A" : currentDayValue;
         } else {
-            console.warn(`Analytics elements (fill or value) for day${i + 1} not found.`);
+            console.warn(`Analytics elements (fill or value) for day ${i + 1} not found. Please check HTML IDs.`);
         }
     }
 }
-// --- Main function to load addon details (Your existing code with improvements) ---
+
+
+// --- Main function to load addon details ---
 function loadAddonDetails(sharedAddonId) {
+    // Initial loading state or error message if no ID
+    const mainContentArea = document.querySelector('main');
     if (!sharedAddonId) {
         console.error("No Addon ID provided to load details.");
-        document.querySelector('body').innerHTML = '<p>No mod selected to display. Please provide an ID in the URL (e.g., ?id=your_mod_id).</p>';
+        if (mainContentArea) {
+            mainContentArea.innerHTML = '<p>No mod selected to display. Please provide an ID in the URL (e.g., ?id=your_mod_id).</p>';
+        }
         return;
     }
+
             // ⭐ INTEGRATION POINT: Call updateDayAnalytics here!
             updateDayAnalytics(mod);
 
