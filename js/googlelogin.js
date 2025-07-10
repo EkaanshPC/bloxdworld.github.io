@@ -126,3 +126,43 @@ client.auth.onAuthStateChange(async (_event, session) => {
 console.log("🏃 Running handleOAuthRedirect() & renderUser()...");
 handleOAuthRedirect().then(() => renderUser());
 console.log("🚀 Initialization complete.");
+async function submitVote(modId) {
+  const { data: { session }, error } = await client.auth.getSession();
+  if (!session) {
+    alert("🔒 You must be logged in to vote.");
+    return;
+  }
+
+  const user = session.user;
+
+  const { error: insertError } = await client.from("votes").insert({
+    user_id: user.id,
+    addon_id: modId
+  });
+
+  if (insertError) {
+    if (insertError.code === "23505") {
+      alert("⚠️ You’ve already voted for this mod.");
+    } else {
+      console.error("❌ Vote failed:", insertError);
+      alert("Vote failed.");
+    }
+  } else {
+    alert("✅ Vote submitted!");
+  }
+}
+
+async function hasUserVoted(modId) {
+  const { data: { session } } = await client.auth.getSession();
+  const user = session?.user;
+  if (!user) return false;
+
+  const { data, error } = await client
+    .from("votes")
+    .select("*")
+    .eq("addon_id", modId)
+    .eq("user_id", user.id)
+    .single();
+
+  return !!data;
+}

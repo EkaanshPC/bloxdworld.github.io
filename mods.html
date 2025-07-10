@@ -487,6 +487,11 @@ document.getElementById("categoryFilter").addEventListener("change", e => {
   );
   renderMods(filtered);
 });
+async function getUserSession() {
+  const { data: { session }, error } = await client.auth.getSession();
+  if (error || !session) return null;
+  return session.user;
+}
 
     let allMods = [];
     let voteData = {};
@@ -758,18 +763,67 @@ upvoteBtn.addEventListener("click", () => {
     upvoteBtn.style.opacity = "1";
     upvoteBtn.title = "Click to upvote";
 
-    fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
-      method: "POST",
-      body: new URLSearchParams({
-        name: modId,
-        votes: newVotes
-      })
-    }).then(() => {
-      console.log(`🔁 Vote for "${modId}" removed.`);
-    }).catch(err => {
-      console.error(`❌ Failed to remove vote for "${modId}":`, err);
+    upvoteBtn.addEventListener("click", async () => {
+  const user = await getUserSession();
+  if (!user) {
+    alert("🔒 You must be logged in to vote.");
+    return;
+  }
+
+  const hasVoted = votedMods[modId];
+
+  if (hasVoted) {
+    // 🔄 Remove vote
+    const { error } = await client
+      .from("votes")
+      .delete()
+      .eq("addon_id", modId)
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("❌ Failed to remove vote:", error);
+      alert("Failed to remove vote.");
+      return;
+    }
+
+    currentVotes--;
+    voteData[modId] = currentVotes;
+    voteCount.textContent = `${currentVotes}`;
+    delete votedMods[modId];
+    localStorage.setItem("votedMods", JSON.stringify(votedMods));
+
+    upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
+    upvoteBtn.alt = "Upvote";
+    upvoteBtn.style.opacity = "1";
+    upvoteBtn.title = "Click to upvote";
+  } else {
+    // ✅ Add vote
+    const { error } = await client.from("votes").insert({
+      addon_id: modId
     });
 
+    if (error) {
+      if (error.code === "23505") {
+        alert("⚠️ You’ve already voted for this mod.");
+      } else {
+        console.error("❌ Failed to submit vote:", error);
+        alert("Vote failed.");
+      }
+      return;
+    }
+
+    currentVotes++;
+    voteData[modId] = currentVotes;
+    voteCount.textContent = `${currentVotes}`;
+    votedMods[modId] = true;
+    localStorage.setItem("votedMods", JSON.stringify(votedMods));
+
+    upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+    upvoteBtn.alt = "Voted";
+    upvoteBtn.style.opacity = "0.7";
+    upvoteBtn.title = "Click to remove vote";
+  }
+});
   } else {
     // ✅ Add vote
     const newVotes = currentVotes + 1;
@@ -784,26 +838,8 @@ upvoteBtn.addEventListener("click", () => {
     upvoteBtn.alt = "Voted";
     upvoteBtn.style.opacity = "0.7";
     upvoteBtn.title = "Click to remove vote";
-
-    fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: new URLSearchParams({
-        name: modId,
-        votes: newVotes
-      })
-    })
-    .then(() => {
-      console.log(`✅ Vote for "${modId}" submitted successfully.`);
-    })
-    .catch(err => {
-      console.error(`❌ Failed to submit vote for "${modId}":`, err);
-    });
   }
 });
-  
 
         voteContainer.appendChild(upvoteBtn);
         voteContainer.appendChild(voteCount);
@@ -853,10 +889,15 @@ Promise.all([
   console.error("❌ Error loading mods:", err);
 });
 
-fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes"))
-  .then(res => res.json())
-  .then(votes => {
-    voteData = votes;
+client
+  .from("votes")
+  .select("addon_id", { count: "exact" })
+  .then(({ data, error }) => {
+    if (error) throw error;
+    voteData = {};
+    data.forEach(v => {
+      voteData[v.addon_id] = (voteData[v.addon_id] || 0) + 1;
+    });
     renderMods(allMods);
   })
   .catch(err => {

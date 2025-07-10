@@ -128,80 +128,99 @@ if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 }
 
 const leaderboardContainer = document.getElementById("leaderboard-list");
+const modContainer = document.getElementById("mod-of-the-day");
 
-Promise.all([
-  fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes")).then(res => res.json()),
-  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json()),
-  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%203").then(res => res.json())
-])
-.then(([voteData, mods, dailyMods]) => {
-  const allMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
+async function loadLeaderboard() {
+  try {
+    // 🔁 Fetch vote counts from Supabase
+    const { data: votes, error: voteError } = await client
+      .from("votes")
+      .select("addon_id", { count: "exact" });
 
-  // 🔍 Build a map of Addon ID → mod object
-  const modMap = {};
-  allMods.forEach(mod => {
-    if (mod["Addon ID"]) {
-      modMap[mod["Addon ID"]] = mod;
+    if (voteError) throw voteError;
+
+    // 🔁 Fetch mod metadata from Google Sheet
+    const modsRes = await fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201");
+    const mods = await modsRes.json();
+
+    // 🔁 Fetch Mod of the Day from Google Sheet
+    const dailyRes = await fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%203");
+    const dailyMods = await dailyRes.json();
+
+    const approvedMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
+
+    // 🔍 Build a map of Addon ID → mod object
+    const modMap = {};
+    approvedMods.forEach(mod => {
+      if (mod["Addon ID"]) {
+        modMap[mod["Addon ID"]] = mod;
+      }
+    });
+
+    // 🧮 Count votes per Addon ID
+    const voteCountMap = {};
+    votes.forEach(vote => {
+      voteCountMap[vote.addon_id] = (voteCountMap[vote.addon_id] || 0) + 1;
+    });
+
+    // 🌟 Mod of the Day
+    const latestDaily = dailyMods[dailyMods.length - 1];
+    const modOfTheDay = latestDaily && modMap[latestDaily["Addon ID"]];
+
+    if (modOfTheDay) {
+      modContainer.innerHTML = `
+        <div class="mods-header">🌟 Mod of the Day</div>
+        <div class="mod-card featured">
+          <h3>${modOfTheDay["Addon Name"] || "Unnamed Mod"}</h3>
+          <p style="color: #888;">${voteCountMap[modOfTheDay["Addon ID"]] || 0} vote(s)</p>
+        </div>
+      `;
+    } else {
+      modContainer.innerHTML = `<p>⚠️ No Mod of the Day selected.</p>`;
     }
-  });
 
-  // 🎯 Get today's Mod of the Day from Form Responses 3 (latest entry)
-  const latestDaily = dailyMods[dailyMods.length - 1];
-  const modOfTheDay = latestDaily && modMap[latestDaily["Addon ID"]];
+    // 🏆 Build leaderboard
+    const sorted = Object.entries(voteCountMap)
+      .map(([addonId, votes]) => ({
+        addonId,
+        name: modMap[addonId]?.["Addon Name"] || addonId,
+        votes
+      }))
+      .sort((a, b) => b.votes - a.votes)
+      .slice(0, 10);
 
-  const modContainer = document.getElementById("mod-of-the-day");
-  if (modOfTheDay) {
-    modContainer.innerHTML = `
-      <div class="mods-header">🌟 Mod of the Day</div>
-      <div class="mod-card featured">
-        <h3>${modOfTheDay["Addon Name"] || "Unnamed Mod"}</h3>
-        <p style="color: #888;">${voteData[modOfTheDay["Addon ID"]] || 0} vote(s)</p>
-      </div>
-    `;
-  } else {
-    modContainer.innerHTML = `<p>⚠️ No Mod of the Day selected.</p>`;
+    leaderboardContainer.innerHTML = "";
+
+    sorted.forEach((mod, index) => {
+      const rank = index + 1;
+      const emoji = rank === 1 ? "👑" : rank <= 3 ? "🔥" : "⭐";
+
+      const entry = document.createElement("div");
+      entry.className = rank === 1
+        ? "winner"
+        : rank <= 3
+          ? "following-winners"
+          : "others";
+
+      entry.style.margin = "10px 0";
+      entry.style.fontSize = "1.1rem";
+
+      entry.innerHTML = `
+        ${emoji} <strong>#${rank}</strong> — 
+        <span style="font-weight: bold;">${mod.name}</span> 
+        <span style="color: #888;">(${mod.votes} vote${mod.votes !== 1 ? "s" : ""})</span>
+      `;
+
+      leaderboardContainer.appendChild(entry);
+    });
+
+  } catch (err) {
+    leaderboardContainer.textContent = "⚠️ Failed to load leaderboard.";
+    console.error("Leaderboard error:", err);
   }
+}
 
-  // 🏆 Build leaderboard
-  const sorted = Object.entries(voteData)
-    .map(([addonId, votes]) => ({
-      addonId,
-      name: modMap[addonId]?.["Addon Name"] || addonId,
-      votes: parseInt(votes)
-    }))
-    .sort((a, b) => b.votes - a.votes)
-    .slice(0, 10);
-
-  leaderboardContainer.innerHTML = "";
-
-  sorted.forEach((mod, index) => {
-    const rank = index + 1;
-    const emoji = rank === 1 ? "👑" : rank <= 3 ? "🔥" : "⭐";
-
-    const entry = document.createElement("div");
-    entry.className = rank === 1
-      ? "winner"
-      : rank <= 3
-        ? "following-winners"
-        : "others";
-
-    entry.style.margin = "10px 0";
-    entry.style.fontSize = "1.1rem";
-
-    entry.innerHTML = `
-      ${emoji} <strong>#${rank}</strong> — 
-      <span style="font-weight: bold;">${mod.name}</span> 
-      <span style="color: #888;">(${mod.votes} vote${mod.votes !== 1 ? "s" : ""})</span>
-    `;
-
-    leaderboardContainer.appendChild(entry);
-  });
-})
-.catch(err => {
-  leaderboardContainer.textContent = "⚠️ Failed to load leaderboard.";
-  console.error("Leaderboard error:", err);
-});
-
+loadLeaderboard();
 const themeToggle = document.getElementById("themeToggle");
 
 // Apply saved theme on load

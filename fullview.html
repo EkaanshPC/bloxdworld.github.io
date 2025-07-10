@@ -474,89 +474,69 @@ function formatModDescription(rawText) {
 
 
 function updateDayAnalytics(mod) {
-    console.log("DEBUG: updateDayAnalytics function called.");
-    console.log("DEBUG: Input 'mod' object:", mod);
+  console.log("📊 updateDayAnalytics called with mod:", mod);
 
-    const fillElements = [];
-    const valueElements = [];
-    for (let i = 1; i <= 5; i++) {
-        fillElements.push(document.getElementById(`day${i}Fill`));
-        valueElements.push(document.getElementById(`day${i}Value`));
+  const fillElements = Array.from({ length: 5 }, (_, i) => document.getElementById(`day${i + 1}Fill`));
+  const valueElements = Array.from({ length: 5 }, (_, i) => document.getElementById(`day${i + 1}Value`));
+
+  if (!mod || typeof mod !== "object" || !mod["Mod Analytics"]) {
+    console.warn("⚠️ Invalid mod or missing 'Mod Analytics'. Resetting bars.");
+    fillElements.forEach(el => el && (el.style.height = "0%"));
+    valueElements.forEach(el => el && (el.textContent = "N/A"));
+    return;
+  }
+
+  let analyticsData;
+  try {
+    analyticsData = JSON.parse(mod["Mod Analytics"]);
+    console.log("✅ Parsed analytics:", analyticsData);
+  } catch (err) {
+    console.error("❌ Failed to parse 'Mod Analytics':", err);
+    fillElements.forEach(el => el && (el.style.height = "0%"));
+    valueElements.forEach(el => el && (el.textContent = "Error"));
+    return;
+  }
+
+  const dayKeys = Object.keys(analyticsData)
+    .map(key => {
+      const match = key.match(/^Day (\d+)$/);
+      return match ? parseInt(match[1], 10) : null;
+    })
+    .filter(day => day !== null)
+    .sort((a, b) => a - b);
+
+  const lastFiveDays = dayKeys.slice(-5);
+  const values = lastFiveDays.map(day => analyticsData[`Day ${day}`]);
+
+  const numericValues = values.filter(val => typeof val === "number" && !isNaN(val));
+  const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0;
+
+  const paddedValues = Array(5).fill("N/A");
+  for (let i = 0; i < values.length; i++) {
+    paddedValues[5 - values.length + i] = values[i];
+  }
+
+  paddedValues.forEach((val, i) => {
+    const fillEl = fillElements[i];
+    const valueEl = valueElements[i];
+
+    if (!fillEl || !valueEl) {
+      console.warn(`⚠️ Missing HTML elements for Day ${i + 1}`);
+      return;
     }
-    console.log("DEBUG: HTML fill elements found:", fillElements);
-    console.log("DEBUG: HTML value elements found:", valueElements);
 
-    if (!mod || typeof mod !== 'object' || !mod["Mod Analytics"]) {
-        console.warn("DEBUG: Invalid mod object or missing 'Mod Analytics' data for analytics display. Clearing bars.");
-        fillElements.forEach(el => { if (el) el.style.height = '0%'; });
-        valueElements.forEach(el => { if (el) el.textContent = "N/A"; });
-        return;
+    let percentage = 0;
+    if (typeof val === "number" && maxValue > 0) {
+      percentage = (val / maxValue) * 100;
     }
 
-    let analyticsData;
-    try {
-        analyticsData = JSON.parse(mod["Mod Analytics"]);
-        console.log("DEBUG: Parsed 'Mod Analytics' data:", analyticsData);
-    } catch (e) {
-        console.error("DEBUG: Failed to parse 'Mod Analytics' JSON for analytics display:", e);
-        fillElements.forEach(el => { if (el) el.style.height = '0%'; });
-        valueElements.forEach(el => { if (el) el.textContent = "Error"; });
-        return;
-    }
+    fillEl.style.height = `${percentage}%`;
+    valueEl.textContent = val === "N/A" ? "N/A" : val;
+    console.log(`📅 Day ${i + 1}: Value = ${val}, Height = ${percentage.toFixed(1)}%`);
+  });
 
-    const dayNumbers = Object.keys(analyticsData)
-        .map(key => {
-            const match = key.match(/^Day (\d+)$/);
-            return match ? parseInt(match[1], 10) : NaN;
-        })
-        .filter(num => !isNaN(num))
-        .sort((a, b) => a - b);
-    console.log("DEBUG: Extracted and sorted day numbers:", dayNumbers);
-
-    const lastFiveDayNumbers = dayNumbers.slice(-5);
-    console.log("DEBUG: Last five day numbers selected:", lastFiveDayNumbers);
-
-    const valuesForDisplay = lastFiveDayNumbers.map(dayNum => analyticsData[`Day ${dayNum}`]);
-    console.log("DEBUG: Raw values for display (from analyticsData):", valuesForDisplay);
-
-    const numericValues = valuesForDisplay.filter(val => typeof val === 'number' && !isNaN(val));
-    const maxValue = numericValues.length > 0 ? Math.max(...numericValues) : 0;
-    console.log("DEBUG: Numeric values used for maxValue calculation:", numericValues);
-    console.log("DEBUG: Calculated maxValue for scaling:", maxValue);
-
-    const paddedValues = Array(5).fill("N/A");
-    for (let i = 0; i < valuesForDisplay.length; i++) {
-        paddedValues[5 - valuesForDisplay.length + i] = valuesForDisplay[i];
-    }
-    console.log("DEBUG: Padded values for final display (with N/A):", paddedValues);
-
-    for (let i = 0; i < 5; i++) {
-        const fillEl = fillElements[i];
-        const valueEl = valueElements[i];
-
-        if (fillEl && valueEl) {
-            const currentDayValue = paddedValues[i];
-            let percentage = 0;
-
-            if (typeof currentDayValue === 'number' && !isNaN(currentDayValue) && maxValue > 0) {
-                percentage = (currentDayValue / maxValue) * 100;
-            } else if (maxValue === 0 && currentDayValue === 0) {
-                percentage = 0;
-            } else {
-                percentage = 0;
-            }
-            console.log(`DEBUG: Day ${i + 1} - Value: ${currentDayValue}, Percentage: ${percentage}%`);
-
-            fillEl.style.height = `${percentage}%`;
-            valueEl.textContent = currentDayValue === "N/A" ? "N/A" : currentDayValue;
-        } else {
-            console.warn(`DEBUG: Analytics elements (fill or value) for day ${i + 1} not found. Check HTML IDs.`);
-        }
-    }
-    console.log("DEBUG: updateDayAnalytics function finished.");
+  console.log("✅ updateDayAnalytics completed.");
 }
-
-
 
 function loadAddonDetails(sharedAddonId) {
 
