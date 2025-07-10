@@ -454,18 +454,18 @@ body.dark #sortVotes:hover {
 let currentPage = 1;
 const modsPerPage = 10;
 let allMods = []; // Declared earlier for clarity and consistency
-let voteData = {}; // Declared earlier for clarity and consistency
-const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}"); // Keep here, it's fine
+let voteData = {}; // Stores total vote counts for each mod
+let votedMods = {}; // Initialize as an empty object. This will be populated from Supabase.
 
 console.log("Referrer:", document.referrer);
 const themeToggle = document.getElementById("themeToggle");
 
-// Apply saved theme on load
+// Apply saved theme on load (Keep localStorage for theme, as it's a client-side preference)
 if (localStorage.getItem("theme") === "dark") {
     document.body.classList.add("dark-mode");
 }
 
-// Toggle and save preference
+// Toggle and save preference (Keep localStorage for theme)
 themeToggle.addEventListener("click", (e) => {
     e.preventDefault();
     document.body.classList.toggle("dark-mode");
@@ -738,6 +738,7 @@ function renderMods(mods) {
         let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
         voteCount.textContent = `${currentVotes}`;
 
+        // IMPORTANT: Rely directly on votedMods from DB fetch
         if (votedMods[modId]) {
             upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
             upvoteBtn.alt = "Voted";
@@ -747,10 +748,10 @@ function renderMods(mods) {
             upvoteBtn.title = "Click to upvote";
         }
 
-       
+        
         upvoteBtn.addEventListener("click", async () => {
             console.log(`DEBUG [Vote Click]: Click detected for mod ID: ${modId}.`);
-            console.log(`DEBUG [Vote Click]: Initial currentVotes: ${currentVotes}, hasVoted locally: ${!!votedMods[modId]}`);
+            console.log(`DEBUG [Vote Click]: Initial currentVotes: ${currentVotes}, hasVoted locally (from DB-populated votedMods): ${!!votedMods[modId]}`);
 
             const user = await getUserSession();
             if (!user) {
@@ -760,7 +761,8 @@ function renderMods(mods) {
             }
             console.log(`DEBUG [Vote Click]: User ID: ${user.id} is logged in.`);
 
-            const hasVoted = votedMods[modId]; // Re-check this after user session is confirmed
+            // Re-check hasVoted directly from the global votedMods (which is refreshed from DB)
+            const hasVoted = votedMods[modId]; 
 
             if (hasVoted) {
                 console.log("DEBUG [Vote Click]: User has previously voted. Attempting to remove vote from Supabase...");
@@ -778,12 +780,11 @@ function renderMods(mods) {
                 }
                 console.log("DEBUG [Vote Click]: Vote successfully removed from Supabase.");
 
-                // Update local state and UI
+                // Update local state and UI (no localStorage.setItem here)
                 currentVotes--;
                 voteData[modId] = currentVotes;
                 voteCount.textContent = `${currentVotes}`;
-                delete votedMods[modId];
-                localStorage.setItem("votedMods", JSON.stringify(votedMods));
+                delete votedMods[modId]; // Remove from our in-memory object
                 console.log(`DEBUG [Vote Click]: Local state updated: currentVotes=${currentVotes}, votedMods=${JSON.stringify(votedMods)}`);
 
                 upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
@@ -811,12 +812,11 @@ function renderMods(mods) {
                 }
                 console.log("DEBUG [Vote Click]: Vote successfully added to Supabase.");
 
-                // Update local state and UI
+                // Update local state and UI (no localStorage.setItem here)
                 currentVotes++;
                 voteData[modId] = currentVotes;
                 voteCount.textContent = `${currentVotes}`;
-                votedMods[modId] = true;
-                localStorage.setItem("votedMods", JSON.stringify(votedMods));
+                votedMods[modId] = true; // Add to our in-memory object
                 console.log(`DEBUG [Vote Click]: Local state updated: currentVotes=${currentVotes}, votedMods=${JSON.stringify(votedMods)}`);
 
                 upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
@@ -825,6 +825,11 @@ function renderMods(mods) {
                 upvoteBtn.title = "Click to remove vote";
                 console.log("DEBUG [Vote Click]: UI updated to 'voted' state.");
             }
+            // After any vote action (insert/delete), re-render the mods to ensure all counts and button states are fresh
+            // This is especially important if you sort by votes, as the count has changed.
+            // However, a full re-render of all mods might be overkill, consider just updating the specific mod's display if performance is an issue.
+            // For now, this is simpler and effective.
+            renderMods(allMods); 
         });
 
         voteContainer.appendChild(upvoteBtn);
@@ -878,45 +883,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-
     const currentUser = await getUserSession();
     console.log("DEBUG [DOMContentLoaded]: Current logged-in user:", currentUser ? currentUser.id : "None");
-
 
     try {
         console.log("DEBUG [DOMContentLoaded]: Starting vote data fetch from Supabase...");
         
-       
         const { data: allVotesData, error: allVotesError } = await client
             .from("votes")
             .select("addon_id, user_id");
 
         if (allVotesError) {
             console.error("ERROR [DOMContentLoaded]: Supabase error fetching all votes:", allVotesError.message, "Code:", allVotesError.code);
-            console.error("ERROR [DOMContentLoaded]: Check Supabase RLS policies for SELECT on 'votes' table!");
+            console.error("ERROR [DOMContentLoaded]: >> CHECK YOUR SUPABASE RLS POLICIES FOR 'SELECT' ON THE 'VOTES' TABLE! <<");
             throw allVotesError;
         }
 
         console.log("DEBUG [DOMContentLoaded]: Raw vote data from Supabase:", allVotesData);
-
-        voteData = {};
         
-        if (currentUser) {
-             
-             Object.keys(votedMods).forEach(key => delete votedMods[key]);
-        }
+        console.log("DEBUG [DOMContentLoaded]: Total vote records fetched from Supabase:", allVotesData ? allVotesData.length : 0);
+
+        voteData = {}; 
+        // Reset votedMods completely, as we're rebuilding it from the database
+        votedMods = {}; // No need for Object.keys(votedMods).forEach(key => delete votedMods[key]); if initialized empty
 
 
         if (Array.isArray(allVotesData)) {
             if (allVotesData.length === 0) {
-                console.log("DEBUG [DOMContentLoaded]: Supabase returned an EMPTY array for votes. No votes found.");
+                console.log("DEBUG [DOMContentLoaded]: Supabase returned an EMPTY array for votes. This means no votes exist in the DB or RLS is blocking access.");
             }
             allVotesData.forEach(voteRecord => {
                 if (voteRecord.addon_id) {
                     
                     voteData[voteRecord.addon_id] = (voteData[voteRecord.addon_id] || 0) + 1;
 
-                   
+                    
                     if (currentUser && voteRecord.user_id === currentUser.id) {
                         votedMods[voteRecord.addon_id] = true;
                     }
@@ -924,12 +925,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                     console.warn("WARN [DOMContentLoaded]: Vote record found without 'addon_id':", voteRecord);
                 }
             });
-            console.log("DEBUG [DOMContentLoaded]: Aggregated voteData object after processing raw data:", voteData);
+            console.log("DEBUG [DOMContentLoaded]: Aggregated voteData object (total counts):", voteData);
             console.log(`DEBUG [DOMContentLoaded]: Total unique mods with votes: ${Object.keys(voteData).length}`);
+            
             if (currentUser) {
                 console.log(`DEBUG [DOMContentLoaded]: User ${currentUser.id} has voted for (votedMods):`, votedMods);
-                
-                localStorage.setItem("votedMods", JSON.stringify(votedMods));
+                // REMOVED: localStorage.setItem("votedMods", JSON.stringify(votedMods));
+            } else {
+                console.log("DEBUG [DOMContentLoaded]: No user logged in, 'votedMods' remains empty."); // Updated log
             }
 
         } else {
@@ -947,12 +950,30 @@ document.addEventListener('DOMContentLoaded', async () => {
         container.appendChild(createTextElement("p", `⚠️ Failed to load vote counts: ${err.message || err}. Check console & Supabase RLS.`));
     }
 
+    
     document.getElementById("search").addEventListener("input", e => {
         const query = e.target.value.toLowerCase();
         const filtered = allMods.filter(mod =>
             (mod["Addon Name"] || "").toLowerCase().includes(query) ||
             (mod["About Addon / Description"] || "").toLowerCase().includes(query) ||
             (mod["Author Name (leave blank for your username to be displayed anonymous)"] || "").toLowerCase().includes(query)
+        );
+        currentPage = 1;
+        renderMods(filtered);
+    });
+
+    document.getElementById("sortVotes").addEventListener("click", () => {
+        const sorted = [...allMods].sort((a,b) =>
+            (voteData[b["Addon ID"]] || 0) - (voteData[a["Addon ID"]] || 0)
+        );
+        currentPage = 1;
+        renderMods(sorted);
+    });
+
+    document.getElementById("categoryFilter").addEventListener("change", e => {
+        const cat = e.target.value.toLowerCase();
+        const filtered = allMods.filter(mod =>
+            cat === "" || (mod["Category (what type of mod is this?)"] || "").toLowerCase() === cat
         );
         currentPage = 1;
         renderMods(filtered);
