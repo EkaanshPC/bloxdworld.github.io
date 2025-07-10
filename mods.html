@@ -747,18 +747,23 @@ function renderMods(mods) {
             upvoteBtn.title = "Click to upvote";
         }
 
-        // 2. **CRITICAL FIX**: This is the *only* event listener for upvoteBtn
+       
         upvoteBtn.addEventListener("click", async () => {
+            console.log(`DEBUG [Vote Click]: Click detected for mod ID: ${modId}.`);
+            console.log(`DEBUG [Vote Click]: Initial currentVotes: ${currentVotes}, hasVoted locally: ${!!votedMods[modId]}`);
+
             const user = await getUserSession();
             if (!user) {
                 alert("🔒 You must be logged in to vote.");
+                console.log("DEBUG [Vote Click]: User not logged in, vote aborted.");
                 return;
             }
+            console.log(`DEBUG [Vote Click]: User ID: ${user.id} is logged in.`);
 
-            const hasVoted = votedMods[modId];
+            const hasVoted = votedMods[modId]; // Re-check this after user session is confirmed
 
             if (hasVoted) {
-                // 🔄 Remove vote
+                console.log("DEBUG [Vote Click]: User has previously voted. Attempting to remove vote from Supabase...");
                 const { error } = await client
                     .from("votes")
                     .delete()
@@ -766,48 +771,59 @@ function renderMods(mods) {
                     .eq("user_id", user.id);
 
                 if (error) {
-                    console.error("❌ Failed to remove vote:", error);
-                    alert("Failed to remove vote.");
+                    console.error("ERROR [Vote Click]: Supabase error removing vote:", error);
+                    alert("Failed to remove vote. Please try again.");
+                    // Do NOT update local state if Supabase operation failed
                     return;
                 }
+                console.log("DEBUG [Vote Click]: Vote successfully removed from Supabase.");
 
+                // Update local state and UI
                 currentVotes--;
                 voteData[modId] = currentVotes;
                 voteCount.textContent = `${currentVotes}`;
                 delete votedMods[modId];
                 localStorage.setItem("votedMods", JSON.stringify(votedMods));
+                console.log(`DEBUG [Vote Click]: Local state updated: currentVotes=${currentVotes}, votedMods=${JSON.stringify(votedMods)}`);
 
                 upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
                 upvoteBtn.alt = "Upvote";
                 upvoteBtn.style.opacity = "1";
                 upvoteBtn.title = "Click to upvote";
+                console.log("DEBUG [Vote Click]: UI updated to 'upvote' state.");
+
             } else {
-                // ✅ Add vote
+                console.log("DEBUG [Vote Click]: User has NOT previously voted. Attempting to add vote to Supabase...");
                 const { error } = await client.from("votes").insert({
                     addon_id: modId,
-                    user_id: user.id // Supabase might need user_id explicitely for RLS/uniqueness
+                    user_id: user.id
                 });
 
                 if (error) {
                     if (error.code === "23505") { // Duplicate key error (already voted)
+                        console.warn("WARN [Vote Click]: Supabase returned duplicate key error (user already voted).");
                         alert("⚠️ You’ve already voted for this mod.");
                     } else {
-                        console.error("❌ Failed to submit vote:", error);
-                        alert("Vote failed.");
+                        console.error("ERROR [Vote Click]: Supabase error submitting vote:", error);
+                        alert("Vote failed. Please try again.");
                     }
                     return;
                 }
+                console.log("DEBUG [Vote Click]: Vote successfully added to Supabase.");
 
+                // Update local state and UI
                 currentVotes++;
                 voteData[modId] = currentVotes;
                 voteCount.textContent = `${currentVotes}`;
                 votedMods[modId] = true;
                 localStorage.setItem("votedMods", JSON.stringify(votedMods));
+                console.log(`DEBUG [Vote Click]: Local state updated: currentVotes=${currentVotes}, votedMods=${JSON.stringify(votedMods)}`);
 
                 upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
                 upvoteBtn.alt = "Voted";
                 upvoteBtn.style.opacity = "0.7";
                 upvoteBtn.title = "Click to remove vote";
+                console.log("DEBUG [Vote Click]: UI updated to 'voted' state.");
             }
         });
 
@@ -841,8 +857,6 @@ function renderMods(mods) {
     renderPagination(mods.length);
 }
 
-// --- Initial Data Loading ---
-// It's generally good to wrap initial load in DOMContentLoaded
 document.addEventListener('DOMContentLoaded', async () => { // Made this async to await promises if needed
 
     // Fetch mods first
