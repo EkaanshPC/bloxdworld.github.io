@@ -182,3 +182,6 @@ body.dark-mode #authArea a:hover {
 
 
 }
+.emailText .dark-mode {
+  color: #ccc;
+}

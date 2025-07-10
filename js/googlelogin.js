@@ -66,7 +66,7 @@ const shortLocal = local.length > 7 ? local.slice(0, 7) + "..." : local;
 const shortEmail = `${shortLocal}@${domain}`;
 
 authArea.innerHTML = `
-    <span style="color:white">${shortEmail}</span>
+    <span style="color:white" class="emailText">${shortEmail}</span>
     <a style="display:inline-block;" href="#" id="logoutBtn">🚪 Logout</a>
 `;
 document.getElementById("logoutBtn").onclick = async (e) => {
@@ -114,7 +114,7 @@ client.auth.onAuthStateChange(async (_event, session) => {
   }
   if (session === null) {
     console.log("🙅 No session found.");
-    authArea.innerHTML = "<li style=\"color:white;\">Not logged in</li>";
+    authArea.innerHTML = "<li style=\"color:white;\" class=\"emailText\">Not logged in</li>";
     return;
   }
 
