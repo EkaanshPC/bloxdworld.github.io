@@ -23,12 +23,146 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
 #blocklyDiv {
-    background: #fafafa;
-    border: 2px dashed #ccc;
-    min-height: 480px;
-    min-width: 600px;
-  }
-  </style>
+  width: 100%;
+  max-width: 960px;
+  height: 600px;
+  margin-top: 2rem;
+  margin-bottom: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+#blocklyDiv .dark-mode {
+  background-color: #333;
+  border-color: #555;
+}
+#blocklyDiv .dark-mode .blocklyToolboxDiv {
+  background-color: #444;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFlyout {
+  background-color: #555;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyBlock {
+  background-color: #666;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyText {
+  fill: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldLabel {
+  fill: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldDropdown {
+  background-color: #777;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldTextInput {
+  background-color: #777;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldCheckbox {
+  fill: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldNumber {
+  background-color: #777;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldColour {
+  background-color: #777;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldVariable {
+  background-color: #777;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFieldImage {
+  filter: brightness(0.8);
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton {
+  background-color: #888;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyScrollbar {
+  background-color: #999;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyScrollbarHandle {
+  background-color: #aaa;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyTooltip {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 4px 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#blocklyDiv .dark-mode .blocklyContextMenu {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+#blocklyDiv .dark-mode .blocklyContextMenuItem {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+#blocklyDiv .dark-mode .blocklyContextMenuItem:hover {
+  background-color: #444;
+}
+#blocklyDiv .dark-mode .blocklyContextMenuItemSelected {
+  background-color: #555;
+  color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutLabel {
+  fill: #fff;
+  font-weight: bold;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:hover {
+  background-color: #999;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:active {
+  background-color: #aaa;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:hover {
+  background-color: #999;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active {
+  background-color: #aaa;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:hover {
+  background-color: #bbb;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:focus {
+  background-color: #ccc;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:focus:hover {
+  background-color: #ddd;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:focus:active {
+  background-color: #eee;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:focus:active:hover {
+  background-color: #fff;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:focus:active:focus {
+  background-color: #f0f0f0;
+}
+#blocklyDiv .dark-mode .blocklyFlyoutButton:focus:active:focus:active:focus:hover {
+  background-color: #f5f5f5;
+}
+</style>
 </head>
 <body>
 
