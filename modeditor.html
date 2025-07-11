@@ -18,7 +18,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-
+#blocklyDiv {
+    background: #fafafa;
+    border: 2px dashed #ccc;
+    min-height: 480px;
+    min-width: 600px;
+  }
   </style>
 </head>
 <body>
@@ -136,7 +141,15 @@ const toolboxJson = {
   ]
 };
 const workspace = Blockly.inject('blocklyDiv', {
-  toolbox: toolboxJson,
+  toolbox: {
+  "kind": "flyoutToolbox",
+  "contents": [
+    { "kind": "block", "type": "controls_if" },
+    { "kind": "block", "type": "logic_compare" },
+    { "kind": "block", "type": "math_number" }
+  ]
+}
+,
   scrollbars: true,
   trashcan: true
 });
