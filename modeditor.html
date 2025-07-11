@@ -24,8 +24,7 @@
   <style>
 #blocklyDiv {
   width: 100%;
-  max-width: 960px;
-  height: 600px;
+  height: 800px;
   margin-top: 2rem;
   margin-bottom: 0;
   padding: 0;
@@ -271,15 +270,18 @@ if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
   document.body.classList.add("mobile");
 }
 window.addEventListener("DOMContentLoaded", () => {
-  const toolboxJson = {
+ 
+  const toolbox = {
     kind: "flyoutToolbox",
     contents: [
       { kind: "block", type: "controls_if" },
       { kind: "block", type: "logic_compare" },
-      { kind: "block", type: "math_number" }
+      { kind: "block", type: "math_number" },
+      { kind: "block", type: "play_sound" } // include custom block in toolbox
     ]
   };
 
+  
   Blockly.defineBlocksWithJsonArray([
     {
       type: "play_sound",
@@ -293,15 +295,22 @@ window.addEventListener("DOMContentLoaded", () => {
       ],
       previousStatement: null,
       nextStatement: null,
-      colour: 160
+      colour: 160,
+      tooltip: "Play a sound file",
+      helpUrl: ""
     }
   ]);
 
-  Blockly.inject("blocklyDiv", {
-    toolbox: toolboxJson,
+  
+  const workspace = Blockly.inject("blocklyDiv", {
+    toolbox: toolbox,
     scrollbars: true,
     trashcan: true
   });
+
+  
+  const variables = workspace.getVariableMap().getAllVariables();
+  console.log("Current variables:", variables);
 });
 
   </script>
