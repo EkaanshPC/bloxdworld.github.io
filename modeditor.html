@@ -12,12 +12,12 @@
 <script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
 <script src="https://unpkg.com/blockly/msg/en.js"></script>
   <meta charset="UTF-8">
-  <title>About | Bloxd World</title>
+  <title>Mod Editor | Bloxd World</title>
 <meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
-<meta property="og:title" content="About Bloxd World">
-<meta property="og:description" content="Be up-to-date to Bloxd World's Roadmap and devlog!">
+<meta property="og:title" content="Mod Editor - A Powerful Tool for Bloxd Modding">
+<meta property="og:description" content="Create and edit mods for Bloxd using our intuitive block-based editor. No coding experience required!">
 <meta property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png">
-<meta property="og:url" content="https://bloxdworld.pages.dev/about">
+<meta property="og:url" content="https://bloxdworld.pages.dev/modeditor">
 <meta name="twitter:card" content="summary_large_image">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -224,7 +224,9 @@
   </ul>
     </div>
   </div>
-<div id="blocklyDiv"></div>
+<div id="blocklyDiv" style="height: 800px;"></div>
+<button id="exportBtn" style="margin-top: 1rem;">Export Bloxd Code</button>
+<pre id="exportOutput" style="background: #eee; padding: 1rem; margin-top: 1rem;"></pre>
 
   <!-- 💡 Mouse Tracking Script -->
   <script>
@@ -269,47 +271,86 @@ if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
   document.body.classList.add("mobile");
 }
 window.addEventListener("DOMContentLoaded", () => {
- 
+  // 🧩 Toolbox with custom categories
   const toolbox = {
-    kind: "flyoutToolbox",
+    kind: "categoryToolbox",
     contents: [
-      { kind: "block", type: "controls_if" },
-      { kind: "block", type: "logic_compare" },
-      { kind: "block", type: "math_number" },
-      { kind: "block", type: "play_sound" } // include custom block in toolbox
+      {
+        kind: "category",
+        name: "Logic",
+        colour: "#5C81A6",
+        contents: [
+          { kind: "block", type: "controls_if" },
+          { kind: "block", type: "logic_compare" }
+        ]
+      },
+      {
+        kind: "category",
+        name: "Custom",
+        colour: "#AA5CA6",
+        contents: [
+          { kind: "block", type: "log_message" },
+          { kind: "block", type: "play_sound" }
+        ]
+      }
     ]
   };
 
-  
+  // 🔊 Custom blocks
   Blockly.defineBlocksWithJsonArray([
     {
-      type: "play_sound",
-      message0: "Play %1",
+      type: "log_message",
+      message0: "log %1",
       args0: [
         {
-          type: "field_dropdown",
-          name: "VALUE",
-          options: [["C4", "c4.m4a"], ["D4", "d4.m4a"]]
+          type: "field_input",
+          name: "TEXT",
+          text: "Hello Bloxd"
         }
       ],
       previousStatement: null,
       nextStatement: null,
-      colour: 160,
-      tooltip: "Play a sound file",
+      colour: 210,
+      tooltip: "Log a custom message",
       helpUrl: ""
     }
   ]);
 
-  
+  // 🧠 Inject Blockly
   const workspace = Blockly.inject("blocklyDiv", {
     toolbox: toolbox,
     scrollbars: true,
     trashcan: true
   });
 
-  
-  const variables = workspace.getVariableMap().getAllVariables();
-  console.log("Current variables:", variables);
+  // 🔧 Custom generator (Bloxd-style pseudo-code)
+  Blockly.BloxdCode = {};
+  Blockly.BloxdCode['log_message'] = function(block) {
+    const msg = block.getFieldValue('TEXT');
+    return `log("${msg}");\n`;
+  };
+  Blockly.BloxdCode['play_sound'] = function(block) {
+    const sound = block.getFieldValue('VALUE');
+    return `playSound("${sound}");\n`;
+  };
+
+  Blockly.BloxdCode.workspaceToCode = function(ws) {
+    const blocks = ws.getTopBlocks(true);
+    let code = '';
+    for (const block of blocks) {
+      const type = block.type;
+      if (Blockly.BloxdCode[type]) {
+        code += Blockly.BloxdCode[type](block);
+      }
+    }
+    return code;
+  };
+
+  // 📤 Export button behavior
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const output = Blockly.BloxdCode.workspaceToCode(workspace);
+    document.getElementById('exportOutput').textContent = output || "// No code generated.";
+  });
 });
 
   </script>
