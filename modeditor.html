@@ -499,7 +499,7 @@ Blockly.BloxdCode['get_player_ids'] = function(block) {
   };
 Blockly.BloxdCode['player_is_in_game'] = function(block) {
     const id = block.getFieldValue('ENTITY_ID');
-    return `api.playerIsInGame${id});\n`;
+    return `api.playerIsInGame(${id});\n`;
   };
 Blockly.BloxdCode['player_logged_in'] = function(block) {
     const id = block.getFieldValue('ENTITY_ID');
