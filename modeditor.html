@@ -286,7 +286,7 @@ window.addEventListener("DOMContentLoaded", () => {
       },
       {
         kind: "category",
-        name: "Custom",
+        name: "CodeAPI",
         colour: "#AA5CA6",
         contents: [
           { kind: "block", type: "log_message" },
@@ -306,249 +306,146 @@ window.addEventListener("DOMContentLoaded", () => {
     ]
   };
 
-  // 🔊 Custom blocks
+  // 🧱 Define custom blocks
   Blockly.defineBlocksWithJsonArray([
     {
       type: "log_message",
       message0: "log %1",
-      args0: [
-        {
-          type: "field_input",
-          name: "TEXT",
-          text: "Hello Bloxd"
-        }
-      ],
+      args0: [{ type: "field_input", name: "TEXT", text: "Hello Bloxd" }],
       previousStatement: null,
       nextStatement: null,
-      colour: 210,
-      tooltip: "Log a custom message",
-      helpUrl: ""
+      colour: 210
     },
     {
       type: "get_entity_name",
-      message0: "Get ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: "'s name by ID",
-      colour: 210,
-      tooltip: "Get a mob or entity's name by its ID",
-      helpUrl: ""
+      message0: "Get name of entity %1",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     },
     {
       type: "get_entity_position",
-      message0: "Get ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: "'s position by ID",
-      colour: 210,
-      tooltip: "Get a mob or entity's position by its ID",
-      helpUrl: ""
+      message0: "Get position of entity %1",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     },
     {
       type: "set_entity_velocity",
-      message0: "Set ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: "'s velocity by ID",
-      colour: 210,
-      tooltip: "Set a mob or entity's velocity by its ID",
-      helpUrl: ""
+      message0: "Set velocity of entity %1",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 210
     },
     {
       type: "set_entity_position",
-      message0: "Set ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      args1: {
-        type: "field_input",
-        name: "X_POSITION",
-        text: "X"
-      },
-      args2: {
-        type: "field_input",
-        name: "Y_POSITION",
-        text: "Y"
-      },
-      args3: {
-        type: "field_input",
-        name: "Z_POSITION",
-        text: "Z"
-      },
-      message1: "'s position by ID",
-      colour: 210,
-      tooltip: "Set a mob or entity's position by its ID",
-      helpUrl: ""
+      message0: "Set position of entity %1 to X:%2 Y:%3 Z:%4",
+      args0: [
+        { type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+        { type: "field_input", name: "X_POSITION", text: "X" },
+        { type: "field_input", name: "Y_POSITION", text: "Y" },
+        { type: "field_input", name: "Z_POSITION", text: "Z" }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 210
     },
     {
       type: "get_player_ids",
-      message0: "Get player's ID",
-      colour: 210,
-      tooltip: "Get all ids of the players in the game",
-      helpUrl: ""
+      message0: "Get player IDs",
+      output: null,
+      colour: 210
     },
     {
       type: "player_is_in_game",
-      message0: "Is ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: " in game?",
-      colour: 210,
-      tooltip: "Check if a player is in the game by their ID",
-      helpUrl: ""
+      message0: "Is player %1 in game?",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     },
     {
       type: "player_logged_in",
-      message0: "Is  ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: " logged in?",
-      colour: 210,
-      tooltip: "Check if a player is logged in by their ID",
-      helpUrl: ""
+      message0: "Is player %1 logged in?",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     },
     {
       type: "get_player_party_when_joined",
-      message0: "Get ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: "'s party when joined",
-      colour: 210,
-      tooltip: "Get a player's party when they joined",
-      helpUrl: ""
+      message0: "Get party of player %1 when joined",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     },
     {
       type: "get_num_players",
-      message0: "Get Number of players",
-      colour: 210,
-      tooltip: "Get the number of players in the game",
-      helpUrl: ""
+      message0: "Get number of players",
+      output: null,
+      colour: 210
     },
     {
       type: "getBlockCoordinatesPlayerStandingOn",
-      message0: "Get block coordinates on which ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: " is standing on",
-      colour: 210,
-      tooltip: "Get the block coordinates of the player standing on",
-      helpUrl: ""
+      message0: "Get block coordinates player %1 is standing on",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     },
     {
       type: "getBlockTypesPlayerStandingOn",
-      message0: "Get block types on which ",
-      args0: {
-        type: "field_input",
-        name: "ENTITY_ID",
-        text: "Entity's ID"
-      },
-      message1: " is standing on",
-      colour: 210,
-      tooltip: "Get a mob or entity's block types on which it is standing on by ID",
-      helpUrl: ""
+      message0: "Get block types player %1 is standing on",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+      colour: 210
     }
   ]);
 
-  // 🧠 Inject Blockly
+  // 🧠 Blockly injection
   const workspace = Blockly.inject("blocklyDiv", {
     toolbox: toolbox,
     scrollbars: true,
     trashcan: true
   });
 
-  // 🔧 Custom generator (Bloxd-style pseudo-code)
-  Blockly.BloxdCode = {};
-  Blockly.BloxdCode['log_message'] = function(block) {
-    const msg = block.getFieldValue('TEXT');
-    return `api.log("${msg}");\n`;
-  };
-Blockly.BloxdCode['get_entity_name'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.getEntityName(${id});\n`;
-  };
-Blockly.BloxdCode['get_entity_position'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.getPosition(${id});\n`;
-  };
-Blockly.BloxdCode['set_entity_velocity'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.setVelocity(${id});\n`;
-  };
-Blockly.BloxdCode['set_entity_position'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    const x = block.getFieldValue('X_POSITION');
-    const y = block.getFieldValue('Y_POSITION');
-    const z = block.getFieldValue('Z_POSITION');
-    return `api.setPosition(${id}, ${x}, ${y}, ${z});\n`;
-  };
-Blockly.BloxdCode['get_player_ids'] = function(block) {
-    return `api.getPlayerIds();\n`;
-  };
-Blockly.BloxdCode['player_is_in_game'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.playerIsInGame(${id});\n`;
-  };
-Blockly.BloxdCode['player_logged_in'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.playerIsLoggedIn(${id});\n`;
-  };
-Blockly.BloxdCode['get_player_party_when_joined'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.getPlayerPartyWhenJoined(${id});\n`;
-  };
-Blockly.BloxdCode['get_num_players'] = function(block) {
-    return `api.getNumPlayers();\n`;
-  };
-Blockly.BloxdCode['getBlockCoordinatesPlayerStandingOn'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.getBlockCoordinatesPlayerStandingOn(${id});\n`;
-  };
-Blockly.BloxdCode['getBlockTypesPlayerStandingOn'] = function(block) {
-    const id = block.getFieldValue('ENTITY_ID');
-    return `api.getBlockTypesPlayerStandingOn(${id});\n`;
+  // 🔧 CodeAPI generator mappings
+  Blockly.BloxdCode = {
+    log_message: block => `api.log("${block.getFieldValue("TEXT")}");\n`,
+    get_entity_name: block => `api.getEntityName(${block.getFieldValue("ENTITY_ID")});\n`,
+    get_entity_position: block => `api.getPosition(${block.getFieldValue("ENTITY_ID")});\n`,
+    set_entity_velocity: block => `api.setVelocity(${block.getFieldValue("ENTITY_ID")});\n`,
+    set_entity_position: block => {
+      const id = block.getFieldValue("ENTITY_ID");
+      const x = block.getFieldValue("X_POSITION");
+      const y = block.getFieldValue("Y_POSITION");
+      const z = block.getFieldValue("Z_POSITION");
+      return `api.setPosition(${id}, ${x}, ${y}, ${z});\n`;
+    },
+    get_player_ids: () => `api.getPlayerIds();\n`,
+    player_is_in_game: block => `api.playerIsInGame(${block.getFieldValue("ENTITY_ID")});\n`,
+    player_logged_in: block => `api.playerIsLoggedIn(${block.getFieldValue("ENTITY_ID")});\n`,
+    get_player_party_when_joined: block => `api.getPlayerPartyWhenJoined(${block.getFieldValue("ENTITY_ID")});\n`,
+    get_num_players: () => `api.getNumPlayers();\n`,
+    getBlockCoordinatesPlayerStandingOn: block => `api.getBlockCoordinatesPlayerStandingOn(${block.getFieldValue("ENTITY_ID")});\n`,
+    getBlockTypesPlayerStandingOn: block => `api.getBlockTypesPlayerStandingOn(${block.getFieldValue("ENTITY_ID")});\n`
   };
 
-
-
+  // 📦 Generator runner
   Blockly.BloxdCode.workspaceToCode = function(ws) {
     const blocks = ws.getTopBlocks(true);
-    let code = '';
+    let code = "";
     for (const block of blocks) {
       const type = block.type;
-      if (Blockly.BloxdCode[type]) {
-        code += Blockly.BloxdCode[type](block);
+      if (this[type]) {
+        code += this[type](block);
       }
     }
     return code;
   };
 
-  // 📤 Export button behavior
-  document.getElementById('exportBtn').addEventListener('click', () => {
+  // 🧾 Export button handler
+  document.getElementById("exportBtn").addEventListener("click", () => {
     const output = Blockly.BloxdCode.workspaceToCode(workspace);
-    document.getElementById('exportOutput').textContent = output || "// No code generated.";
+    document.getElementById("exportOutput").textContent = output || "// No code generated.";
   });
 });
 
