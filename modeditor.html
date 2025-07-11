@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="styles/devlogandindex.css">
 <link rel="stylesheet" href="styles/other.css">
 <link rel="stylesheet" href="styles/navbar.css">
+<script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
+<script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
+<script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
+<script src="https://unpkg.com/blockly/msg/en.js"></script>
   <meta charset="UTF-8">
   <title>About | Bloxd World</title>
 <meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
@@ -132,43 +136,39 @@ themeToggle.addEventListener("click", (e) => {
 if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   document.body.classList.add("mobile");
 }
-const toolboxJson = {
-  "kind": "flyoutToolbox",
-  "contents": [
-    { "kind": "block", "type": "controls_if" },
-    { "kind": "block", "type": "logic_compare" },
-    { "kind": "block", "type": "math_number" }
-  ]
-};
-const workspace = Blockly.inject('blocklyDiv', {
-  toolbox: {
-  "kind": "flyoutToolbox",
-  "contents": [
-    { "kind": "block", "type": "controls_if" },
-    { "kind": "block", "type": "logic_compare" },
-    { "kind": "block", "type": "math_number" }
-  ]
-}
-,
-  scrollbars: true,
-  trashcan: true
+window.addEventListener("DOMContentLoaded", () => {
+  const toolboxJson = {
+    kind: "flyoutToolbox",
+    contents: [
+      { kind: "block", type: "controls_if" },
+      { kind: "block", type: "logic_compare" },
+      { kind: "block", type: "math_number" }
+    ]
+  };
+
+  Blockly.defineBlocksWithJsonArray([
+    {
+      type: "play_sound",
+      message0: "Play %1",
+      args0: [
+        {
+          type: "field_dropdown",
+          name: "VALUE",
+          options: [["C4", "c4.m4a"], ["D4", "d4.m4a"]]
+        }
+      ],
+      previousStatement: null,
+      nextStatement: null,
+      colour: 160
+    }
+  ]);
+
+  Blockly.inject("blocklyDiv", {
+    toolbox: toolboxJson,
+    scrollbars: true,
+    trashcan: true
+  });
 });
-Blockly.defineBlocksWithJsonArray([
-  {
-    "type": "play_sound",
-    "message0": "Play %1",
-    "args0": [
-      {
-        "type": "field_dropdown",
-        "name": "VALUE",
-        "options": [["C4", "c4.m4a"], ["D4", "d4.m4a"]]
-      }
-    ],
-    "previousStatement": null,
-    "nextStatement": null,
-    "colour": 160
-  }
-]);
 
   </script>
 <footer class="site-footer">
@@ -183,9 +183,5 @@ Blockly.defineBlocksWithJsonArray([
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/googlelogin.js"></script>
-<script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
-<script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
-<script src="https://unpkg.com/blockly/javascript_compressed.js"></script>
-<script src="https://unpkg.com/blockly/msg/en.js"></script>
 </body>
 </html>
