@@ -127,11 +127,6 @@ themeToggle.addEventListener("click", (e) => {
 if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
   document.body.classList.add("mobile");
 }
-const workspace = Blockly.inject('blocklyDiv', {
-  toolbox: toolboxJson,
-  scrollbars: true,
-  trashcan: true
-});
 const toolboxJson = {
   "kind": "flyoutToolbox",
   "contents": [
@@ -140,6 +135,11 @@ const toolboxJson = {
     { "kind": "block", "type": "math_number" }
   ]
 };
+const workspace = Blockly.inject('blocklyDiv', {
+  toolbox: toolboxJson,
+  scrollbars: true,
+  trashcan: true
+});
 Blockly.defineBlocksWithJsonArray([
   {
     "type": "play_sound",
