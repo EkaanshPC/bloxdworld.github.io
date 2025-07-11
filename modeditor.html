@@ -313,6 +313,152 @@ window.addEventListener("DOMContentLoaded", () => {
       colour: 210,
       tooltip: "Log a custom message",
       helpUrl: ""
+    },
+    {
+      type: "get_entity_name",
+      message0: "Get ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: "'s name by ID",
+      colour: 210,
+      tooltip: "Get a mob or entity's name by its ID",
+      helpUrl: ""
+    },
+    {
+      type: "get_entity_position",
+      message0: "Get ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: "'s position by ID",
+      colour: 210,
+      tooltip: "Get a mob or entity's position by its ID",
+      helpUrl: ""
+    },
+    {
+      type: "set_entity_velocity",
+      message0: "Set ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: "'s velocity by ID",
+      colour: 210,
+      tooltip: "Set a mob or entity's velocity by its ID",
+      helpUrl: ""
+    },
+    {
+      type: "set_entity_position",
+      message0: "Set ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      args1: {
+        type: "field_input",
+        name: "X_POSITION",
+        text: "X"
+      },
+      args2: {
+        type: "field_input",
+        name: "Y_POSITION",
+        text: "Y"
+      },
+      args3: {
+        type: "field_input",
+        name: "Z_POSITION",
+        text: "Z"
+      },
+      message1: "'s position by ID",
+      colour: 210,
+      tooltip: "Set a mob or entity's position by its ID",
+      helpUrl: ""
+    },
+    {
+      type: "get_player_ids",
+      message0: "Get player's ID",
+      colour: 210,
+      tooltip: "Get all ids of the players in the game",
+      helpUrl: ""
+    },
+    {
+      type: "player_is_in_game",
+      message0: "Is ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: " in game?",
+      colour: 210,
+      tooltip: "Check if a player is in the game by their ID",
+      helpUrl: ""
+    },
+    {
+      type: "player_logged_in",
+      message0: "Is  ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: " logged in?",
+      colour: 210,
+      tooltip: "Check if a player is logged in by their ID",
+      helpUrl: ""
+    },
+    {
+      type: "get_player_party_when_joined",
+      message0: "Get ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: "'s party when joined",
+      colour: 210,
+      tooltip: "Get a player's party when they joined",
+      helpUrl: ""
+    },
+    {
+      type: "get_num_players",
+      message0: "Get Number of players",
+      colour: 210,
+      tooltip: "Get the number of players in the game",
+      helpUrl: ""
+    },
+    {
+      type: "getBlockCoordinatesPlayerStandingOn",
+      message0: "Get block coordinates on which ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: " is standing on",
+      colour: 210,
+      tooltip: "Get the block coordinates of the player standing on",
+      helpUrl: ""
+    },
+    {
+      type: "getBlockTypesPlayerStandingOn",
+      message0: "Get block types on which ",
+      args0: {
+        type: "field_input",
+        name: "ENTITY_ID",
+        text: "Entity's ID"
+      },
+      message1: " is standing on",
+      colour: 210,
+      tooltip: "Get a mob or entity's block types on which it is standing on by ID",
+      helpUrl: ""
     }
   ]);
 
@@ -327,12 +473,55 @@ window.addEventListener("DOMContentLoaded", () => {
   Blockly.BloxdCode = {};
   Blockly.BloxdCode['log_message'] = function(block) {
     const msg = block.getFieldValue('TEXT');
-    return `log("${msg}");\n`;
+    return `api.log("${msg}");\n`;
   };
-  Blockly.BloxdCode['play_sound'] = function(block) {
-    const sound = block.getFieldValue('VALUE');
-    return `playSound("${sound}");\n`;
+Blockly.BloxdCode['get_entity_name'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.getEntityName(${id});\n`;
   };
+Blockly.BloxdCode['get_entity_position'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.getPosition(${id});\n`;
+  };
+Blockly.BloxdCode['set_entity_velocity'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.setVelocity(${id});\n`;
+  };
+Blockly.BloxdCode['set_entity_position'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    const x = block.getFieldValue('X_POSITION');
+    const y = block.getFieldValue('Y_POSITION');
+    const z = block.getFieldValue('Z_POSITION');
+    return `api.setPosition(${id}, ${x}, ${y}, ${z});\n`;
+  };
+Blockly.BloxdCode['get_player_ids'] = function(block) {
+    return `api.getPlayerIds();\n`;
+  };
+Blockly.BloxdCode['player_is_in_game'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.playerIsInGame${id});\n`;
+  };
+Blockly.BloxdCode['player_logged_in'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.playerIsLoggedIn(${id});\n`;
+  };
+Blockly.BloxdCode['get_player_party_when_joined'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.getPlayerPartyWhenJoined(${id});\n`;
+  };
+Blockly.BloxdCode['get_num_players'] = function(block) {
+    return `api.getNumPlayers();\n`;
+  };
+Blockly.BloxdCode['getBlockCoordinatesPlayerStandingOn'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.getBlockCoordinatesPlayerStandingOn(${id});\n`;
+  };
+Blockly.BloxdCode['getBlockTypesPlayerStandingOn'] = function(block) {
+    const id = block.getFieldValue('ENTITY_ID');
+    return `api.getBlockTypesPlayerStandingOn(${id});\n`;
+  };
+
+
 
   Blockly.BloxdCode.workspaceToCode = function(ws) {
     const blocks = ws.getTopBlocks(true);
