@@ -194,48 +194,87 @@ if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 }
 window.addEventListener("DOMContentLoaded", () => {
   // 🧩 Toolbox with custom categories
-  const toolbox = {
-    kind: "categoryToolbox",
-    contents: [
-      {
-        kind: "category",
-        name: "Logic",
-        colour: "#5C81A6",
-        contents: [
-          { kind: "block", type: "controls_if" },
-          { kind: "block", type: "logic_compare" }
-        ]
-      },
-      {
-        kind: "category",
-        name: "CodeAPI",
-        colour: "#AA5CA6",
-        contents: [
-          { kind: "block", type: "log_message" },
-          { kind: "block", type: "get_entity_name" },
-          { kind: "block", type: "get_entity_position" },
-          { kind: "block", type: "set_entity_velocity" },
-          { kind: "block", type: "set_entity_position" },
-          { kind: "block", type: "get_player_ids" },
-          { kind: "block", type: "player_is_in_game" },
-          { kind: "block", type: "player_logged_in" },
-          { kind: "block", type: "get_player_party_when_joined" },
-          { kind: "block", type: "get_num_players" },
-          { kind: "block", type: "getBlockCoordinatesPlayerStandingOn" },
-          { kind: "block", type: "getBlockTypesPlayerStandingOn" },
-          { kind: "block", type: "getUnitCoordinatesLifeformWithin" },
-          { kind: "block", type: "showShopTutorial" },
-          { kind: "block", type: "getShieldAmount" },
-          { kind: "block", type: "getHealth" },
-          { kind: "block", type: "setShieldAmount" },
-          { kind: "block", type: "setHealth" },
-          { kind: "block", type: "applyHealthChange" },
-          { kind: "block", type: "getEntityIdFromName" },
-          { kind: "block", type: "applyMeleeHit" }
-        ]
-      }
-    ]
-  };
+ const toolbox = {
+  kind: "categoryToolbox",
+  contents: [
+    {
+      kind: "category",
+      name: "Logic",
+      colour: "#5C81A6",
+      contents: [
+        { kind: "block", type: "controls_if" },
+        { kind: "block", type: "logic_compare" }
+      ]
+    },
+    {
+      kind: "category",
+      name: "Entities",
+      colour: "#7CB342",
+      contents: [
+        { kind: "block", type: "get_entity_name" },
+        { kind: "block", type: "get_entity_position" },
+        { kind: "block", type: "set_entity_velocity" },
+        { kind: "block", type: "set_entity_position" },
+        { kind: "block", type: "getEntityIdFromName" },
+        { kind: "block", type: "kill_lifeform" }
+      ]
+    },
+    {
+      kind: "category",
+      name: "Players",
+      colour: "#42A5F5",
+      contents: [
+        { kind: "block", type: "get_player_ids" },
+        { kind: "block", type: "player_is_in_game" },
+        { kind: "block", type: "player_logged_in" },
+        { kind: "block", type: "get_player_party_when_joined" },
+        { kind: "block", type: "get_num_players" },
+        { kind: "block", type: "force_respawn" }
+      ]
+    },
+    {
+      kind: "category",
+      name: "Combat",
+      colour: "#EF5350",
+      contents: [
+        { kind: "block", type: "applyMeleeHit" },
+        { kind: "block", type: "attempt_apply_damage" }
+      ]
+    },
+    {
+      kind: "category",
+      name: "Health & Shields",
+      colour: "#AB47BC",
+      contents: [
+        { kind: "block", type: "getShieldAmount" },
+        { kind: "block", type: "setShieldAmount" },
+        { kind: "block", type: "getHealth" },
+        { kind: "block", type: "setHealth" },
+        { kind: "block", type: "applyHealthChange" }
+      ]
+    },
+    {
+      kind: "category",
+      name: "Environment",
+      colour: "#26C6DA",
+      contents: [
+        { kind: "block", type: "getBlockCoordinatesPlayerStandingOn" },
+        { kind: "block", type: "getBlockTypesPlayerStandingOn" },
+        { kind: "block", type: "getUnitCoordinatesLifeformWithin" }
+      ]
+    },
+    {
+      kind: "category",
+      name: "UI & Effects",
+      colour: "#FFA726",
+      contents: [
+        { kind: "block", type: "showShopTutorial" },
+        { kind: "block", type: "log_message" }
+      ]
+    }
+  ]
+};
+
 
   // 🧱 Define custom blocks
   Blockly.defineBlocksWithJsonArray([
@@ -446,6 +485,66 @@ window.addEventListener("DOMContentLoaded", () => {
       nextStatement: null,
       colour: 210
     },
+    {
+  type: "attempt_apply_damage",
+  message0: "Apply damage ➜ Source: %1 Target: %2 Amount: %3 Item: %4",
+  args0: [
+    { type: "field_input", name: "EID", text: "eId" },
+    { type: "field_input", name: "HIT_EID", text: "hitEId" },
+    { type: "field_number", name: "DMG_AMT", value: 10 },
+    { type: "field_input", name: "WITH_ITEM", text: "itemId" }
+  ],
+  message1: "Body Part: %1 Dir: %2 True Dmg: %3 Crit: %4 Broadcast Hurt: %5",
+  args1: [
+    { type: "field_dropdown", name: "BODY_PART", options: [["None", "undefined"], ["Head", "\"head\""], ["Legs", "\"legs\""]] },
+    { type: "field_dropdown", name: "ATTACK_DIR", options: [["None", "undefined"], ["Forward", "\"forward\""]] },
+    { type: "field_checkbox", name: "IS_TRUE_DMG", checked: false },
+    { type: "field_checkbox", name: "CRIT", checked: false },
+    { type: "field_checkbox", name: "BROADCAST", checked: true }
+  ],
+  message2: "Reduce Vertical KB: %1 Horizontal Mult: %2 Vertical Mult: %3",
+  args2: [
+    { type: "field_checkbox", name: "REDUCE_Y_KB", checked: true },
+    { type: "field_number", name: "KB_X", value: 1 },
+    { type: "field_number", name: "KB_Y", value: 1 }
+  ],
+  message3: "Cooldown Settings: %1 Sound Override: %2 Ignore Rules: %3 Damager DbId: %4",
+  args3: [
+    { type: "field_input", name: "COOLDOWN", text: "null" },
+    { type: "field_input", name: "SOUND", text: "null" },
+    { type: "field_checkbox", name: "IGNORE_RULES", checked: false },
+    { type: "field_input", name: "DAMAGER_DB_ID", text: "null" }
+  ],
+  previousStatement: null,
+  nextStatement: null,
+  colour: 0,
+  tooltip: "Apply damage with labeled inputs and effects",
+  helpUrl: ""
+},
+{
+  type: "force_respawn",
+  message0: "Force respawn %1 on %2 (optional)",
+  args0: [
+    { type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+    { type: "field_input", name: "RESPAWN_REASON", text: "optionally respawn pos" }
+  ],
+  previousStatement: null,
+  nextStatement: null,
+  colour: 210,
+  tooltip: "Force a player to respawn, optionally with a reason",
+  helpUrl: ""
+},
+{type:"kill_lifeform",
+  message0: "Kill lifeform %1 (killed by %2)",
+  args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+  { type: "field_input", name: "KILLED_BY", text: "Who killed it?" }
+  ],
+  previousStatement: null,
+  nextStatement: null,
+  colour: 210,
+  tooltip: "Kill a lifeform by its entity ID",
+  helpUrl: ""
+}
   ]);
 
   // 🧠 Blockly injection
@@ -508,7 +607,74 @@ window.addEventListener("DOMContentLoaded", () => {
       return `api.applyMeleeHit(${playerId}, ${entityId}, "${directionFacing}", "${bodyPartHit}");\n`;
     }
   };
+Blockly.BloxdCode['attempt_apply_damage'] = function(block) {
+  const eId = block.getFieldValue("EID");
+  const hitEId = block.getFieldValue("HIT_EID");
+  const dmg = block.getFieldValue("DMG_AMT");
+  const item = block.getFieldValue("WITH_ITEM");
 
+  const data = {
+    eId,
+    hitEId,
+    attemptedDmgAmt: dmg,
+    withItem: item
+  };
+
+  // Optional values
+  const body = block.getFieldValue("BODY_PART");
+  if (body && body !== "undefined") data.bodyPartHit = body;
+
+  const dir = block.getFieldValue("ATTACK_DIR");
+  if (dir && dir !== "undefined") data.attackDir = dir;
+
+  const trueDmg = block.getFieldValue("IS_TRUE_DMG");
+  if (trueDmg === "TRUE") data.isTrueDamage = true;
+
+  const crit = block.getFieldValue("CRIT");
+  if (crit === "TRUE") data.showCritParticles = true;
+
+  const broadcast = block.getFieldValue("BROADCAST");
+  if (broadcast === "TRUE") data.broadcastEntityHurt = true;
+
+  const reduceYKB = block.getFieldValue("REDUCE_Y_KB");
+  if (reduceYKB === "FALSE") data.reduceVerticalKbVelocity = false;
+
+  const kbX = block.getFieldValue("KB_X");
+  if (kbX !== "1") data.horizontalKbMultiplier = Number(kbX);
+
+  const kbY = block.getFieldValue("KB_Y");
+  if (kbY !== "1") data.verticalKbMultiplier = Number(kbY);
+
+  const cooldown = block.getFieldValue("COOLDOWN");
+  if (cooldown && cooldown !== "null") data.attackCooldownSettings = cooldown;
+
+  const sound = block.getFieldValue("SOUND");
+  if (sound && sound !== "null") data.hittingSoundOverride = sound;
+
+  const ignore = block.getFieldValue("IGNORE_RULES");
+  if (ignore === "TRUE") data.ignoreOtherEntitySettingCanAttack = true;
+
+  const dbId = block.getFieldValue("DAMAGER_DB_ID");
+  if (dbId && dbId !== "null") data.damagerDbId = dbId;
+
+  const json = JSON.stringify(data, null, 2);
+  return `api.attemptApplyDamage(${json});\n`;
+};
+Blockly.BloxdCode['force_respawn'] = function(block) {
+  const id = block.getFieldValue("ENTITY_ID");
+  const reason = block.getFieldValue("RESPAWN_REASON");
+
+  const reasonClause = reason && reason !== "undefined" ? `, "${reason}"` : "";
+  return `api.forceRespawn(${id}${reasonClause});\n`;
+};
+Blockly.BloxdCode['kill_lifeform'] = function(block) {
+  const id = block.getFieldValue("ENTITY_ID");
+  if (block.getFieldValue("KILLED_BY") === "undefined") {
+    return `api.killLifeform(${id});\n`;
+  }
+  const killedBy = block.getFieldValue("KILLED_BY");
+  return `api.killLifeform(${id}, "${killedBy}");\n`;
+};
   // 📦 Generator runner
   Blockly.BloxdCode.workspaceToCode = function(ws) {
     const blocks = ws.getTopBlocks(true);
