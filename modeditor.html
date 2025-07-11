@@ -290,7 +290,17 @@ window.addEventListener("DOMContentLoaded", () => {
         colour: "#AA5CA6",
         contents: [
           { kind: "block", type: "log_message" },
-          { kind: "block", type: "play_sound" }
+          { kind: "block", type: "get_entity_name" },
+          { kind: "block", type: "get_entity_position" },
+          { kind: "block", type: "set_entity_velocity" },
+          { kind: "block", type: "set_entity_position" },
+          { kind: "block", type: "get_player_ids" },
+          { kind: "block", type: "player_is_in_game" },
+          { kind: "block", type: "player_logged_in" },
+          { kind: "block", type: "get_player_party_when_joined" },
+          { kind: "block", type: "get_num_players" },
+          { kind: "block", type: "getBlockCoordinatesPlayerStandingOn" },
+          { kind: "block", type: "getBlockTypesPlayerStandingOn" }
         ]
       }
     ]
