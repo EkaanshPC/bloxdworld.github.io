@@ -243,6 +243,8 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Get name of entity %1",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -250,6 +252,8 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Get position of entity %1",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -277,6 +281,8 @@ window.addEventListener("DOMContentLoaded", () => {
       type: "get_player_ids",
       message0: "Get player IDs",
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -284,6 +290,8 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Is player %1 in game?",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -291,6 +299,8 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Is player %1 logged in?",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -298,12 +308,16 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Get party of player %1 when joined",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
       type: "get_num_players",
       message0: "Get number of players",
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -311,6 +325,8 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Get block coordinates player %1 is standing on",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
     },
     {
@@ -318,8 +334,109 @@ window.addEventListener("DOMContentLoaded", () => {
       message0: "Get block types player %1 is standing on",
       args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
       output: null,
+       previousStatement: null,
+      nextStatement: null,
       colour: 210
-    }
+    },
+    {
+      type: "getUnitCoordinatesLifeformWithin",
+      message0: "Get the up to 12 unit co-ordinates the lifeform is located within %1",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "showShopTutorial",
+      message0: "Show shop tutorial for %1",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "getShieldAmount",
+      message0: "Get amount of shield %1 has",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "getHealth",
+      message0: "Get health of entity %1",
+      args0: [{ type: "field_input", name: "ENTITY_ID", text: "Entity ID" }],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "setShieldAmount",
+      message0: "Set shield amount of %1 to %2",
+      args0: [
+        { type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+        { type: "field_input", name: "AMOUNT", text: "Amount" }
+      ],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "setHealth",
+      message0: "Set health of entity %1 to %2",
+      args0: [
+        { type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+        { type: "field_input", name: "HEALTH", text: "Health" },
+        { type: "field_input", name: "WHO_DID_DAMAGE", text: "Who Did Damage" },
+        { type: "field_checkbox", name: "INCREASE_MAX_HEALTH_IF_NEEDED", text: "Increase Max Health If Needed" }
+      ],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "applyHealthChange",
+      message0: "Apply health change to entity %1 by %2",
+      args0: [
+        { type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+        { type: "field_input", name: "CHANGE_AMOUNT", text: "Change Amount" },
+        { type: "field_input", name: "WHO_DID_DAMAGE", text: "Who Did Damage" },
+        { type: "field_input", name: "BROADCAST", text: "Broadcast" }
+      ],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "getEntityIdFromName",
+      message0: "Get entity ID from name %1",
+      args0: [{ type: "field_input", name: "NAME", text: "Entity Name" }],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
+    {
+      type: "applyMeleeHit",
+      message0: "Apply melee hit from player ID %1 to entity ID %2",
+      args0: [
+        { type: "field_input", name: "PLAYER_ID", text: "Player ID" },
+        { type: "field_input", name: "ENTITY_ID", text: "Entity ID" },
+        { type: "field_input", name: "DIRECTION_FACING", text: "Who Did Damage" },
+        { type: "field_dropdown", name: "BODY_PART_HIT", options: ["TorsoNode","HeadMesh","ArmRightMesh","ArmLeftMesh","LegLeftMesh","LegRightMesh"] ,text:"Which body part was hit?"}
+      ],
+      output: null,
+       previousStatement: null,
+      nextStatement: null,
+      colour: 210
+    },
   ]);
 
   // 🧠 Blockly injection
@@ -349,6 +466,38 @@ window.addEventListener("DOMContentLoaded", () => {
     get_num_players: () => `api.getNumPlayers();\n`,
     getBlockCoordinatesPlayerStandingOn: block => `api.getBlockCoordinatesPlayerStandingOn(${block.getFieldValue("ENTITY_ID")});\n`,
     getBlockTypesPlayerStandingOn: block => `api.getBlockTypesPlayerStandingOn(${block.getFieldValue("ENTITY_ID")});\n`
+    ,
+    getUnitCoordinatesLifeformWithin: block => `api.getUnitCoordinatesLifeformWithin(${block.getFieldValue("ENTITY_ID")});\n`,
+    showShopTutorial: block => `api.showShopTutorial(${block.getFieldValue("ENTITY_ID")});\n`,
+    getShieldAmount: block => `api.getShieldAmount(${block.getFieldValue("ENTITY_ID")});\n`,
+    getHealth: block => `api.getHealth(${block.getFieldValue("ENTITY_ID")});\n`,
+    setShieldAmount: block => {
+      const id = block.getFieldValue("ENTITY_ID");
+      const amount = block.getFieldValue("AMOUNT");
+      return `api.setShieldAmount(${id}, ${amount});\n`;
+    },
+    setHealth: block => {
+      const id = block.getFieldValue("ENTITY_ID");
+      const health = block.getFieldValue("HEALTH");
+      const whoDidDamage = block.getFieldValue("WHO_DID_DAMAGE");
+      const increaseMaxHealth = block.getFieldValue("INCREASE_MAX_HEALTH_IF_NEEDED") === "TRUE";
+      return `api.setHealth(${id}, ${health}, ${whoDidDamage}, ${increaseMaxHealth});\n`;
+    },
+    applyHealthChange: block => {
+      const id = block.getFieldValue("ENTITY_ID");
+      const changeAmount = block.getFieldValue("CHANGE_AMOUNT");
+      const whoDidDamage = block.getFieldValue("WHO_DID_DAMAGE");
+      const broadcast = block.getFieldValue("BROADCAST");
+      return `api.applyHealthChange(${id}, ${changeAmount}, ${whoDidDamage}, ${broadcast});\n`;
+    },
+    getEntityIdFromName: block => `api.getPlayerId("${block.getFieldValue("NAME")}");\n`,
+    applyMeleeHit: block => {
+      const playerId = block.getFieldValue("PLAYER_ID");
+      const entityId = block.getFieldValue("ENTITY_ID");
+      const directionFacing = block.getFieldValue("DIRECTION_FACING");
+      const bodyPartHit = block.getFieldValue("BODY_PART_HIT");
+      return `api.applyMeleeHit(${playerId}, ${entityId}, "${directionFacing}", "${bodyPartHit}");\n`;
+    }
   };
 
   // 📦 Generator runner
