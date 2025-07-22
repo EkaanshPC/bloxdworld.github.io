@@ -1,4 +1,11 @@
-/* === Navbar Container === */
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
 ul.navbar {
   list-style: none;
   display: flex;
@@ -10,14 +17,12 @@ ul.navbar {
   transition: gap 0.3s ease;
 }
 
-/* === Navbar Item === */
 .nav-item {
   position: relative;
   display: flex;
   align-items: center;
 }
 
-/* === Link Styling === */
 .nav-item a {
   display: flex;
   flex-direction: row;
@@ -34,7 +39,6 @@ ul.navbar {
   text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
 }
 
-/* === Dark Mode Link Styling === */
 body.dark-mode .nav-item a {
   color: #ccc;
 }
@@ -43,12 +47,10 @@ body.dark-mode .nav-item a:hover {
   color: #00ffff;
 }
 
-/* === Icon Styling === */
 .nav-item i {
   font-size: 1.2rem;
 }
 
-/* === Label Styling === */
 .nav-label {
   margin-left: 6px;
   font-size: 0.85rem;
@@ -67,12 +69,10 @@ body.dark-mode .nav-item a:hover {
   opacity: 1;
 }
 
-/* === Dark Mode Label === */
 body.dark-mode .nav-label {
   color: #ccc;
 }
 
-/* === Mobile Behavior === */
 body.mobile .nav-label {
   display: block;
   opacity: 1;
@@ -87,46 +87,8 @@ body.mobile .nav-label {
   ul.navbar {
     flex-wrap: wrap;
     gap: 15px;
-  }
-}
-
-/* === Auth Area (Login/Logout) === */
-#authArea {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  list-style: none;
-  padding: 0;
-  gap: 12px;
-}
-
-#authArea a {
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.2s ease;
-}
-
-#authArea a:hover {
-  color: cyan;
-}
-body.dark-mode #authArea {
-  color: #ccc;
-}
-body.dark-mode #authArea a {
-  color: #ccc;
-}
-
-body.dark-mode #authArea a:hover {
-  color: cyan;
-}
-
-/* === Responsive Adjustments === */
-@media (max-width: 600px) {
-  ul.navbar {
     flex-direction: column;
     align-items: center;
-    gap: 10px;
   }
   #authArea {
     margin-top: 10px;
@@ -140,10 +102,10 @@ body.dark-mode #authArea a:hover {
     font-size: 0.9rem;
   }
   .nav-label {
-    display: none; /* Hide labels on mobile */
+    display: none;
   }
   .nav-item:hover .nav-label {
-    display: block; /* Show label on hover */
+    display: block;
     opacity: 1;
     position: static;
     background: none;
@@ -179,9 +141,38 @@ body.dark-mode #authArea a:hover {
     color: cyan;
     text-shadow: 0 0 6px cyan, 0 0 12px cyan;
   }
-
-
 }
+
+#authArea {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  gap: 12px;
+}
+
+#authArea a {
+  color: #000;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+#authArea a:hover {
+  color: cyan;
+}
+
+body.dark-mode #authArea {
+  color: #ccc;
+}
+body.dark-mode #authArea a {
+  color: #ccc;
+}
+body.dark-mode #authArea a:hover {
+  color: cyan;
+}
+
 .emailText .dark-mode {
   color: #ccc;
 }
