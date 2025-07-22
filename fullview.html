@@ -362,6 +362,95 @@ body:not(.dark-mode) #codeSnippet {
   color: #000;
   border: 1px solid rgb(94, 87, 87);
 }
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+#nameHolder {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+#nameHolder img {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+#nameHolder h1 {
+  font-size: 28px;
+  margin: 0;
+  color: #222;
+}
+
+#modMeta {
+  font-size: 14px;
+  color: #777;
+  padding: 0 24px 16px;
+}
+
+#imageHolder img {
+  max-width: 100%;
+  display: block;
+  margin: 16px auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+h4 {
+  font-size: 18px;
+  margin-top: 32px;
+  padding: 0 24px;
+  color: #444;
+}
+
+#codeSnippet {
+  background-color: #222;
+  color: #0f0;
+  padding: 12px;
+  margin: 16px 24px;
+  border-radius: 6px;
+  font-family: monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 14px;
+}
+
+#copyButton {
+  margin: 8px 24px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background: #1e90ff;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#copyButton:hover {
+  background: #0f6edc;
+}
+
+.info-box {
+  background-color: #ffe9c3;
+  padding: 16px;
+  margin: 24px;
+  border-left: 4px solid #ff9900;
+  border-radius: 4px;
+  color: #444;
+  font-size: 14px;
+  font-style: italic;
+}
 
   </style>
 </head>
@@ -427,71 +516,78 @@ body:not(.dark-mode) #codeSnippet {
   </ul>
     </div>
   </div>
-<div id="nameHolder">
-  <img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png" alt="Mod Icon" class="modIcon">
-  <h1>Lorem ipsum dolor sit amet</h1>
-</div>
-
-<p>
-  Uploaded on: <span id="uploadDate">October 1, 2023</span> |
-  Made by: <span id="uploaderName">John Doe</span> |
-  Category: <span id="category">Other</span>
-</p>
-
-<div id="imageHolder"></div>
-
-<h4 class="description">Consectetur adipiscing elit</h4>
-
-<pre id="codeSnippet">console.log('Hello, world!');</pre>
-
-<p>Copy code to clipboard: <button id="copyButton">Copy</button></p>
-
-<p class="info-box">No more info about the mod is provided yet.</p>
-
-<div id="analytics-data">
-        <h3>Mod Analytics (Last 5 Days)</h3>
-        <div class="analytics-bars-container">
-            <div class="day-bar-wrapper">
-                <span class="day-label">Day 1</span>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="day1Fill"></div>
-                </div>
-                <span class="day-value" id="day1Value">N/A</span>
-            </div>
-
-            <div class="day-bar-wrapper">
-                <span class="day-label">Day 2</span>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="day2Fill"></div>
-                </div>
-                <span class="day-value" id="day2Value">N/A</span>
-            </div>
-
-            <div class="day-bar-wrapper">
-                <span class="day-label">Day 3</span>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="day3Fill"></div>
-                </div>
-                <span class="day-value" id="day3Value">N/A</span>
-            </div>
-
-            <div class="day-bar-wrapper">
-                <span class="day-label">Day 4</span>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="day4Fill"></div>
-                </div>
-                <span class="day-value" id="day4Value">N/A</span>
-            </div>
-
-            <div class="day-bar-wrapper">
-                <span class="day-label">Day 5</span>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="day5Fill"></div>
-                </div>
-                <span class="day-value" id="day5Value">N/A</span>
-            </div>
-        </div>
+<div id="mod-detail-page" class="modrinth-style">
+  <div class="mod-header">
+    <img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png" alt="Mod Icon" class="mod-icon">
+    <div class="mod-title-section">
+      <h1 class="mod-title">Lorem ipsum dolor sit amet</h1>
+      <div class="mod-meta">
+        <span><strong>Uploaded:</strong> <span id="uploadDate">October 1, 2023</span></span>
+        <span><strong>By:</strong> <span id="uploaderName">John Doe</span></span>
+        <span><strong>Category:</strong> <span id="category">Other</span></span>
+      </div>
     </div>
+  </div>
+
+  <div id="imageHolder" class="mod-preview-image"></div>
+
+  <div class="mod-description">
+    <h2>Description</h2>
+    <h4 class="description">Consectetur adipiscing elit</h4>
+  </div>
+
+  <div class="mod-code">
+    <h2>Addon Code</h2>
+    <pre id="codeSnippet">console.log('Hello, world!');</pre>
+    <button id="copyButton">📋 Copy Code</button>
+  </div>
+
+  <div class="mod-extra">
+    <h2>Additional Info</h2>
+    <p class="info-box">No more info about the mod is provided yet.</p>
+  </div>
+
+  <div id="analytics-data" class="mod-analytics">
+    <h2>Mod Analytics (Last 5 Days)</h2>
+    <div class="analytics-bars-container">
+      <div class="day-bar-wrapper">
+        <span class="day-label">Day 1</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="day1Fill"></div>
+        </div>
+        <span class="day-value" id="day1Value">N/A</span>
+      </div>
+      <div class="day-bar-wrapper">
+        <span class="day-label">Day 2</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="day2Fill"></div>
+        </div>
+        <span class="day-value" id="day2Value">N/A</span>
+      </div>
+      <div class="day-bar-wrapper">
+        <span class="day-label">Day 3</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="day3Fill"></div>
+        </div>
+        <span class="day-value" id="day3Value">N/A</span>
+      </div>
+      <div class="day-bar-wrapper">
+        <span class="day-label">Day 4</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="day4Fill"></div>
+        </div>
+        <span class="day-value" id="day4Value">N/A</span>
+      </div>
+      <div class="day-bar-wrapper">
+        <span class="day-label">Day 5</span>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="day5Fill"></div>
+        </div>
+        <span class="day-value" id="day5Value">N/A</span>
+      </div>
+    </div>
+  </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/googlelogin.js"></script>
   <script>
