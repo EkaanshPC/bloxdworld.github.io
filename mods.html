@@ -343,6 +343,85 @@ body.dark #sortVotes:hover {
   background-color: #008b8d;
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
 }
+.mods-toolbar {
+  max-width: 900px;
+  margin: 40px auto 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.04);
+}
+
+body.dark-mode .mods-toolbar {
+  background: #2a2a2a;
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.05);
+}
+
+.mods-header {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #222;
+}
+
+body.dark-mode .mods-header {
+  color: #eee;
+}
+
+.mods-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.search-bar,
+.filter-select,
+.sort-button {
+  font-size: 1rem;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  transition: all 0.2s ease;
+}
+
+.search-bar {
+  flex: 1;
+  min-width: 160px;
+}
+
+.filter-select {
+  background: #fff;
+}
+
+.sort-button {
+  background: #00ffff;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  background: #00e6e6;
+}
+
+body.dark-mode .search-bar,
+body.dark-mode .filter-select {
+  background: #3a3a3a;
+  color: #eee;
+  border: 1px solid #555;
+}
+
+body.dark-mode .sort-button {
+  background: #00ffff;
+  color: #000;
+}
+
+body.dark-mode .sort-button:hover {
+  background: #00e6e6;
+}
   </style>
 </head>
 <body>
@@ -406,18 +485,26 @@ body.dark #sortVotes:hover {
     </div>
   </div>
 </div>
+
   <div class="mods-container">
-    <div class="mods-header">Community Mods</div>
+    <div class="mods-toolbar">
+  <div class="mods-header">Community Mods</div>
+
+  <div class="mods-controls">
     <input type="text" id="search" class="search-bar" placeholder="Search mods...">
-<select id="categoryFilter">
-<option selected value="">OTHER</option>
-<option value="Gameplay">Gameplay</option>
-<option value="Visual">Visual</option>
-<option value="NPC/AI">NPC/AI</option>
-<option value="Utilities">Tools/Utilities</option>
-<option value="Experimental">Experimental</option>
-</select>
-<button id="sortVotes">Sort by Votes</button>
+
+    <select id="categoryFilter" class="filter-select">
+      <option selected value="">Other</option>
+      <option value="Gameplay">Gameplay</option>
+      <option value="Visual">Visual</option>
+      <option value="NPC/AI">NPC/AI</option>
+      <option value="Utilities">Tools/Utilities</option>
+      <option value="Experimental">Experimental</option>
+    </select>
+
+    <button id="sortVotes" class="sort-button">Sort by Votes</button>
+  </div>
+</div>
     <div id="mods-list">Loading. Please Wait</div>
   </div>
   <div id="pagination" style="text-align: center; margin-top: 20px;"></div>

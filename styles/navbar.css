@@ -184,5 +184,5 @@ body.dark-mode #authArea a:hover {
 
 body.dark-mode .modrinth-navbar {
   background: #2a2a2a;
-  box-shadow: 0 0 24px rgb(0, 0, 0,0.4);
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.4);
 }
