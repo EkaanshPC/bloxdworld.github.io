@@ -176,3 +176,11 @@ body.dark-mode #authArea a:hover {
 .emailText .dark-mode {
   color: #ccc;
 }
+.modrinth-navbar {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.04);
+  padding: 10px 20px;
+  max-width: 900px;
+  margin: 20px auto;
+}
