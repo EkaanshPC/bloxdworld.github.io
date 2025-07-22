@@ -18,350 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-.cta-buttons {
-  margin-top: 20px;
-  display: flex;
-  gap: 16px;
-  justify-content: center;
-}
-
-.cta-button {
-  padding: 12px 24px;
-  background-color: #007c7e;
-  color: white;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.cta-button:hover {
-  background-color: #009fa1;
-}
-.intro-text {
-  max-width: 100%;
-  margin: 20px auto 30px;
-  font-size: 25px;
-  text-align: center;
-  color: #333;
-  line-height: 1.6;
-  transition: color 0.3s ease;
-}
-
-body.dark-mode .intro-text {
-  color: #eee;
-}
-.how-it-works {
-  max-width: 800px;
-  margin: 60px auto;
-  padding: 20px;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
-  text-align: center;
-}
-
-.how-it-works h2 {
-  font-size: 28px;
-  color: #007c7e;
-  margin-bottom: 20px;
-}
-
-.how-it-works ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.how-it-works li {
-  font-size: 18px;
-  margin: 12px 0;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-body.dark-mode .how-it-works {
-  background-color: #222;
-  color: #eee;
-  box-shadow: 0 0 12px rgba(0, 255, 255, 0.2);
-}
-
-body.dark-mode .how-it-works h2 {
-  color: #00e0e2;
-}
-
-body.dark-mode .how-it-works li {
-  color: #ccc;
-}
-/* Container for the mod title and icon */
-#nameHolder {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.modIcon {
-  width: 72px;
-  height: 72px;
-  border-radius: 12px;
-  object-fit: cover;
-  background-color: #f0f0f0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-}
-
-/* Mod title */
-#nameHolder h1 {
-  margin: 0;
-  font-size: 2em;
-  font-weight: 600;
-  color: #1a1a1a;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-}
-
-/* Metadata line */
-p span#uploadDate,
-p span#uploaderName,
-p span#category {
-  font-weight: 500;
-  color: #666;
-}
-
-p {
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  font-size: 0.95em;
-  color: #444;
-  margin: 8px 0;
-}
-
-/* Mod image */
-#imageHolder img {
-  width: 100%;
-  border-radius: 10px;
-  margin: 20px 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-}
-
-/* Description block */
-h4 {
-  font-size: 1.05em;
-  line-height: 1.7;
-  color: #2c2c2c;
-  background: #f9f9f9;
-  padding: 18px;
-  border-radius: 10px;
-  white-space: pre-wrap;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
-  border: 1px solid #e5e5e5;
-}
-
-/* Code snippet */
-#codeSnippet {
-  background-color: #282c34;
-  color: #e6e6e6;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-family: 'Fira Code', 'Courier New', monospace;
-  font-size: 0.95em;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  margin-top: 16px;
-}
-
-/* Copy button */
-#copyButton {
-  background: #00b894;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-left: 8px;
-  transition: background 0.2s ease;
-}
-
-#copyButton:hover {
-  background: #009e7a;
-}
-.dark-mode #nameHolder h1 {
-  color: #f2f2f2;
-}
-
-.dark-mode .modIcon {
-  background-color: #2a2a2a;
-  box-shadow: 0 1px 4px rgba(255, 255, 255, 0.05);
-}
-
-.dark-mode p span#uploadDate,
-.dark-mode p span#uploaderName,
-.dark-mode p span#category {
-  color: #aaa;
-}
-
-.dark-mode p {
-  color: #ccc;
-}
-
-.dark-mode #imageHolder img {
-  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
-}
-
-.dark-mode h4 {
-  background: #1e1e1e;
-  color: #ddd;
-  border: 1px solid #333;
-}
-
-.dark-mode #codeSnippet {
-  background-color: #111;
-  color: #eee;
-}
-
-.dark-mode #copyButton {
-  background: #007f6e;
-}
-
-.dark-mode #copyButton:hover {
-  background: #005f52;
-}
-
-.analytics-bars-container {
-    display: flex;
-    gap: 15px;
-    align-items: flex-end;
-    height: 200px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    justify-content: center;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-.day-bar-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-end;
-    height: 100%;
-    min-width: 40px;
-}
-
-.day-label {
-    font-size: 0.8em;
-    color: #555;
-    margin-bottom: 5px;
-    flex-shrink: 0;
-}
-
-.progress-bar-container {
-    width: 25px;
-    height: 100%;
-    background-color: #ddd;
-    border-radius: 5px;
-    overflow: hidden;
-    position: relative;
-    flex-grow: 1;
-    margin-bottom: 5px;
-}
-
-.progress-bar-fill {
-    width: 100%;
-    height: 0%;
-    background-color: #6a0dad;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    transition: height 0.5s ease-in-out;
-    border-radius: 5px;
-}
-
-.day-value {
-    font-size: 0.9em;
-    font-weight: bold;
-    color: #333;
-    flex-shrink: 0;
-}
-.dark-mode .analytics-bars-container {
-    background-color: #222;
-    border: 1px solid #444;
-}
-.dark-mode .day-label {
-    color: #bbb;
-}
-.dark-mode .progress-bar-container {
-    background-color: #333;
-}
-.dark-mode .progress-bar-fill {
-    background-color: #9b59b6;
-}
-.dark-mode .day-value {
-    color: #eee;
-}
-.info-box {
-    margin: 30px;
-    background-color: blue;
-    color: white;
-    text-shadow:
-        -1px -1px 0 #000,
-         1px -1px 0 #000,
-        -1px  1px 0 #000,
-         1px  1px 0 #000;
-    padding: 15px;
-    border-radius: 5px;
-}
-.blue-box::before {
-    content: "ℹ️";
-
-    position: absolute;
-    left: 10px;
-    font-size: 1.5em;
-    line-height: 1;
-    color: inherit;
-}
-/* Fix modIcon size conflicts */
-.modIcon {
-  width: 64px;
-  height: 64px;
-}
-
-/* Removed duplicate inline font-weight with class */
-.description {
-  text-align: left;
-  font-weight: normal;
-}
-
-/* Fixed code snippet (pre used properly now) */
-#codeSnippet {
-  background-color: #282c34;
-  color: #e6e6e6;
-  border: none;
-  padding: 14px;
-  border-radius: 8px;
-  font-family: 'Fira Code', 'Courier New', monospace;
-  font-size: 0.95em;
-  overflow-x: auto;
-  white-space: pre;
-  margin-top: 16px;
-  background-color: #ccc; /* Light theme override */
-  color: #000;
-  border: 1px solid rgb(94, 87, 87);
-}
-
-/* Optional: override light theme box bg */
-body:not(.dark-mode) #codeSnippet {
-  background-color: #ccc;
-  color: #000;
-  border: 1px solid rgb(94, 87, 87);
-}
+/* 🔧 Clean, Modrinth-like Styling */
 body {
   font-family: "Segoe UI", sans-serif;
   margin: 0;
@@ -370,81 +27,106 @@ body {
   color: #333;
 }
 
-#nameHolder {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 24px;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+.modrinth-style {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.04);
 }
 
-#nameHolder img {
+.mod-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.mod-icon {
   width: 72px;
   height: 72px;
   border-radius: 12px;
   object-fit: cover;
+  background: #f0f0f0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
-#nameHolder h1 {
-  font-size: 28px;
+.mod-title-section {
+  flex: 1;
+}
+
+.mod-title {
   margin: 0;
-  color: #222;
+  font-size: 2em;
+  font-weight: 600;
+  color: #1a1a1a;
 }
 
-#modMeta {
-  font-size: 14px;
-  color: #777;
-  padding: 0 24px 16px;
+.mod-meta span {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 0.95em;
+  color: #666;
 }
 
-#imageHolder img {
-  max-width: 100%;
-  display: block;
-  margin: 16px auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+.mod-description h2,
+.mod-code h2,
+.mod-extra h2,
+.mod-analytics h2 {
+  margin-top: 30px;
+  font-size: 1.5em;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+  color: #007c7e;
 }
 
-h4 {
-  font-size: 18px;
-  margin-top: 32px;
-  padding: 0 24px;
-  color: #444;
+.description {
+  font-size: 1em;
+  background: #f9f9f9;
+  padding: 18px;
+  border-radius: 10px;
+  color: #333;
+  border: 1px solid #e0e0e0;
+  white-space: pre-wrap;
+  margin: 0;
 }
 
 #codeSnippet {
-  background-color: #222;
-  color: #0f0;
-  padding: 12px;
-  margin: 16px 24px;
-  border-radius: 6px;
-  font-family: monospace;
+  background-color: #282c34;
+  color: #e6e6e6;
+  border: none;
+  padding: 14px;
+  border-radius: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95em;
+  overflow-x: auto;
   white-space: pre-wrap;
-  word-wrap: break-word;
-  font-size: 14px;
+  margin-top: 16px;
 }
 
 #copyButton {
-  margin: 8px 24px;
-  padding: 8px 16px;
-  font-size: 14px;
-  background: #1e90ff;
-  border: none;
+  background: #00b894;
   color: white;
+  border: none;
+  padding: 8px 16px;
   border-radius: 6px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  margin-top: 8px;
+  transition: background 0.2s ease;
 }
 
 #copyButton:hover {
-  background: #0f6edc;
+  background: #009e7a;
 }
 
 .info-box {
   background-color: #ffe9c3;
   padding: 16px;
-  margin: 24px;
+  margin: 24px 0;
   border-left: 4px solid #ff9900;
   border-radius: 4px;
   color: #444;
@@ -452,6 +134,130 @@ h4 {
   font-style: italic;
 }
 
+.analytics-bars-container {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  height: 200px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  justify-content: center;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.day-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 40px;
+}
+
+.day-label {
+  font-size: 0.8em;
+  color: #555;
+  margin-bottom: 5px;
+  flex-shrink: 0;
+}
+
+.progress-bar-container {
+  width: 25px;
+  height: 100%;
+  background-color: #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  flex-grow: 1;
+  margin-bottom: 5px;
+}
+
+.progress-bar-fill {
+  width: 100%;
+  height: 0%;
+  background-color: #6a0dad;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transition: height 0.5s ease-in-out;
+  border-radius: 5px;
+}
+
+.day-value {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #333;
+  flex-shrink: 0;
+}
+
+/* 🌙 Dark mode overrides */
+body.dark-mode .modrinth-style {
+  background-color: #1a1a1a;
+  color: #eee;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+}
+
+body.dark-mode .mod-title {
+  color: #f2f2f2;
+}
+
+body.dark-mode .mod-icon {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .mod-meta span {
+  color: #aaa;
+}
+
+body.dark-mode .description {
+  background: #1e1e1e;
+  color: #ddd;
+  border: 1px solid #333;
+}
+
+body.dark-mode #codeSnippet {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark-mode #copyButton {
+  background: #007f6e;
+}
+
+body.dark-mode #copyButton:hover {
+  background: #005f52;
+}
+
+body.dark-mode .info-box {
+  background-color: #333;
+  border-left: 4px solid #ffa500;
+  color: #eee;
+}
+
+body.dark-mode .analytics-bars-container {
+  background-color: #222;
+  border: 1px solid #444;
+}
+
+body.dark-mode .day-label {
+  color: #bbb;
+}
+
+body.dark-mode .progress-bar-container {
+  background-color: #333;
+}
+
+body.dark-mode .progress-bar-fill {
+  background-color: #9b59b6;
+}
+
+body.dark-mode .day-value {
+  color: #eee;
+}
+</style>
   </style>
 </head>
 <body>
@@ -516,6 +322,7 @@ h4 {
   </ul>
     </div>
   </div>
+
 <div id="mod-detail-page" class="modrinth-style">
   <div class="mod-header">
     <img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png" alt="Mod Icon" class="mod-icon">
@@ -528,7 +335,6 @@ h4 {
       </div>
     </div>
   </div>
-
   <div id="imageHolder" class="mod-preview-image"></div>
 
   <div class="mod-description">
