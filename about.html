@@ -18,7 +18,65 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+/* 🌟 Base Styles */
+.install-section {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
 
+.install-section h2 {
+  font-size: 1.8rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.install-step {
+  background-color: #ffffff;
+  border-left: 4px solid #007bff;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.install-step:hover {
+  background-color: #eef6ff;
+}
+
+.install-step p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* 🌙 Dark Mode Overrides */
+.dark-mode .install-section {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .install-section h2 {
+  color: #66b2ff;
+}
+
+.dark-mode .install-step {
+  background-color: #2a2a2a;
+  border-left: 4px solid #66b2ff;
+}
+
+.dark-mode .install-step:hover {
+  background-color: #333;
+}
+
+.dark-mode .install-step p {
+  color: #ddd;
+}
   </style>
 </head>
 <body>
@@ -85,24 +143,16 @@
   </div>
   </div>
 
-  <div class="section">
-<h2>HOW TO INSTALL?</h2>
-<div class="log-entry">
-<p>Find the mod of your choice.</p>
+<!-- 📦 How to Install Section -->
+<div class="install-section">
+  <h2>🛠️ How to Install?</h2>
+  <div class="install-step"><p>✅ Find the mod of your choice.</p></div>
+  <div class="install-step"><p>🔍 Click on the mod</p></div>
+  <div class="install-step"><p>📋 Copy the code snippet.</p></div>
+  <div class="install-step"><p>💾 Paste it in your world code / code block.</p></div>
+  <div class="install-step"><p>🎉 You are now done!</p></div>
 </div>
-<div class="log-entry">
-<p>Click "Show More"</p>
-</div>
-<div class="log-entry">
-<p>Copy the code section (under author)</p>
-</div>
-<div class="log-entry">
-<p>Paste it in your world code / code block.</p>
-</div>
-<div class="log-entry">
-<p>You are now done!</p>
-</div>
-  </div>
+
  <div class="devlog-container">
   <h1>🛠️ Bloxd World Devlog & Roadmap</h1>
 
