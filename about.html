@@ -77,6 +77,120 @@
 .dark-mode .install-step p {
   color: #ddd;
 }
+.devlog-container {
+  background-color: #fefefe;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 2rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.devlog-container h1 {
+  font-size: 2rem;
+  color: #007bff;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.devlog-section {
+  margin-bottom: 2rem;
+}
+
+.devlog-section h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.devlog-entry {
+  background-color: #ffffff;
+  border-left: 4px solid #007bff;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.devlog-entry:hover {
+  background-color: #eef6ff;
+}
+
+.devlog-entry time {
+  font-size: 0.9rem;
+  color: #666;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.devlog-entry p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.roadmap ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.roadmap li {
+  background-color: #f0f0f0;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.roadmap li.done {
+  background-color: #d4edda;
+  border-left: 4px solid #28a745;
+  color: #155724;
+}
+
+/* 🌙 Dark Mode Compatibility */
+.dark-mode .devlog-container {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+}
+
+.dark-mode .devlog-container h1 {
+  color: #66b2ff;
+}
+
+.dark-mode .devlog-section h2 {
+  color: #ddd;
+}
+
+.dark-mode .devlog-entry {
+  background-color: #2a2a2a;
+  border-left: 4px solid #66b2ff;
+}
+
+.dark-mode .devlog-entry:hover {
+  background-color: #333;
+}
+
+.dark-mode .devlog-entry time {
+  color: #aaa;
+}
+
+.dark-mode .devlog-entry p {
+  color: #ddd;
+}
+
+.dark-mode .roadmap li {
+  background-color: #2a2a2a;
+  color: #ccc;
+}
+
+.dark-mode .roadmap li.done {
+  background-color: #264d3c;
+  border-left: 4px solid #28a745;
+  color: #b2f0c2;
+}
+
   </style>
 </head>
 <body>
@@ -156,63 +270,64 @@
  <div class="devlog-container">
   <h1>🛠️ Bloxd World Devlog & Roadmap</h1>
 
-  <div class="section">
+  <div class="devlog-section">
     <h2>📅 Latest Updates</h2>
-    <div class="log-entry">
+    <div class="devlog-entry">
       <time>June 30, 2025</time>
       <p>🏆 Added leaderboard page for top-voted mods.</p>
     </div>
-    <div class="log-entry">
+    <div class="devlog-entry">
       <time>June 15, 2025</time>
       <p>🌟 Implemented "Mod of the Day" feature to highlight top mods.</p>
-  </div>
-    <div class="log-entry">
+    </div>
+    <div class="devlog-entry">
       <time>June 15, 2025</time>
       <p>🔧 Added dark mode toggle for better user experience.</p>
-  </div>
-
-    <div class="section roadmap">
-     <h2>✅ Completed Features</h2>
-<ul>
-  <li class="done">Add upvoting system</li>
-  <li class="done">Toggle upvote (remove your vote)</li>
-  <li class="done">Persistent Mod IDs</li>
-  <li class="done">Dark mode toggle</li>
-  <li class="done">Tag-based filtering</li>
-  <li class="done">Mod search (name, tags, description)</li>
-  <li class="done">Leaderboard page</li>
-  <li class="done">Mod of the Day (random from top 10)</li>
-  <li class="done">Moderated mod submissions</li>
-  <li class="done">UI polish (mod cards, spacing, responsiveness)</li>
-    <li class="done">“How to Install” section on About page</li>
-  <li class="done">Basic user system (local usernames, vote tracking)</li>
-  <li class="done">Full Home Page- It aint done yet... its just a image rn soo....</li>
-  <li class="done">Mod analytics (views, votes, trends)</li>
-</ul>
-
-<h2>🔜 In Progress / Next Up</h2>
-<ul>
-  <li>Mod editor / live preview (test your mod live in bloxd)</li>
-  <li>Creator profiles (mods by user, badges, stats)</li>
-  <li>Code AI assistant (generate mod code from prompts)</li>
-</ul>
-
-<h2>🧠 Planned Features</h2>
-<ul>
-  <li>Learn Bloxd Code hub (interactive tutorials and docs)</li>
-  <li>Mod idea generator (AI-powered inspiration)</li>
-  <li>Tooltip AI (hover explanations for mod fields)</li>
-  <li>Mod comments / feedback system</li>
-  <li>Achievements & badges (e.g. “Top Mod”, “First Upload”)</li>
-  <li>Theme customizer (user-selectable color palettes)</li>
-  <li>Better Mobile UI</li>
-  <li>Random mod button (discover mods by chance)</li>
-  <li>Mod jams (monthly creative challenges)</li>
-  <li>Creator badges (soon)</li>
-  <li>Email milestone updates to users</li>
-</ul>
     </div>
   </div>
+
+  <div class="devlog-section roadmap">
+    <h2>✅ Completed Features</h2>
+    <ul>
+      <li class="done">Add upvoting system</li>
+      <li class="done">Toggle upvote (remove your vote)</li>
+      <li class="done">Persistent Mod IDs</li>
+      <li class="done">Dark mode toggle</li>
+      <li class="done">Tag-based filtering</li>
+      <li class="done">Mod search (name, tags, description)</li>
+      <li class="done">Leaderboard page</li>
+      <li class="done">Mod of the Day (random from top 10)</li>
+      <li class="done">Moderated mod submissions</li>
+      <li class="done">UI polish (mod cards, spacing, responsiveness)</li>
+      <li class="done">“How to Install” section on About page</li>
+      <li class="done">Basic user system (local usernames, vote tracking)</li>
+      <li class="done">Full Home Page — It ain't done yet... it's just an image rn soo....</li>
+      <li class="done">Mod analytics (views, votes, trends)</li>
+    </ul>
+
+    <h2>🔜 In Progress / Next Up</h2>
+    <ul>
+      <li>Mod editor / live preview (test your mod live in Bloxd)</li>
+      <li>Creator profiles (mods by user, badges, stats)</li>
+      <li>Code AI assistant (generate mod code from prompts)</li>
+    </ul>
+
+    <h2>🧠 Planned Features</h2>
+    <ul>
+      <li>Learn Bloxd Code hub (interactive tutorials and docs)</li>
+      <li>Mod idea generator (AI-powered inspiration)</li>
+      <li>Tooltip AI (hover explanations for mod fields)</li>
+      <li>Mod comments / feedback system</li>
+      <li>Achievements & badges (e.g. “Top Mod”, “First Upload”)</li>
+      <li>Theme customizer (user-selectable color palettes)</li>
+      <li>Better Mobile UI</li>
+      <li>Random mod button (discover mods by chance)</li>
+      <li>Mod jams (monthly creative challenges)</li>
+      <li>Creator badges (soon)</li>
+      <li>Email milestone updates to users</li>
+    </ul>
+  </div>
+</div>
 
   <!-- 💡 Mouse Tracking Script -->
   <script>
