@@ -143,9 +143,3 @@ body.mobile .nav-label {
     gap: 15px;
   }
 }
-.header-right {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
-}
