@@ -253,7 +253,7 @@ body.dark-mode .site-footer {
 </div>
 
 <section>
-  <img src="THE PLACE FOR.png" alt="Bloxd World Banner" id="bworldbanner"/>
+  <img src="What you'd expect.png" alt="Bloxd World Banner" id="bworldbanner"/>
 </section>
 
 <!-- 🧠 Welcome / Intro -->
@@ -281,6 +281,7 @@ themeToggle.addEventListener("click", (e) => {
   // Save preference
   if (document.body.classList.contains("dark-mode")) {
     localStorage.setItem("theme", "dark");
+    document.querySelector("bworldbanner").src="What you'd expect (1).png"
   } else {
     localStorage.setItem("theme", "light");
   }
