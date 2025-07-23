@@ -145,6 +145,89 @@ body.dark-mode .site-footer {
 .footer-links a:hover {
   color: var(--primary-dark);
 }
+/* 🌐 Bloxd World Hero + Intro Styling */
+
+.hero-banner img {
+  width: 90%;
+  max-width: 1000px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 255, 255, 0.15);
+  transition: transform 0.3s ease;
+}
+.hero-banner img:hover {
+  transform: scale(1.01);
+}
+
+.intro-text {
+  max-width: 800px;
+  margin: 0 auto;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  padding: 0 16px;
+  color: #222;
+}
+
+.intro-text h1, .intro-text h2 {
+  font-weight: 700;
+  color: #007c7e;
+  margin-bottom: 10px;
+}
+
+.cta-buttons {
+  margin: 30px auto 50px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.cta-button {
+  background: linear-gradient(135deg, #00c2c2, #009e9e);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 5px 12px rgba(0, 194, 194, 0.3);
+  transition: all 0.25s ease;
+}
+.cta-button:hover {
+  background: linear-gradient(135deg, #00a8a8, #007f7f);
+  transform: translateY(-2px);
+}
+
+.how-it-works {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 16px;
+  font-size: 1.1rem;
+  color: #333;
+}
+.how-it-works h2 {
+  font-size: 1.8rem;
+  color: #007c7e;
+  margin-bottom: 12px;
+}
+.how-it-works ul {
+  list-style: none;
+  padding-left: 0;
+}
+.how-it-works li {
+  margin-bottom: 8px;
+  padding-left: 1em;
+  position: relative;
+}
+.how-it-works li::before {
+  content: "✨";
+  position: absolute;
+  left: 0;
+}
+
+ul li {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
 
   </style>
 </head>
