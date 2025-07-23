@@ -135,11 +135,3 @@ body.mobile .nav-label {
   color: #ccc;
   padding: 0;
 }
-
-/* === Responsive Tweak === */
-@media (max-width: 600px) {
-  ul.navbar {
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-}
