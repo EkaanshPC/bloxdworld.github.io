@@ -50,6 +50,82 @@ color:white;
   align-items: center; /* ✅ This centers all child mod cards horizontally */
   padding: 20px;
 }
+/* 🌟 Mod of the Day */
+.mod-of-the-day {
+  background-color: #fff;
+  border-left: 4px solid #ffc107;
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 700px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.mod-of-the-day h2 {
+  margin-top: 0;
+  font-size: 1.6rem;
+  color: #ff9800;
+}
+
+.mod-of-the-day p {
+  font-size: 1rem;
+  color: #333;
+}
+
+/* 🏆 Leaderboard Section */
+.mods-container {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  max-width: 700px;
+  margin: 2rem auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.mods-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+#leaderboard-list {
+  font-size: 1rem;
+  color: #555;
+  padding: 1rem;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 🌙 Dark Mode Compatibility */
+.dark-mode .mod-of-the-day {
+  background-color: #2a2a2a;
+  border-left: 4px solid #ffb74d;
+}
+
+.dark-mode .mod-of-the-day h2 {
+  color: #ffcc80;
+}
+
+.dark-mode .mod-of-the-day p {
+  color: #ddd;
+}
+
+.dark-mode .mods-container {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .mods-header {
+  color: #66b2ff;
+}
+
+.dark-mode #leaderboard-list {
+  background-color: #2a2a2a;
+  color: #ccc;
+  box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
+}
 
   </style>
 </head>
@@ -116,12 +192,18 @@ color:white;
     </div>
   </div>
   </div>
-<div id="mod-of-the-day" class="mod-of-the-day textwhiteonly"></div>
+<!-- 🌟 Mod of the Day -->
+<div id="mod-of-the-day" class="mod-of-the-day">
+  <h2>🌟 Mod of the Day</h2>
+  <p>Loading featured mod...</p>
 </div>
+
+<!-- 🏆 Top Mods Leaderboard -->
 <div class="mods-container">
   <div class="mods-header">🏆 Top Mods Leaderboard</div>
   <div id="leaderboard-list">Loading leaderboard...</div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/googlelogin.js"></script>
   <script>
