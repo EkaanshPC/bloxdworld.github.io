@@ -64,9 +64,8 @@ const email = user.email;
 const [local, domain] = email.split("@");
 const shortLocal = local.length > 7 ? local.slice(0, 7) + "..." : local;
 const shortEmail = `${shortLocal}@${domain}`;
-
 authArea.innerHTML = `
-    <span style="color:white" class="emailText">${shortEmail}</span>
+    <span class="emailText">${shortEmail}</span>
     <a style="display:inline-block;" href="#" id="logoutBtn">🚪 Logout</a>
 `;
 document.getElementById("logoutBtn").onclick = async (e) => {

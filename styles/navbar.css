@@ -169,6 +169,9 @@ body.dark-mode #authArea a:hover {
 }
 
 /* === Email Text (??) === */
+.emailText {
+  color:white
+}
 .emailText .dark-mode {
   color: #ccc;
 }
