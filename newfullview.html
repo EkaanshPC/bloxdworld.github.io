@@ -97,7 +97,7 @@ function updateAnalytics(mod) {
 
 document.addEventListener("DOMContentLoaded", async ()=>{
   const params = new URLSearchParams(window.location.search);
-  const addonId = params.get("addonId");
+  const addonId = params.get("addonid");
   if(!addonId) return alert("No Addon ID in URL");
 
   const { data, error } = await client
