@@ -1,5 +1,5 @@
 console.log("🔥 Script loaded!");
-
+console.log(`[DEBUG] SUPABASE_URL:${process.env.SUPABASE_URL}, SUPABASE_ANON_KEY: ${process.env.SUPABASE_ANON_KEY} - obilocaple`)
 // ✅ 1️⃣ Initialize Supabase client with persistent session
 const client = supabase.createClient(
   "https://pxmsgzfufvwxpnyeobwk.supabase.co",
