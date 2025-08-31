@@ -540,15 +540,15 @@ body.dark-mode .sort-button:hover {
     mods.forEach(mod => {
       const card = document.createElement("div");
       card.className = "mod-card";
+card.innerHTML = `
+  <img src="${mod.icon || mod.image || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png"}" alt="icon" class="mod-icon">
+  <h3>${mod.title}</h3>
+  <p><b>Author:</b> ${mod.author || "Unknown"}</p>
+  <p>${(mod.description || "No description yet.").slice(0, 50)}${mod.description && mod.description.length > 50 ? "…" : ""}</p>
+  <p><b>Category:</b> ${mod.category || "Misc"}</p>
+  <button onclick="copyLink('${mod.file_path}')">📎 Copy Link</button>
+`;
 
-      card.innerHTML = `
-        <img src="${mod.icon || mod.image || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png"}" alt="icon" class="mod-icon">
-        <h3>${mod.title}</h3><br>
-        <p><b>Author:</b> ${mod.author || "Unknown"}</p><br>
-        <p>${(mod.description || "No description yet.").slice(0, 50)}${mod.description && mod.description.length > 50 ? "…" : ""}</p><br>
-        <p><b>Category:</b> ${mod.category || "Misc"}</p><><br>
-        <button onclick="copyLink('${mod.file_path}')">📎 Copy Link</button>
-      `;
 
       container.appendChild(card);
     });
