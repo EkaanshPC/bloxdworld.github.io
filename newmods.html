@@ -639,10 +639,12 @@ card.innerHTML = `
       <h3>${mod.title}</h3>
       <div class="mod-meta">
         <p><b>Author:</b> ${mod.author || "Unknown"}</p>
-        <p><b>Category:</b> ${mod.category || "Misc"}</p>
       </div>
     </div>
     <p class="mod-description">${(mod.description || "No description yet.").slice(0, 50)}${mod.description && mod.description.length > 50 ? "…" : ""}</p>
+    <div class="mod-meta">
+      <p><b>Category:</b> ${mod.category || "Not specified"}</p>
+    </div>
     <button onclick="copyLink('${mod.file_path}')">📎 Copy Link</button>
   </div>
 `;
