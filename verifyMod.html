@@ -37,7 +37,7 @@ const ADMIN_EMAIL = "ekaanshagarwal19564@gmail.com";
 
 async function fetchMods() {
   const { data, error } = await client
-    .from("approval")
+    .from("mod")
     .select("*") // fetch mod details via relationship
     .eq("approval", false)
     .order("created_at", { ascending: false });
@@ -80,14 +80,11 @@ function renderMods(approvals) {
 
 // --- Verify / Reject ---
 window.verifyMod = async (modId, approve) => {
-  const updates = approve
-    ? { verified: true, rejected: false }
-    : { verified: false, rejected: true };
-
+  const updates = { approval: approve }; // true = approved, false = rejected
   const { error } = await client
-    .from("approval")  // <- change this to approval
+    .from("mod")
     .update(updates)
-    .eq("id", modId); // <- link by id beo
+    .eq("id", modId);
 
   if (error) return alert("Error updating mod: " + error.message);
 
@@ -95,6 +92,7 @@ window.verifyMod = async (modId, approve) => {
   const mods = await fetchMods();
   renderMods(mods);
 };
+
 
 // --- Run ---
 document.addEventListener("DOMContentLoaded", async () => {
