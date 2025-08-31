@@ -1,4 +1,4 @@
-console.log("🔥 Script loaded!");
+console.log("🔥 Script loaded!"+process.env.SUPABASE_URL);
 
 const client = supabase.createClient(
   "https://pxmsgzfufvwxpnyeobwk.supabase.co",
