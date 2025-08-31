@@ -615,7 +615,7 @@ body.dark-mode .sort-button:hover {
   const { data: mods, error } = await client
     .from("mod")
     .select("*")
-    .eq("approved", true)        // ✅ Only approved mods
+    .eq("approval", true)        // ✅ Only approved mods
     .order("created_at", { ascending: false });
 
   if (error) {

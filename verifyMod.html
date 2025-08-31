@@ -81,10 +81,16 @@ function renderMods(mods) {
 // --- Verify / Reject ---
 window.verifyMod = async (modId, approve) => {
   const updates = approve
-    ? { verified: true }
+    ? { verified: true, rejected: false }
     : { verified: false, rejected: true };
-  const { error } = await client.from("mod").update(updates).eq("id", modId);
+
+  const { error } = await client
+    .from("approval")  // <- change this to approval
+    .update(updates)
+    .eq("mod_id", modId); // <- link by mod_id, not id
+
   if (error) return alert("Error updating mod: " + error.message);
+
   alert(approve ? "✅ Mod approved!" : "❌ Mod rejected!");
   const mods = await fetchMods();
   renderMods(mods);
