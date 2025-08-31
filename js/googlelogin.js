@@ -171,10 +171,10 @@ export async function uploadMod(title, file) {
   const fileExt = file.name.split('.').pop();
   const filePath = `mods/${Date.now()}.${fileExt}`;
 
-  const { error: uploadError } = await supabase.storage.from('mod').upload(filePath, file);
+  const { error: uploadError } = await client.storage.from('mod').upload(filePath, file);
   if (uploadError) return { error: uploadError.message };
 
-  const { error: dbError } = await supabase.from('mod').insert({
+  const { error: dbError } = await client.from('mod').insert({
     title,
     file_path: filePath,
     created_at: new Date()
