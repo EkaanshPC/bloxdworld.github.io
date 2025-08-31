@@ -165,20 +165,44 @@ async function hasUserVoted(modId) {
   return !!data;
 }
 
-export async function uploadMod(title, file) {
+export async function uploadMod({ 
+  title, 
+  file, 
+  description, 
+  image, 
+  icon, 
+  author, 
+  category, 
+  info 
+}) {
   if (!title || !file) return { error: "Fill title and file!" };
 
   const fileExt = file.name.split('.').pop();
   const filePath = `mods/${Date.now()}.${fileExt}`;
 
-  const { error: uploadError } = await client.storage.from('mod').upload(filePath, file);
+  // Upload file to storage
+  const { error: uploadError } = await client
+    .storage
+    .from('mod')
+    .upload(filePath, file);
+
   if (uploadError) return { error: uploadError.message };
 
-  const { error: dbError } = await client.from('mod').insert({
-    title,
-    file_path: filePath,
-    created_at: new Date()
-  });
+  // Insert row in database
+  const { error: dbError } = await client
+    .from('mod')
+    .insert({
+      title,
+      description,
+      image,
+      icon,
+      author,
+      category,
+      info,
+      file_path: filePath,
+      created_at: new Date()
+    });
+
   if (dbError) return { error: dbError.message };
 
   return { success: true };

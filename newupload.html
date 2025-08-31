@@ -23,7 +23,10 @@
   box-shadow: 0 0 15px rgba(0,0,0,0.1);
   text-align: center;
 }
-.upload-container input[type="text"], .upload-container input[type="file"] {
+.upload-container input[type="text"],
+.upload-container input[type="file"],
+.upload-container textarea,
+.upload-container select {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
@@ -48,7 +51,7 @@
 <div class="modrinth-navbar">
   <div class="header">
     <div class="header-left">
-<div style="display: flex; align-items: center; height: 100%;">
+      <div style="display: flex; align-items: center; height: 100%;">
         <div class="cube-container">
           <div class="cube">
             <div class="face front"></div>
@@ -62,46 +65,16 @@
       </div>
       <div class="logo-text"> Bloxd <br>World</div>
     </div>
-   <div class="header-right">
-  <ul class="navbar">
-    <li class="nav-item">
-      <a href="index.html">
-        <i class="fas fa-home"></i>
-        <span class="nav-label">Home</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="mods.html">
-        <i class="fas fa-cubes"></i>
-        <span class="nav-label">Mods</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="upload.html">
-        <i class="fas fa-upload"></i>
-        <span class="nav-label">Upload</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="about.html">
-        <i class="fas fa-info-circle"></i>
-        <span class="nav-label">About</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="leaderboard.html">
-        <i class="fas fa-trophy"></i>
-        <span class="nav-label">Leaderboard</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" id="themeToggle">
-        <i class="fas fa-moon"></i>
-        <span class="nav-label">Theme</span>
-      </a>
-    </li>
-    <li class="nav-item" id="authArea"></li>
-  </ul>
+    <div class="header-right">
+      <ul class="navbar">
+        <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
+        <li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a></li>
+        <li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a></li>
+        <li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a></li>
+        <li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a></li>
+        <li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a></li>
+        <li class="nav-item" id="authArea"></li>
+      </ul>
     </div>
   </div>
 </div>
@@ -109,6 +82,17 @@
 <div class="upload-container">
   <h2>Upload Your Mod</h2>
   <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
+  <textarea id="modDescription" placeholder="Enter Mod Description"></textarea><br>
+  <input type="text" id="modImage" placeholder="Image URL"><br>
+  <input type="text" id="modIcon" placeholder="Icon URL"><br>
+  <input type="text" id="modAuthor" placeholder="Author Name"><br>
+  <select id="modCategory">
+    <option value="">Select Category</option>
+    <option value="Gameplay">Gameplay</option>
+    <option value="Visual">Visual</option>
+    <option value="Utility">Utility</option>
+    <option value="Other">Other</option>
+  </select><br>
   <input type="file" id="modFile"><br>
   <button>Upload 🔥</button>
   <p id="uploadStatus"></p>
@@ -132,10 +116,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const status = document.getElementById('uploadStatus');
 
   uploadBtn.addEventListener('click', async () => {
-    const title = document.getElementById('modTitle').value;
-    const file = document.getElementById('modFile').files[0];
+    const modData = {
+      title: document.getElementById('modTitle').value,
+      file: document.getElementById('modFile').files[0],
+      description: document.getElementById('modDescription').value,
+      image: document.getElementById('modImage').value,
+      icon: document.getElementById('modIcon').value,
+      author: document.getElementById('modAuthor').value,
+      category: document.getElementById('modCategory').value,
+      info: { extra: "submitted via form" }
+    };
+
     status.textContent = 'Uploading... ⏳';
-    const result = await uploadMod(title, file);
+    const result = await uploadMod(modData);
 
     if (result.error) status.textContent = '❌ ' + result.error;
     else status.textContent = '✅ Upload successful!';
@@ -161,3 +154,4 @@ themeToggle.addEventListener("click", e => {
 <script type="module" src="js/googlelogin.js"></script>
 </body> 
 </html>
+
