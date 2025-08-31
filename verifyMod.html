@@ -38,8 +38,8 @@ const ADMIN_EMAIL = "ekaanshagarwal19564@gmail.com";
 async function fetchMods() {
   const { data, error } = await client
     .from("approval")
-    .select("*, mod(*)") // fetch mod details via relationship
-    .eq("verified", false)
+    .select("*") // fetch mod details via relationship
+    .eq("approval", false)
     .order("created_at", { ascending: false });
 
   if (error) return console.error(error);
