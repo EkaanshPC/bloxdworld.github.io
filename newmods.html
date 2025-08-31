@@ -422,6 +422,50 @@ body.dark-mode .sort-button {
 body.dark-mode .sort-button:hover {
   background: #00e6e6;
 }
+.mod-card {
+  display: flex;
+  flex-direction: row; /* image left, text right */
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  gap: 20px;
+  max-width: 100%;
+}
+
+.mod-icon {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.mod-content {
+  display: flex;
+  flex-direction: column; /* stack text vertically */
+  justify-content: space-between; /* optional for spacing */
+  flex: 1; /* take up remaining space */
+  gap: 10px; /* spacing between items */
+}
+
+.mod-header {
+  display: flex;
+  flex-direction: column; /* title, author, category stacked */
+  gap: 4px;
+}
+
+.mod-description {
+  font-size: 1em;
+  color: #1a1a1a;
+  background: #f5fafd;
+  border-left: 4px solid #2196f3;
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(33, 150, 243, 0.08);
+}
+
   </style>
 </head>
 <body>
