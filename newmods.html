@@ -610,20 +610,22 @@ body.dark-mode .sort-button:hover {
   const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"; // not service!
   const client = createClient(supabaseUrl, supabaseKey);
 
-  async function fetchMods() {
-    console.log("🔄 Fetching mods from Supabase...");
-    const { data: mods, error } = await client
-      .from("mod")
-      .select("*")
-      .order("created_at", { ascending: false });
+ async function fetchMods() {
+  console.log("🔄 Fetching mods from Supabase...");
+  const { data: mods, error } = await client
+    .from("mod")
+    .select("*")
+    .eq("approved", true)        // ✅ Only approved mods
+    .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error("❌ Error fetching mods:", error.message);
-      return [];
-    }
-    console.log("✅ Got mods:", mods);
-    return mods;
+  if (error) {
+    console.error("❌ Error fetching mods:", error.message);
+    return [];
   }
+  console.log("✅ Got mods:", mods);
+  return mods;
+}
+
 
   function renderMods(mods) {
     const container = document.getElementById("mod-list");
