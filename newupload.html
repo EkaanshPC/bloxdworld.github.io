@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc" />
+<title>Upload a Mod | Bloxd World</title>
+<meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
+<meta property="og:title" content="Upload">
+<meta property="og:description" content="Upload your mod!">
+<meta property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png">
+<meta property="og:url" content="https://bloxdworld.pages.dev/upload">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles/earth-cube.css">
+<link rel="stylesheet" href="styles/header.css">
+<link rel="stylesheet" href="styles/devlogandindex.css">
+<link rel="stylesheet" href="styles/other.css">
+<link rel="stylesheet" href="styles/navbar.css"> 
+
+<style>
+  .upload-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+  .upload-container input[type="text"], .upload-container input[type="file"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  .upload-container button {
+    padding: 12px 25px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    background-color: #1e88e5;
+    color: white;
+    cursor: pointer;
+  }
+  .upload-container button:hover {
+    background-color: #1565c0;
+  }
+</style>
+</head>
+<body>
+<div class="modrinth-navbar">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd <br>World</div>
+    </div>
+    <div class="header-right">
+      <ul class="navbar">
+        <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
+        <li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a></li>
+        <li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a></li>
+        <li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a></li>
+        <li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a></li>
+        <li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a></li>
+        <li class="nav-item" id="authArea"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Form -->
+<div class="upload-container">
+  <h2>Upload Your Mod</h2>
+  <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
+  <input type="file" id="modFile"><br>
+  <button onclick="uploadMod()">Upload 🔥</button>
+  <p id="uploadStatus"></p>
+</div>
+
+<footer class="site-footer">
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
+</footer>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SUPABASE_URL = 'https://pxmsgzfufvwxpnyeobwk.supabase.co';
+const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY_HERE';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function uploadMod() {
+  const title = document.getElementById('modTitle').value;
+  const file = document.getElementById('modFile').files[0];
+  const status = document.getElementById('uploadStatus');
+
+  if (!title || !file) {
+    status.textContent = '🔥 Fill in title and select a file!';
+    return;
+  }
+
+  status.textContent = 'Uploading... ⏳';
+
+  const fileExt = file.name.split('.').pop();
+  const filePath = `mods/${Date.now()}.${fileExt}`;
+
+  const { data, error } = await supabase.storage.from('mod').upload(filePath, file);
+  if (error) {
+    console.error(error);
+    status.textContent = '❌ Upload failed!';
+    return;
+  }
+
+  const { error: dbError } = await supabase.from('mod').insert({
+    title,
+    file_path: filePath,
+    created_at: new Date()
+  });
+
+  if (dbError) {
+    console.error(dbError);
+    status.textContent = '❌ Failed to save mod info!';
+    return;
+  }
+
+  status.textContent = '✅ Upload successful!';
+  document.getElementById('modTitle').value = '';
+  document.getElementById('modFile').value = '';
+}
+</script>
+
+<script>
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
+const themeToggle = document.getElementById("themeToggle");
+if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
+
+themeToggle.addEventListener("click", e => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+});
+</script>
+
+<script src="js/googlelogin.js"></script>
+</body>
+</html>
