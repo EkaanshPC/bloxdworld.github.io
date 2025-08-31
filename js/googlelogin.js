@@ -1,6 +1,5 @@
 console.log("🔥 Script loaded!");
-import 'dotenv/config';
-console.log(`${process.env.SUPABASE_URL}`)
+
 const client = supabase.createClient(
   "https://pxmsgzfufvwxpnyeobwk.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U",
