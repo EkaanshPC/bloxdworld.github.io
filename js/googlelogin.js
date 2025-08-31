@@ -200,7 +200,8 @@ export async function uploadMod({
       category,
       info,
       file_path: filePath,
-      created_at: new Date()
+      created_at: new Date(),
+      verified: false
     });
 
   if (dbError) return { error: dbError.message };
