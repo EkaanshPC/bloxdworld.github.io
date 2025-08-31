@@ -125,52 +125,22 @@
 </footer>
 
 <script type="module">
+import { uploadMod } from './js/googlelogin.js';
 
-const SUPABASE_URL = 'https://pxmsgzfufvwxpnyeobwk.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U';
-
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-async function uploadMod() {
-  const title = document.getElementById('modTitle').value;
-  const file = document.getElementById('modFile').files[0];
+document.addEventListener('DOMContentLoaded', () => {
+  const uploadBtn = document.querySelector('.upload-container button');
   const status = document.getElementById('uploadStatus');
 
-  if (!title || !file) {
-    status.textContent = '🔥 Fill in title and select a file!';
-    return;
-  }
+  uploadBtn.addEventListener('click', async () => {
+    const title = document.getElementById('modTitle').value;
+    const file = document.getElementById('modFile').files[0];
+    status.textContent = 'Uploading... ⏳';
+    const result = await uploadMod(title, file);
 
-  status.textContent = 'Uploading... ⏳';
-
-  const filePath = `mods/${Date.now()}-${file.name}`;
-  const { data, error } = await supabase.storage.from('mod').upload(filePath, file);
-
-  if (error) {
-    status.textContent = '❌ Upload failed!';
-    console.error(error);
-    return;
-  }
-
-  const { error: dbError } = await supabase.from('mod').insert({
-    title,
-    file_path: filePath,
-    created_at: new Date()
+    if (result.error) status.textContent = '❌ ' + result.error;
+    else status.textContent = '✅ Upload successful!';
   });
-
-  if (dbError) {
-    status.textContent = '❌ Failed to save mod info!';
-    console.error(dbError);
-    return;
-  }
-
-  status.textContent = '✅ Upload successful!';
-  document.getElementById('modTitle').value = '';
-  document.getElementById('modFile').value = '';
-}
-
-// Attach click listener instead of inline onclick
-document.querySelector('.upload-container button').addEventListener('click', uploadMod);
+});
 </script>
 
 <script>
