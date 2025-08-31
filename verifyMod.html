@@ -35,28 +35,28 @@ const client = createClient(supabaseUrl, supabaseKey);
 // --- Admin Email ---
 const ADMIN_EMAIL = "ekaanshagarwal19564@gmail.com";
 
-// --- Fetch Mods ---
 async function fetchMods() {
-  const { data: mods, error } = await client
-    .from("mod")
-    .select("*")
-    .eq("approval", false)
+  const { data, error } = await client
+    .from("approval")
+    .select("*, mod(*)") // fetch mod details via relationship
+    .eq("verified", false)
     .order("created_at", { ascending: false });
+
   if (error) return console.error(error);
-  return mods;
+  return data;
 }
 
-// --- Render Mods ---
-function renderMods(mods) {
+function renderMods(approvals) {
   const container = document.getElementById("mods-list");
   container.innerHTML = "";
 
-  if (!mods || mods.length === 0) {
+  if (!approvals || approvals.length === 0) {
     container.innerHTML = "<p>No mods waiting for verification!</p>";
     return;
   }
 
-  mods.forEach(mod => {
+  approvals.forEach(approval => {
+    const mod = approval.mod;
     const card = document.createElement("div");
     card.className = "mod-card";
     card.innerHTML = `
@@ -69,8 +69,8 @@ function renderMods(mods) {
           <p><b>Description:</b> ${(mod.description || "No description").slice(0,100)}${mod.description && mod.description.length > 100 ? "…" : ""}</p>
         </div>
         <div>
-          <button class="approve-btn" onclick="verifyMod('${mod.id}', true)">✅ Approve</button>
-          <button class="reject-btn" onclick="verifyMod('${mod.id}', false)">❌ Reject</button>
+          <button class="approve-btn" onclick="verifyMod('${approval.id}', true)">✅ Approve</button>
+          <button class="reject-btn" onclick="verifyMod('${approval.id}', false)">❌ Reject</button>
         </div>
       </div>
     `;
@@ -87,7 +87,7 @@ window.verifyMod = async (modId, approve) => {
   const { error } = await client
     .from("approval")  // <- change this to approval
     .update(updates)
-    .eq("id", modId); // <- link by mod_id, not id
+    .eq("id", modId); // <- link by id beo
 
   if (error) return alert("Error updating mod: " + error.message);
 
