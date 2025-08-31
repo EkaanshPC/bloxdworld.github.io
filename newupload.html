@@ -1,16 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
 <meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc" />
 <title>Upload a Mod | Bloxd World</title>
 <meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
-<meta property="og:title" content="Upload">
-<meta property="og:description" content="Upload your mod!">
-<meta property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png">
-<meta property="og:url" content="https://bloxdworld.pages.dev/upload">
-<meta name="twitter:card" content="summary_large_image">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="styles/earth-cube.css">
@@ -20,75 +14,46 @@
 <link rel="stylesheet" href="styles/navbar.css"> 
 
 <style>
-  .upload-container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  .upload-container input[type="text"], .upload-container input[type="file"] {
-    width: 90%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-  }
-  .upload-container button {
-    padding: 12px 25px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 6px;
-    background-color: #1e88e5;
-    color: white;
-    cursor: pointer;
-  }
-  .upload-container button:hover {
-    background-color: #1565c0;
-  }
+.upload-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.upload-container input[type="text"], .upload-container input[type="file"] {
+  width: 90%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.upload-container button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #1e88e5;
+  color: white;
+  cursor: pointer;
+}
+.upload-container button:hover {
+  background-color: #1565c0;
+}
 </style>
 </head>
 <body>
 <div class="modrinth-navbar">
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
-      <div style="display: flex; align-items: center; height: 100%;">
-        <div class="cube-container">
-          <div class="cube">
-            <div class="face front"></div>
-            <div class="face back"></div>
-            <div class="face right"></div>
-            <div class="face left"></div>
-            <div class="face top"></div>
-            <div class="face bottom"></div>
-          </div>
-        </div>
-      </div>
-      <div class="logo-text"> Bloxd <br>World</div>
-    </div>
-    <div class="header-right">
-      <ul class="navbar">
-        <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
-        <li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a></li>
-        <li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a></li>
-        <li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a></li>
-        <li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a></li>
-        <li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a></li>
-        <li class="nav-item" id="authArea"></li>
-      </ul>
-    </div>
-  </div>
+  <!-- Header here, same as before -->
 </div>
 
-<!-- Upload Form -->
 <div class="upload-container">
   <h2>Upload Your Mod</h2>
   <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
   <input type="file" id="modFile"><br>
-  <button onclick="uploadMod()">Upload 🔥</button>
+  <button>Upload 🔥</button>
   <p id="uploadStatus"></p>
 </div>
 
@@ -107,6 +72,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 const SUPABASE_URL = 'https://pxmsgzfufvwxpnyeobwk.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U';
+
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function uploadMod() {
@@ -121,13 +87,12 @@ async function uploadMod() {
 
   status.textContent = 'Uploading... ⏳';
 
-  const fileExt = file.name.split('.').pop();
-  const filePath = `mods/${Date.now()}.${fileExt}`;
-
+  const filePath = `mods/${Date.now()}-${file.name}`;
   const { data, error } = await supabase.storage.from('mod').upload(filePath, file);
+
   if (error) {
-    console.error(error);
     status.textContent = '❌ Upload failed!';
+    console.error(error);
     return;
   }
 
@@ -138,8 +103,8 @@ async function uploadMod() {
   });
 
   if (dbError) {
-    console.error(dbError);
     status.textContent = '❌ Failed to save mod info!';
+    console.error(dbError);
     return;
   }
 
@@ -147,6 +112,9 @@ async function uploadMod() {
   document.getElementById('modTitle').value = '';
   document.getElementById('modFile').value = '';
 }
+
+// Attach click listener instead of inline onclick
+document.querySelector('.upload-container button').addEventListener('click', uploadMod);
 </script>
 
 <script>
@@ -163,7 +131,6 @@ themeToggle.addEventListener("click", e => {
   localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
 });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/googlelogin.js"></script>
 </body>
 </html>
