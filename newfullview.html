@@ -26,6 +26,66 @@ body { font-family:'Fredoka', sans-serif; background:#f5f5f5; margin:0; padding:
 </style>
 </head>
 <body>
+<div class="modrinth-navbar">
+  <div class="header">
+    <div class="header-left">
+<div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd <br>World</div>
+    </div>
+   <div class="header-right">
+  <ul class="navbar">
+    <li class="nav-item">
+      <a href="index.html">
+        <i class="fas fa-home"></i>
+        <span class="nav-label">Home</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="mods.html">
+        <i class="fas fa-cubes"></i>
+        <span class="nav-label">Mods</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="upload.html">
+        <i class="fas fa-upload"></i>
+        <span class="nav-label">Upload</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="about.html">
+        <i class="fas fa-info-circle"></i>
+        <span class="nav-label">About</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="leaderboard.html">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-label">Leaderboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span class="nav-label">Theme</span>
+      </a>
+    </li>
+    <li class="nav-item" id="authArea"></li>
+  </ul>
+    </div>
+  </div>
+</div>
 
 <div id="mod-detail-page" class="modrinth-style">
   <div class="mod-header">
@@ -81,18 +141,39 @@ function formatDescription(raw) {
 }
 
 function updateAnalytics(mod) {
-  const fills = Array.from({length:5},(_,i)=>document.getElementById(`day${i+1}Fill`));
-  const values = Array.from({length:5},(_,i)=>document.getElementById(`day${i+1}Value`));
-  const analytics = mod.mod_analytics ? JSON.parse(mod.mod_analytics) : {};
-  const lastFive = Object.keys(analytics).slice(-5).map(k=>analytics[k]);
-  const numeric = lastFive.filter(v=>typeof v==='number');
-  const max = numeric.length? Math.max(...numeric) : 0;
+  const fills = Array.from({ length: 5 }, (_, i) => document.getElementById(`day${i + 1}Fill`));
+  const values = Array.from({ length: 5 }, (_, i) => document.getElementById(`day${i + 1}Value`));
 
-  for(let i=0;i<5;i++){
-    const val = lastFive[i]??"N/A";
-    fills[i].style.height = typeof val==='number' && max? (val/max*100)+"%" : "0%";
-    values[i].textContent = val;
+  let analytics = {};
+  try {
+    analytics = mod.mod_analytics ? JSON.parse(mod.mod_analytics) : {};
+  } catch {
+    console.warn("Invalid JSON in mod_analytics");
   }
+
+  // Get day numbers and sort ascending
+  const dayEntries = Object.entries(analytics)
+    .map(([k, v]) => {
+      const match = k.match(/^Day (\d+)$/);
+      return match ? [parseInt(match[1], 10), v] : null;
+    })
+    .filter(Boolean)
+    .sort((a, b) => a[0] - b[0]);
+
+  // Take the last 5 days
+  const lastFive = Array(5).fill("N/A");
+  const sliceStart = Math.max(dayEntries.length - 5, 0);
+  dayEntries.slice(sliceStart).forEach(([day, val], i) => {
+    lastFive[5 - (dayEntries.length - sliceStart) + i] = val;
+  });
+
+  const numericValues = lastFive.filter(v => typeof v === "number" && !isNaN(v));
+  const max = numericValues.length ? Math.max(...numericValues) : 0;
+
+  lastFive.forEach((val, i) => {
+    fills[i].style.height = typeof val === "number" && max ? (val / max * 100) + "%" : "0%";
+    values[i].textContent = val;
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async ()=>{
