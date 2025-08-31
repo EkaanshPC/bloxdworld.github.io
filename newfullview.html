@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bloxd World – Mod Detail</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+body { font-family:'Fredoka', sans-serif; background:#f5f5f5; margin:0; padding:0; }
+.modrinth-style { max-width:900px; margin:40px auto; padding:20px; background:#fff; border-radius:12px; box-shadow:0 0 24px rgba(0,0,0,0.04); }
+.mod-header { display:flex; gap:20px; align-items:center; margin-bottom:20px; }
+.mod-icon { width:72px; height:72px; border-radius:12px; object-fit:cover; background:#f0f0f0; }
+.mod-title { margin:0; font-size:2em; color:#1a1a1a; }
+.mod-meta span { display:inline-block; margin-right:15px; font-size:0.95em; color:#666; }
+.description { background:#f9f9f9; padding:18px; border-radius:10px; border:1px solid #e0e0e0; white-space:pre-wrap; margin-top:10px; }
+#codeSnippet { background:#282c34; color:#e6e6e6; padding:14px; border-radius:8px; font-family:'Fira Code', monospace; overflow-x:auto; }
+#copyButton { margin-top:8px; padding:8px 16px; border:none; border-radius:6px; cursor:pointer; background:#00b894; color:white; }
+#copyButton:hover { background:#009e7a; }
+.analytics-bars-container { display:flex; gap:15px; align-items:flex-end; height:200px; padding:10px; background:#f0f0f0; border-radius:8px; border:1px solid #e0e0e0; justify-content:center; max-width:100%; overflow-x:auto; margin-top:20px; }
+.day-bar-wrapper { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; min-width:40px; }
+.day-label { font-size:0.8em; color:#555; margin-bottom:5px; flex-shrink:0; }
+.progress-bar-container { width:25px; height:100%; background:#ddd; border-radius:5px; overflow:hidden; position:relative; flex-grow:1; margin-bottom:5px; }
+.progress-bar-fill { width:100%; height:0%; background:#6a0dad; position:absolute; bottom:0; left:0; transition:height 0.5s ease-in-out; border-radius:5px; }
+.day-value { font-size:0.9em; font-weight:bold; color:#333; flex-shrink:0; }
+</style>
+</head>
+<body>
+
+<div id="mod-detail-page" class="modrinth-style">
+  <div class="mod-header">
+    <img src="" alt="Mod Icon" class="mod-icon" id="modIcon">
+    <div>
+      <h1 class="mod-title" id="modTitle">Loading...</h1>
+      <div class="mod-meta">
+        <span><strong>Uploaded:</strong> <span id="uploadDate">...</span></span>
+        <span><strong>By:</strong> <span id="uploaderName">...</span></span>
+        <span><strong>Category:</strong> <span id="category">...</span></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mod-description">
+    <h2>Description</h2>
+    <p id="description" class="description">Loading description...</p>
+  </div>
+
+  <div class="mod-code">
+    <h2>Addon Code</h2>
+    <pre id="codeSnippet">Loading code...</pre>
+    <button id="copyButton">📋 Copy Code</button>
+  </div>
+
+  <div id="analytics-data" class="mod-analytics">
+    <h2>Mod Analytics (Last 5 Days)</h2>
+    <div class="analytics-bars-container">
+      ${[1,2,3,4,5].map(i => `
+        <div class="day-bar-wrapper">
+          <span class="day-label">Day ${i}</span>
+          <div class="progress-bar-container">
+            <div class="progress-bar-fill" id="day${i}Fill"></div>
+          </div>
+          <span class="day-value" id="day${i}Value">N/A</span>
+        </div>
+      `).join('')}
+    </div>
+  </div>
+</div>
+
+<script>
+const supabaseUrl = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
+const client = supabase.createClient(supabaseUrl, supabaseKey);
+
+function formatDescription(raw) {
+  if(!raw) return 'No description provided.';
+  return raw.replace(/\n/g,'<br>')
+            .replace(/\*(.*?)\*/g,'<strong>$1</strong>')
+            .replace(/_(.*?)_/g,'<u>$1</u>')
+            .replace(/`(.*?)`/g,'<code>$1</code>');
+}
+
+function updateAnalytics(mod) {
+  const fills = Array.from({length:5},(_,i)=>document.getElementById(`day${i+1}Fill`));
+  const values = Array.from({length:5},(_,i)=>document.getElementById(`day${i+1}Value`));
+  const analytics = mod.mod_analytics ? JSON.parse(mod.mod_analytics) : {};
+  const lastFive = Object.keys(analytics).slice(-5).map(k=>analytics[k]);
+  const numeric = lastFive.filter(v=>typeof v==='number');
+  const max = numeric.length? Math.max(...numeric) : 0;
+
+  for(let i=0;i<5;i++){
+    const val = lastFive[i]??"N/A";
+    fills[i].style.height = typeof val==='number' && max? (val/max*100)+"%" : "0%";
+    values[i].textContent = val;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", async ()=>{
+  const params = new URLSearchParams(window.location.search);
+  const addonId = params.get("addonId");
+  if(!addonId) return alert("No Addon ID in URL");
+
+  const { data, error } = await client
+    .from("mod")
+    .select("*")
+    .eq("id", addonId)
+    .single();
+
+  if(error) return console.error(error);
+
+  const mod = data;
+  document.getElementById("modTitle").textContent = mod.title;
+  document.getElementById("uploadDate").textContent = mod.created_at.split("T")[0];
+  document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
+  document.getElementById("category").textContent = mod.category || "Uncategorized";
+  document.getElementById("description").innerHTML = formatDescription(mod.description);
+  document.getElementById("codeSnippet").textContent = mod.code || "No code provided";
+  document.getElementById("modIcon").src = mod.icon || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png";
+
+  updateAnalytics(mod);
+
+  document.getElementById("copyButton").addEventListener("click",()=>{
+    navigator.clipboard.writeText(mod.code||'').then(()=>alert("Code copied!"));
+  });
+});
+</script>
+
+</body>
+</html>
