@@ -93,11 +93,14 @@ window.verifyMod = async (modId, approve) => {
 
 // --- Run ---
 document.addEventListener("DOMContentLoaded", async () => {
-  const user = await getUser(); // from googlelogin.js
-  if (!user || user.email !== ADMIN_EMAIL) {
-    document.getElementById("mods-list").innerHTML = "<p>❌ Access Denied. Only admin can view this page.</p>";
+const { data: { session } } = await client.auth.getSession();
+const user = session?.user;
+
+if (!user || user.email !== "ekaanshagarwal19564@gmail.com") {
+    document.getElementById("mods-list").innerHTML = 
+        "<p>❌ Access Denied. Only admin can view this page.</p>";
     return;
-  }
+}
   const mods = await fetchMods();
   renderMods(mods);
 });
