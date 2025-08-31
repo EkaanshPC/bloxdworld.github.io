@@ -40,7 +40,7 @@ async function fetchMods() {
   const { data: mods, error } = await client
     .from("mod")
     .select("*")
-    .eq("verified", false)
+    .eq("approval", false)
     .order("created_at", { ascending: false });
   if (error) return console.error(error);
   return mods;
