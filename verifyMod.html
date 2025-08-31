@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Verify Mods | Bloxd World</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  body { font-family: 'Fredoka', sans-serif; background: #f0f0f0; margin: 0; padding: 20px; }
+  h1 { text-align: center; color: #007c7e; }
+  .mod-card { display: flex; flex-direction: row; background: white; border-radius: 8px; padding: 20px; margin: 20px auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); gap: 20px; max-width: 900px; }
+  .mod-icon { width: 140px; height: 140px; object-fit: cover; border-radius: 10px; }
+  .mod-content { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .mod-meta p { margin: 0; }
+  button { padding: 8px 12px; font-size: 14px; border: none; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+  .approve-btn { background: #00c200; color: white; }
+  .reject-btn { background: #ff4444; color: white; }
+  .approve-btn:hover { background: #00e600; }
+  .reject-btn:hover { background: #ff6666; }
+</style>
+</head>
+<body>
+
+<h1>Mod Verification Dashboard</h1>
+<div id="mods-list">Checking access...</div>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js";
+import { getUser } from './js/googlelogin.js'; // your Google login helper
+
+// --- Supabase Init ---
+const supabaseUrl = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"; // replace with your anon key
+const client = createClient(supabaseUrl, supabaseKey);
+
+// --- Admin Email ---
+const ADMIN_EMAIL = "ekaanshagarwal19564@gmail.com";
+
+// --- Fetch Mods ---
+async function fetchMods() {
+  const { data: mods, error } = await client
+    .from("mod")
+    .select("*")
+    .eq("verified", false)
+    .order("created_at", { ascending: false });
+  if (error) return console.error(error);
+  return mods;
+}
+
+// --- Render Mods ---
+function renderMods(mods) {
+  const container = document.getElementById("mods-list");
+  container.innerHTML = "";
+
+  if (!mods || mods.length === 0) {
+    container.innerHTML = "<p>No mods waiting for verification!</p>";
+    return;
+  }
+
+  mods.forEach(mod => {
+    const card = document.createElement("div");
+    card.className = "mod-card";
+    card.innerHTML = `
+      <img src="${mod.icon || mod.image || 'https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png'}" class="mod-icon">
+      <div class="mod-content">
+        <h3>${mod.title}</h3>
+        <div class="mod-meta">
+          <p><b>Author:</b> ${mod.author || "Unknown"}</p>
+          <p><b>Category:</b> ${mod.category || "Misc"}</p>
+          <p><b>Description:</b> ${(mod.description || "No description").slice(0,100)}${mod.description && mod.description.length > 100 ? "…" : ""}</p>
+        </div>
+        <div>
+          <button class="approve-btn" onclick="verifyMod('${mod.id}', true)">✅ Approve</button>
+          <button class="reject-btn" onclick="verifyMod('${mod.id}', false)">❌ Reject</button>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+// --- Verify / Reject ---
+window.verifyMod = async (modId, approve) => {
+  const updates = approve
+    ? { verified: true }
+    : { verified: false, rejected: true };
+  const { error } = await client.from("mod").update(updates).eq("id", modId);
+  if (error) return alert("Error updating mod: " + error.message);
+  alert(approve ? "✅ Mod approved!" : "❌ Mod rejected!");
+  const mods = await fetchMods();
+  renderMods(mods);
+};
+
+// --- Run ---
+document.addEventListener("DOMContentLoaded", async () => {
+  const user = await getUser(); // from googlelogin.js
+  if (!user || user.email !== ADMIN_EMAIL) {
+    document.getElementById("mods-list").innerHTML = "<p>❌ Access Denied. Only admin can view this page.</p>";
+    return;
+  }
+  const mods = await fetchMods();
+  renderMods(mods);
+});
+</script>
+</body>
+</html>
