@@ -111,20 +111,34 @@ body { font-family:'Fredoka', sans-serif; background:#f5f5f5; margin:0; padding:
     <button id="copyButton">📋 Copy Code</button>
   </div>
 
-  <div id="analytics-data" class="mod-analytics">
-    <h2>Mod Analytics (Last 5 Days)</h2>
-    <div class="analytics-bars-container">
-      ${[1,2,3,4,5].map(i => `
-        <div class="day-bar-wrapper">
-          <span class="day-label">Day ${i}</span>
-          <div class="progress-bar-container">
-            <div class="progress-bar-fill" id="day${i}Fill"></div>
-          </div>
-          <span class="day-value" id="day${i}Value">N/A</span>
-        </div>
-      `).join('')}
-    </div>
+  <div class="analytics-bars-container">
+  <div class="day-bar-wrapper">
+    <span class="day-label">Day 1</span>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="day1Fill"></div></div>
+    <span class="day-value" id="day1Value">N/A</span>
   </div>
+  <div class="day-bar-wrapper">
+    <span class="day-label">Day 2</span>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="day2Fill"></div></div>
+    <span class="day-value" id="day2Value">N/A</span>
+  </div>
+  <div class="day-bar-wrapper">
+    <span class="day-label">Day 3</span>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="day3Fill"></div></div>
+    <span class="day-value" id="day3Value">N/A</span>
+  </div>
+  <div class="day-bar-wrapper">
+    <span class="day-label">Day 4</span>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="day4Fill"></div></div>
+    <span class="day-value" id="day4Value">N/A</span>
+  </div>
+  <div class="day-bar-wrapper">
+    <span class="day-label">Day 5</span>
+    <div class="progress-bar-container"><div class="progress-bar-fill" id="day5Fill"></div></div>
+    <span class="day-value" id="day5Value">N/A</span>
+  </div>
+</div>
+
 </div>
 
 <script>
