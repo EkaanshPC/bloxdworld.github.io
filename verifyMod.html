@@ -34,29 +34,32 @@ const client = createClient(supabaseUrl, supabaseKey);
 
 // --- Admin Email ---
 const ADMIN_EMAIL = "ekaanshagarwal19564@gmail.com";
-
+// --- Fetch mods that are not approved yet ---
 async function fetchMods() {
-  const { data, error } = await client
+  const { data: mods, error } = await client
     .from("mod")
-    .select("*") // fetch mod details via relationship
-    .eq("approval", false)
+    .select("*")
+    .eq("approval", false) // only pending mods
     .order("created_at", { ascending: false });
 
-  if (error) return console.error(error);
-  return data;
+  if (error) {
+    console.error("❌ Error fetching mods:", error.message);
+    return [];
+  }
+  return mods;
 }
 
-function renderMods(approvals) {
+// --- Render mods in the admin dashboard ---
+function renderMods(mods) {
   const container = document.getElementById("mods-list");
   container.innerHTML = "";
 
-  if (!approvals || approvals.length === 0) {
+  if (!mods || mods.length === 0) {
     container.innerHTML = "<p>No mods waiting for verification!</p>";
     return;
   }
 
-  approvals.forEach(approval => {
-    const mod = approval.mod;
+  mods.forEach(mod => {
     const card = document.createElement("div");
     card.className = "mod-card";
     card.innerHTML = `
@@ -69,8 +72,8 @@ function renderMods(approvals) {
           <p><b>Description:</b> ${(mod.description || "No description").slice(0,100)}${mod.description && mod.description.length > 100 ? "…" : ""}</p>
         </div>
         <div>
-          <button class="approve-btn" onclick="verifyMod('${approval.id}', true)">✅ Approve</button>
-          <button class="reject-btn" onclick="verifyMod('${approval.id}', false)">❌ Reject</button>
+          <button class="approve-btn" onclick="verifyMod('${mod.id}', true)">✅ Approve</button>
+          <button class="reject-btn" onclick="verifyMod('${mod.id}', false)">❌ Reject</button>
         </div>
       </div>
     `;
@@ -78,9 +81,9 @@ function renderMods(approvals) {
   });
 }
 
-// --- Verify / Reject ---
+// --- Approve / Reject a mod ---
 window.verifyMod = async (modId, approve) => {
-  const updates = { approval: approve }; // true = approved, false = rejected
+  const updates = { approval: approve }; // true = approved
   const { error } = await client
     .from("mod")
     .update(updates)
@@ -89,10 +92,12 @@ window.verifyMod = async (modId, approve) => {
   if (error) return alert("Error updating mod: " + error.message);
 
   alert(approve ? "✅ Mod approved!" : "❌ Mod rejected!");
+  
   const mods = await fetchMods();
   renderMods(mods);
 };
 
+// --- Run on page load ---
 
 // --- Run ---
 document.addEventListener("DOMContentLoaded", async () => {
