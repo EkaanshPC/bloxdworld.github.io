@@ -16,41 +16,47 @@
 <link rel="stylesheet" href="styles/navbar.css"> 
 
 <style>
-/* Mini Neon vibes for the profile page */
+/* Default light mode (no .dark-mode class) */
+body {
+  background: #f9f9f9;
+  color: #111;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 .profile-container {
   max-width: 600px;
   margin: 50px auto;
-  background: #111;
+  background: #fff;
   padding: 30px;
-  border-radius: 15px;
-  color: #00ffff;
-  font-family: 'Press Start 2P', monospace;
-  box-shadow: 0 0 20px #00ffff66;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
+
 .profile-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: #111;
 }
-.profile-field {
-  margin-bottom: 20px;
-}
+
 .profile-field label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
+  color: #111;
 }
-.profile-field input, .profile-field textarea {
+
+.profile-field input,
+.profile-field textarea {
   width: 100%;
   padding: 10px;
-  border: 2px solid #00ffff;
-  border-radius: 10px;
-  background: #222;
-  color: #00ffff;
-  font-family: 'Press Start 2P', monospace;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: #fff;
+  color: #111;
 }
-.profile-field textarea {
-  resize: none;
-  height: 80px;
-}
+
 #profilePreview {
   display: block;
   margin: 0 auto 20px auto;
@@ -58,23 +64,64 @@
   width: 120px;
   height: 120px;
   object-fit: cover;
-  border: 3px solid #00ffff;
+  border: 2px solid #ccc;
 }
+
 #saveProfile {
-  background: #00ffff;
-  color: #111;
+  background: #007bff;
+  color: #fff;
   border: none;
   padding: 15px;
   width: 100%;
-  font-family: 'Press Start 2P', monospace;
   cursor: pointer;
-  border-radius: 10px;
-  transition: all 0.2s;
+  border-radius: 6px;
+  transition: background 0.2s, box-shadow 0.2s;
 }
+
 #saveProfile:hover {
-  background: #00ffffaa;
-  box-shadow: 0 0 20px #00ffff;
+  background: #0056b3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
+
+/* Dark mode overrides */
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .profile-container {
+  background: #1e1e1e;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+body.dark-mode .profile-container h2 {
+  color: #fff;
+}
+
+body.dark-mode .profile-field label {
+  color: #e0e0e0;
+}
+
+body.dark-mode .profile-field input,
+body.dark-mode .profile-field textarea {
+  background: #2c2c2c;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+body.dark-mode #profilePreview {
+  border: 2px solid #555;
+}
+
+body.dark-mode #saveProfile {
+  background: #007bff;
+}
+
+body.dark-mode #saveProfile:hover {
+  background: #0056b3;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
 </style>
 </head>
 <body>
