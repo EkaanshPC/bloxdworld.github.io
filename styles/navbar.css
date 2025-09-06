@@ -14,7 +14,6 @@ ul.navbar {
   position: relative;
   display: flex;
   align-items: center;
-  padding:10px;
 }
 
 .nav-item a {
@@ -22,18 +21,20 @@ ul.navbar {
   flex-direction: row;
   align-items: center;
   text-decoration: none;
-  background:none;
+  background: none;
   color: #000;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.2s ease, text-shadow 0.2s ease, background-color 0.2s ease;
+  padding: 8px 16px; /* added padding to make background bigger */
+  border-radius: 6px; /* optional: smooth corners */
 }
 
 .nav-item a:hover {
   color: #00ffff;
-  text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
-  background-color:gray;
+  background-color: gray;
 }
+
 
 
 body.dark-mode .nav-item a {
