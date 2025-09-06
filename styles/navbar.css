@@ -170,10 +170,10 @@ body.dark-mode #authArea a:hover {
 
 /* === Email Text (??) === */
 .emailText {
-  color:rgb(0, 0, 0)
+  color:white
 }
 .emailText .dark-mode {
-  color: #ffffff;
+  color: #ccc;
 }
 
 .modrinth-navbar {
