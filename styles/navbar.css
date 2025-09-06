@@ -34,7 +34,6 @@ ul.navbar {
 
 .nav-item a:hover {
   color: #00ffff;
-  text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
   background-color: gray;
   padding: 8px 16px; /* expand padding on hover */
 }
