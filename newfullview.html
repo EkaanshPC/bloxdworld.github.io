@@ -277,7 +277,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
       return data;
     }
   };
-  fetch(getLink(mod.file_path))
+  const fileUrl = `https://pxmsgzfufvwxpnyeobwk.supabase.co/storage/v1/object/public/mod/${mod.file_path}`;
+  fetch(fileUrl)
   .then(res => res.text())
   .then(data => {
 console.log(`Code found! ${data}`)
