@@ -112,8 +112,7 @@
 </footer>
 
 <script type="module">
-import { uploadMod } from './js/googlelogin.js';
-
+import { uploadMod, getUID } from './js/googlelogin.js';
 document.addEventListener('DOMContentLoaded', () => {
   const uploadBtn = document.querySelector('.upload-container button');
   const status = document.getElementById('uploadStatus');
@@ -130,6 +129,7 @@ if(!user.email) return status.textContent = 'You must be logged in to upload a m
       icon: document.getElementById('modIcon').value,
       author: document.getElementById('modAuthor').value,
       category: document.getElementById('modCategory').value,
+      creatoruid:getUID(),
       info: { extra: "submitted via form" }
     };
 

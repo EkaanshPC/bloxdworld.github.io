@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<title>Update Profile | Bloxd World</title>
+<meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles/earth-cube.css">
+<link rel="stylesheet" href="styles/header.css">
+<link rel="stylesheet" href="styles/devlogandindex.css">
+<link rel="stylesheet" href="styles/other.css">
+<link rel="stylesheet" href="styles/navbar.css"> 
+
+<style>
+/* Mini Neon vibes for the profile page */
+.profile-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #111;
+  padding: 30px;
+  border-radius: 15px;
+  color: #00ffff;
+  font-family: 'Press Start 2P', monospace;
+  box-shadow: 0 0 20px #00ffff66;
+}
+.profile-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.profile-field {
+  margin-bottom: 20px;
+}
+.profile-field label {
+  display: block;
+  margin-bottom: 5px;
+}
+.profile-field input, .profile-field textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #00ffff;
+  border-radius: 10px;
+  background: #222;
+  color: #00ffff;
+  font-family: 'Press Start 2P', monospace;
+}
+.profile-field textarea {
+  resize: none;
+  height: 80px;
+}
+#profilePreview {
+  display: block;
+  margin: 0 auto 20px auto;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border: 3px solid #00ffff;
+}
+#saveProfile {
+  background: #00ffff;
+  color: #111;
+  border: none;
+  padding: 15px;
+  width: 100%;
+  font-family: 'Press Start 2P', monospace;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+#saveProfile:hover {
+  background: #00ffffaa;
+  box-shadow: 0 0 20px #00ffff;
+}
+</style>
+</head>
+<body>
+<div class="modrinth-navbar">
+  <div class="header">
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd <br>World</div>
+    </div>
+    <div class="header-right">
+      <ul class="navbar">
+        <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
+        <li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a></li>
+        <li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a></li>
+        <li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a></li>
+        <li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a></li>
+        <li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a></li>
+        <li class="nav-item" id="authArea"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="profile-container">
+  <h2>Update Profile</h2>
+  <img id="profilePreview" src="https://via.placeholder.com/120" alt="Profile Picture Preview">
+  
+  <div class="profile-field">
+    <label for="displayName">Display Name</label>
+    <input type="text" id="displayName">
+  </div>
+  
+  <div class="profile-field">
+    <label for="bio">Bio</label>
+    <textarea id="bio"></textarea>
+  </div>
+
+  <div class="profile-field">
+    <label for="profilePicture">Profile Picture URL</label>
+    <input type="text" id="profilePicture">
+  </div>
+
+  <button id="saveProfile">Save Profile</button>
+</div>
+
+<footer class="site-footer">
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
+</footer>
+
+<script type="module">
+import { client, getUID } from "./js/googlelogin.js";
+
+async function loadProfile() {
+  const uid = await getUID();
+  if (!uid) return;
+
+  const { data: profile, error } = await client
+    .from("profiles")
+    .select("*")
+    .eq("uid", uid)
+    .single();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (profile) {
+    document.getElementById("displayName").value = profile.display_name || "";
+    document.getElementById("bio").value = profile.bio || "";
+    document.getElementById("profilePicture").value = profile.profile_picture || "";
+    if (profile.profile_picture) document.getElementById("profilePreview").src = profile.profile_picture;
+  }
+}
+
+document.getElementById("profilePicture").addEventListener("input", (e) => {
+  document.getElementById("profilePreview").src = e.target.value || "https://via.placeholder.com/120";
+});
+
+document.getElementById("saveProfile").addEventListener("click", async () => {
+  const uid = await getUID();
+  if (!uid) {
+    Toastify({ text: "You must be logged in!", backgroundColor: "red", duration: 3000 }).showToast();
+    return;
+  }
+
+  const display_name = document.getElementById("displayName").value;
+  const bio = document.getElementById("bio").value;
+  const profile_picture = document.getElementById("profilePicture").value;
+
+  const { data, error } = await client
+    .from("profiles")
+    .upsert({ uid, display_name, bio, profile_picture }, { onConflict: ["uid"] });
+
+  if (error) {
+    Toastify({ text: "Failed to save profile!", backgroundColor: "red", duration: 3000 }).showToast();
+    console.error(error);
+    return;
+  }
+
+  Toastify({ text: "Profile updated!", backgroundColor: "#00ffff", duration: 3000 }).showToast();
+});
+
+loadProfile();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="js/googlelogin.js"></script>
+</body>
+</html>

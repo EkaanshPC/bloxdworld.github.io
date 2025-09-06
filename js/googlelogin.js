@@ -164,6 +164,14 @@ async function hasUserVoted(modId) {
 
   return !!data;
 }
+export async function getUID() {
+  const { data: { user }, error } = await client.auth.getUser();
+  if (error) {
+    console.error("Failed to get UID:", error);
+    return null;
+  }
+  return user.id; // this is the UID
+}
 
 export async function uploadMod({ 
   title, 
@@ -173,6 +181,7 @@ export async function uploadMod({
   icon, 
   author, 
   category, 
+  creatoruid,
   info 
 }) {
   if (!title || !file) return { error: "Fill title and file!" };
@@ -200,10 +209,44 @@ export async function uploadMod({
       category,
       info,
       file_path: filePath,
-      created_at: new Date()
+      created_at: new Date(),
+      creatoruid
     });
 
   if (dbError) return { error: dbError.message };
 
   return { success: true };
+}
+export async function getProfile() {
+  const uid = await getUID();
+  if (!uid) return null;
+
+  const { data, error } = await client
+    .from("profiles")
+    .select("*")
+    .eq("uid", uid)
+    .single();
+
+  if (error) {
+    console.error("Failed to fetch profile:", error);
+    return null;
+  }
+
+  return data;
+}
+export async function updateProfile({ display_name, profile_picture, bio }) {
+  const uid = await getUID();
+  if (!uid) return { error: "User not logged in!" };
+
+  const { data, error } = await client
+    .from("profiles")
+    .upsert({
+      uid,
+      display_name,
+      profile_picture,
+      bio
+    }, { onConflict: ["uid"] }); // will update if exists
+
+  if (error) return { error: error.message };
+  return { success: true, data };
 }
