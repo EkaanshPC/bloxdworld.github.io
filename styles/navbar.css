@@ -14,23 +14,28 @@ ul.navbar {
   position: relative;
   display: flex;
   align-items: center;
+  padding: 4px 8px; /* optional: give hover some space */
 }
 
 .nav-item a {
   display: flex;
-  flex-direction: row;
   align-items: center;
   text-decoration: none;
+  background-color: transparent; /* use transparent instead of none */
   color: #000;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.2s ease, text-shadow 0.2s ease, background-color 0.2s ease;
+  padding: 4px 8px; /* makes hover bg visible */
+  border-radius: 4px; /* smooth hover bg */
 }
 
 .nav-item a:hover {
   color: #00ffff;
   text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
+  background-color: rgba(128, 128, 128, 0.2); /* softer hover bg */
 }
+
 
 body.dark-mode .nav-item a {
   color: #ccc;
