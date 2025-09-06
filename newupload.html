@@ -119,6 +119,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const status = document.getElementById('uploadStatus');
 
   uploadBtn.addEventListener('click', async () => {
+    const { data: { session } } = await client.auth.getSession();
+const user = session?.user;
+if(!user.email) return status.textContent = 'You must be logged in to upload a mod!';
     const modData = {
       title: document.getElementById('modTitle').value,
       file: document.getElementById('modFile').files[0],
