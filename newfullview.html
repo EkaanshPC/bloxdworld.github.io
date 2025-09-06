@@ -271,7 +271,13 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
   document.getElementById("category").textContent = mod.category || "Uncategorized";
   document.getElementById("description").innerHTML = formatDescription(mod.description);
-  fetch(mod.file_path)
+  window.getLink = async (filePath) => {
+    const { data } = client.storage.from("mod").getPublicUrl(filePath);
+    if (data?.publicUrl) {
+      return data;
+    }
+  };
+  fetch(getLink(mod.file_path))
   .then(res => res.text())
   .then(data => {
 console.log(`Code found! ${data}`)
