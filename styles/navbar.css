@@ -183,8 +183,3 @@ body.dark-mode #authArea a:hover {
   max-width: 900px;
   margin: 20px auto;
 }
-
-body.dark-mode .modrinth-navbar {
-  background: #2a2a2a;
-  box-shadow: 0 0 24px rgba(0, 0, 0, 0.4);
-}
