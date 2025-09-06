@@ -18,22 +18,28 @@ ul.navbar {
 
 .nav-item a {
   display: flex;
-  flex-direction: row;
   align-items: center;
   text-decoration: none;
   background: none;
   color: #000;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: color 0.2s ease, text-shadow 0.2s ease, background-color 0.2s ease;
-  padding: 8px 16px; /* added padding to make background bigger */
-  border-radius: 6px; /* optional: smooth corners */
+  padding: 4px 8px; /* default padding */
+  border-radius: 6px;
+  transition: 
+    color 0.2s ease, 
+    text-shadow 0.2s ease, 
+    background-color 0.2s ease,
+    padding 0.2s ease; /* add padding to transition */
 }
 
 .nav-item a:hover {
   color: #00ffff;
+  text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
   background-color: gray;
+  padding: 8px 16px; /* expand padding on hover */
 }
+
 
 
 
