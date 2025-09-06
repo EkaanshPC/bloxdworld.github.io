@@ -24,7 +24,6 @@ ul.navbar {
   color: #000;
   font-weight: 600;
   font-size: 0.95rem;
-  padding: 4px 8px; /* default padding */
   border-radius: 6px;
   transition: 
     color 0.2s ease, 
