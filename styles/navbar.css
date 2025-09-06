@@ -14,6 +14,7 @@ ul.navbar {
   position: relative;
   display: flex;
   align-items: center;
+  padding:10px;
 }
 
 .nav-item a {
@@ -173,10 +174,10 @@ body.dark-mode #authArea a:hover {
 
 /* === Email Text (??) === */
 .emailText {
-  color:white
+  color:rgb(0, 0, 0)
 }
 .emailText .dark-mode {
-  color: #ccc;
+  color: #ffffff;
 }
 
 .modrinth-navbar {
