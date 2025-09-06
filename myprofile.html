@@ -158,7 +158,7 @@ body.dark-mode #saveProfile:hover {
 
 <div class="profile-container">
   <h2>Update Profile</h2>
-  <img id="profilePreview" src="https://via.placeholder.com/120" alt="Profile Picture Preview">
+  <img id="profilePreview" src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png" alt="Profile Picture Preview">
   
   <div class="profile-field">
     <label for="displayName">Display Name</label>
@@ -209,7 +209,7 @@ async function loadProfile() {
     .from("profiles")
     .select("*")
     .eq("uid", uid)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.error(error);
