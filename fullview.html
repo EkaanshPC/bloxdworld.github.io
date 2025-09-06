@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc" />
@@ -395,6 +396,12 @@ text-align: left;
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="module" src="js/googlelogin.js"></script>
   <script>
+Toastify({
+  text: "Update v2 soon! This page will be overhauled!",
+  duration: 3000,
+  backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
+  close: true,
+}).showToast();
 
 function formatModDescription(rawText) {
     if (typeof rawText !== 'string') {
