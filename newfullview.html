@@ -13,7 +13,8 @@
 <meta property="og:url" content="https://bloxdworld.pages.dev">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="styles/earth-cube.css">
-
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 <link rel="stylesheet" href="styles/header.css">
 <link rel="stylesheet" href="styles/devlogandindex.css">
 <link rel="stylesheet" href="styles/other.css">
@@ -168,6 +169,14 @@ body { font-family:'Fredoka', sans-serif; background:#f5f5f5; margin:0; padding:
 </div>
 
 <script type="module">
+  Toastify({
+  text: "This is still in alpha testing!",
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #FF0000, #D3D3D3)",
+  close: true,
+}).showToast();
 const supabaseUrl = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
 const client = supabase.createClient(supabaseUrl, supabaseKey);
@@ -188,6 +197,14 @@ function updateAnalytics(mod) {
   try {
     analytics = mod.mod_analytics ? JSON.parse(mod.mod_analytics) : {};
   } catch {
+    Toastify({
+  text: "Warning: Invalid JSON in mod_analytics!",
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #FFFF00, #D3D3D3)",
+  close: true,
+}).showToast();
     console.warn("Invalid JSON in mod_analytics");
   }
 
@@ -219,7 +236,16 @@ function updateAnalytics(mod) {
 document.addEventListener("DOMContentLoaded", async ()=>{
   const params = new URLSearchParams(window.location.search);
   const addonId = params.get("addonid");
-  if(!addonId) return alert("No Addon ID in URL");
+  if(!addonId) {
+    Toastify({
+  text: "No AddonId found in URL!",
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #FF0000, #D3D3D3)",
+  close: true,
+}).showToast();
+    return console.error("No Addon ID in URL");}
 
   const { data, error } = await client
     .from("mod")
@@ -227,7 +253,16 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     .eq("id", addonId)
     .single();
 
-  if(error) return console.error(error);
+  if(error) {
+    Toastify({
+  text: `Error while finding mod: ${error}`,
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #FF0000, #D3D3D3)",
+  close: true,
+}).showToast();
+    return console.error(error);}
 
   const mod = data;
   console.log("data got! it is:",mod)
@@ -242,7 +277,14 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   updateAnalytics(mod);
 
   document.getElementById("copyButton").addEventListener("click",()=>{
-    navigator.clipboard.writeText('Bloxdworld: soon').then(()=>alert("Code copied!"));
+    navigator.clipboard.writeText('Bloxdworld: soon').then(()=>{Toastify({
+  text: "Code copied to clipboard!",
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #ADD8E6, #D3D3D3)",
+  close: true,
+}).showToast();});
   });
 });
 </script>
