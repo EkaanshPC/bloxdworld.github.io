@@ -14,7 +14,6 @@ ul.navbar {
   position: relative;
   display: flex;
   align-items: center;
-  padding: 4px 8px; /* optional: give hover some space */
 }
 
 .nav-item a {
@@ -26,7 +25,6 @@ ul.navbar {
   font-weight: 600;
   font-size: 0.95rem;
   transition: color 0.2s ease, text-shadow 0.2s ease, background-color 0.2s ease;
-  padding: 4px 8px; /* makes hover bg visible */
   border-radius: 4px; /* smooth hover bg */
 }
 
