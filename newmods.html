@@ -645,7 +645,7 @@ card.innerHTML = `
         <p><b>Author:</b> ${mod.author || "Unknown"}</p>
       </div>
     </div>
-    <p class="mod-description">${(mod.description || "No description yet.").slice(0, 50)}${mod.description && mod.description.length > 50 ? "…" : ""}</p>
+    <p class="mod-description">${(mod.description || "No description yet.").slice(0, 150)}${mod.description && mod.description.length > 50 ? "…" : ""}</p>
     <div class="mod-meta">
       <p><b>Category:</b> ${mod.category || "Not specified"}</p>
     </div>
