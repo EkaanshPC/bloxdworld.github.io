@@ -220,6 +220,12 @@ ul.navbar {
   gap: 12px;
   margin-left: auto; /* sticks this to the far right */
 }
+.alsorightpls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto; /* sticks this to the far right */
+}
 .header {
   display: flex;
   align-items: center;
