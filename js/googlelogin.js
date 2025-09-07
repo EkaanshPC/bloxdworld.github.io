@@ -341,4 +341,23 @@ export async function getUserMods(uid) {
 }
  
 let uid=await getUID()
-getUserMods(uid).then(mods => console.log(mods));
+getUserMods(uid).then(mods => mods.forEach(mod=>applyApprovedVersions(mod)));
+
+async function applyApprovedVersions(mod) {
+  const { data: versions } = await supabase
+    .from("versions")
+    .select("*")
+    .eq("mod_id", mod.id)
+    .eq("approved", true)
+    .order("created_at", { ascending: true });
+
+  if (versions && versions.length > 0) {
+    // Apply the latest approved version
+    const latest = versions[versions.length - 1];
+    mod.title = latest.proposed_title;
+    mod.shortdescription = latest.proposed_description;
+    mod.file_path = latest.proposed_file_path;
+  }
+
+  return mod;
+}
