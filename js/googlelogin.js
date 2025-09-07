@@ -73,7 +73,7 @@ async function renderUser(sessionFromEvent) {
         <div class="profile-dropdown">
           <button class="profile-btn">
             <img src="${
-              profile.profile_picture || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png"
+              profile.profile_picture || user.user_metadata.picture
             }" alt="avatar" class="profile-pic">
             <span class="profile-name">${
               profile.display_name || user.user_metadata.full_name || shortEmail
