@@ -98,11 +98,11 @@ async function renderUser(sessionFromEvent) {
   } else {
     console.log("🙅 No user logged in.");
 
- authArea.innerHTML = `
+authArea.innerHTML = `
   <li>
-    <a href="#" id="loginBtn"> 
-      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="height: 16px; vertical-align: middle; margin-left: 4px;">
-      <br/><p>Login</p>
+    <a href="#" id="loginBtn" style="display: flex; align-items: center; gap: 8px;">
+      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="height: 16px; border-radius:10px;">
+      <span>Login</span>
     </a>
   </li>
 `;
