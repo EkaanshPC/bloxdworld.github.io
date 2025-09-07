@@ -52,6 +52,7 @@ async function renderUser(sessionFromEvent) {
   if (!session) {
     const { data, error } = await client.auth.getSession();
     session = data.session;
+    console.log("client is",client)
     console.log("client.auth is",client.auth)
     console.log("💾 getSession() response:", session, error);
   }
