@@ -63,10 +63,20 @@ const email = user.email;
 const [local, domain] = email.split("@");
 const shortLocal = local.length > 7 ? local.slice(0, 7) + "..." : local;
 const shortEmail = `${shortLocal}@${domain}`;
-authArea.innerHTML = `
-    <span class="emailText">${shortEmail}</span>
-    <a style="display:inline-block;" href="#" id="logoutBtn">🚪 Logout</a>
-`;
+getProfile().then(profile => {
+  authArea.innerHTML = `
+    <div class="profile-dropdown">
+      <button class="profile-btn">
+        <img src="${profile.profile_picture}" alt="avatar" class="profile-pic">
+        <span class="profile-name">${profile.display_name}</span>
+      </button>
+      <div class="dropdown-content">
+        <a href="/myprofile">My Profile</a>
+        <a href="#" id="logoutBtn">🚪 Logout</a>
+      </div>
+    </div>
+  `;
+})
 document.getElementById("logoutBtn").onclick = async (e) => {
   e.preventDefault();
   console.log("🚪 Logging out...");
@@ -252,6 +262,3 @@ export async function updateProfile({ display_name, profile_picture, bio }) {
   if (error) return { error: error.message };
   return { success: true, data };
 }
-getProfile().then(profile => {
-  console.log("profile data:", profile);
-});
