@@ -252,3 +252,4 @@ export async function updateProfile({ display_name, profile_picture, bio }) {
   if (error) return { error: error.message };
   return { success: true, data };
 }
+console.log("profile data:",getProfile())
