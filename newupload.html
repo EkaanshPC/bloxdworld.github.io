@@ -220,19 +220,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const { data: { session } } = await client.auth.getSession();
 const user = session?.user;
 if(!user.email) return status.textContent = 'You must be logged in to upload a mod!';
-    const modData = {
-      title: document.getElementById('modTitle').value,
-      file: document.getElementById('modFile').files[0],
-      description: document.getElementById('modDescription').value,
-      image: document.getElementById('modImage').value,
-      icon: document.getElementById('modIcon').value,
-      author: document.getElementById('modAuthor').value,
-      category: document.getElementById('modCategory').value,
-      creatoruid:getUID(),
-      shortdescription:document.getElementById('modShort').value,
-      info: { extra: "submitted via form" }
-    };
+getProfile().then(profile => {
+  const author = profile.display_name || user.user_metadata.display_name;
 
+  const modData = {
+    title: document.getElementById('modTitle').value,
+    file: document.getElementById('modFile').files[0],
+    description: document.getElementById('modDescription').value,
+    image: document.getElementById('modImage').value,
+    icon: document.getElementById('modIcon').value,
+    author: author,
+    category: document.getElementById('modCategory').value,
+    creatoruid: getUID(),
+    shortdescription: document.getElementById('modShort').value,
+    info: { extra: "submitted via form" }
+  };
+
+  console.log("modData",modData);
+});
     status.textContent = 'Uploading... ⏳';
     const result = await uploadMod(modData);
 
