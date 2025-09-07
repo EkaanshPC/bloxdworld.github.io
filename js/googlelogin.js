@@ -252,31 +252,52 @@ export async function getProfile() {
   const uid = await getUID();
   if (!uid) return null;
 
+  // Fetch profile, no .single() to avoid PGRST116
   const { data, error } = await client
     .from("profiles")
     .select("*")
-    .eq("uid", uid)
-    .single();
+    .eq("uid", uid);
 
   if (error) {
     console.error("Failed to fetch profile:", error);
     return null;
   }
 
-  return data;
+  if (!data || data.length === 0) {
+    // No profile exists yet, optionally create one
+    const { data: newProfile, error: insertError } = await client
+      .from("profiles")
+      .insert({ uid })
+      .select()
+      .single(); // safe here, we know 1 row is returned
+
+    if (insertError) {
+      console.error("Failed to create new profile:", insertError);
+      return null;
+    }
+
+    return newProfile;
+  }
+
+  // Return first profile if it exists
+  return data[0];
 }
+
 export async function updateProfile({ display_name, profile_picture, bio }) {
   const uid = await getUID();
   if (!uid) return { error: "User not logged in!" };
 
   const { data, error } = await client
     .from("profiles")
-    .upsert({
-      uid,
-      display_name,
-      profile_picture,
-      bio
-    }, { onConflict: ["uid"] }); // will update if exists
+    .upsert(
+      {
+        uid,
+        display_name,
+        profile_picture,
+        bio
+      },
+      { onConflict: ["uid"], returning: "representation" } // make sure it returns the updated row
+    );
 
   if (error) return { error: error.message };
   return { success: true, data };
