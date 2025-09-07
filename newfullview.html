@@ -448,50 +448,6 @@ function formatDescription(raw) {
             .replace(/`(.*?)`/g,'<code>$1</code>');
 }
 
-function updateAnalytics(mod) {
-  const fills = Array.from({ length: 5 }, (_, i) => document.getElementById(`day${i + 1}Fill`));
-  const values = Array.from({ length: 5 }, (_, i) => document.getElementById(`day${i + 1}Value`));
-
-  let analytics = {};
-  try {
-    analytics = mod.mod_analytics ? JSON.parse(mod.mod_analytics) : {};
-  } catch {
-    Toastify({
-  text: "Warning: Invalid JSON in mod_analytics!",
-  duration: 3000,
-  gravity: "bottom", // bottom or top
-  position: "right", // left, center, right
-  backgroundColor: "linear-gradient(to right, #FFFF00, #D3D3D3)",
-  close: true,
-}).showToast();
-    console.warn("Invalid JSON in mod_analytics");
-  }
-
-  // Get day numbers and sort ascending
-  const dayEntries = Object.entries(analytics)
-    .map(([k, v]) => {
-      const match = k.match(/^Day (\d+)$/);
-      return match ? [parseInt(match[1], 10), v] : null;
-    })
-    .filter(Boolean)
-    .sort((a, b) => a[0] - b[0]);
-
-  // Take the last 5 days
-  const lastFive = Array(5).fill("N/A");
-  const sliceStart = Math.max(dayEntries.length - 5, 0);
-  dayEntries.slice(sliceStart).forEach(([day, val], i) => {
-    lastFive[5 - (dayEntries.length - sliceStart) + i] = val;
-  });
-
-  const numericValues = lastFive.filter(v => typeof v === "number" && !isNaN(v));
-  const max = numericValues.length ? Math.max(...numericValues) : 0;
-
-  lastFive.forEach((val, i) => {
-    fills[i].style.height = typeof val === "number" && max ? (val / max * 100) + "%" : "0%";
-    values[i].textContent = val;
-  });
-}
-
 document.addEventListener("DOMContentLoaded", async ()=>{
   const params = new URLSearchParams(window.location.search);
   const addonId = params.get("addonid");
