@@ -67,12 +67,12 @@ getProfile().then(profile => {
   authArea.innerHTML = `
     <div class="profile-dropdown">
       <button class="profile-btn">
-        <img src="${profile.profile_picture}" alt="avatar" class="profile-pic">
-        <span class="profile-name">${profile.display_name||shortEmail}</span>
+        <img src="${profile.profile_picture||"https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png"}" alt="avatar" class="profile-pic">
+        <span class="profile-name">${profile.display_name||user.user_metadata.full_name}</span>
       </button>
       <div class="dropdown-content">
         <a href="/myprofile">My Profile</a>
-        <a href="#" id="logoutBtn">🚪 Logout</a>
+        <a href="#" id="logoutBtn">Logout</a>
       </div>
     </div>
   `;
