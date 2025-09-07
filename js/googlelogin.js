@@ -100,9 +100,9 @@ async function renderUser(sessionFromEvent) {
 
  authArea.innerHTML = `
   <li>
-    <a href="#" id="loginBtn">
-      Login with 
+    <a href="#" id="loginBtn"> 
       <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="height: 16px; vertical-align: middle; margin-left: 4px;">
+      <p>Login</p>
     </a>
   </li>
 `;
