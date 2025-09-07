@@ -98,9 +98,14 @@ async function renderUser(sessionFromEvent) {
   } else {
     console.log("🙅 No user logged in.");
 
-    authArea.innerHTML = `
-      <li><a href="#" id="loginBtn">🔑 Login with Google</a></li>
-    `;
+ authArea.innerHTML = `
+  <li>
+    <a href="#" id="loginBtn">
+      Login with 
+      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="height: 16px; vertical-align: middle; margin-left: 4px;">
+    </a>
+  </li>
+`;
 
     document.getElementById("loginBtn").onclick = async (e) => {
       e.preventDefault();
