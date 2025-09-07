@@ -151,22 +151,6 @@ const supabase = createClient(SUPABASE_URL, ANON_KEY);
 
 const modsList = document.getElementById("modsList");
 
-// Use your existing getUserMods() function
-async function getUserMods(uid) {
-  const res = await fetch(`${SUPABASE_URL}/functions/v1/get-user-mods`, {
-    method: "GET",
-    headers: {
-      "Authorization": `Bearer ${ANON_KEY}`,
-      "Content-Type": "application/json"
-    }
-  });
-  if (!res.ok) {
-    console.error("Failed request:", res.status, res.statusText);
-    return [];
-  }
-  return await res.json().then(data => data.mods || []);
-}
-
 async function fetchAndRenderMods() {
   const { data: { user } } = await supabase.auth.getUser(); 
   if (!user) return;
