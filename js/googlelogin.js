@@ -47,6 +47,7 @@ async function handleOAuthRedirect() {
 // ✅ 3️⃣ Render UI based on user session
 async function renderUser(sessionFromEvent) {
   console.log("🎭 renderUser() called");
+
   let session = sessionFromEvent;
   if (!session) {
     const { data, error } = await client.auth.getSession();
@@ -59,52 +60,65 @@ async function renderUser(sessionFromEvent) {
 
   if (user) {
     console.log("✅ Logged in user:", user);
-const email = user.email;
-const [local, domain] = email.split("@");
-const shortLocal = local.length > 7 ? local.slice(0, 7) + "..." : local;
-const shortEmail = `${shortLocal}@${domain}`;
-getProfile().then(profile => {
-  authArea.innerHTML = `
-    <div class="profile-dropdown">
-      <button class="profile-btn">
-        <img src="${profile.profile_picture||"https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png"}" alt="avatar" class="profile-pic">
-        <span class="profile-name">${profile.display_name||user.user_metadata.full_name}</span>
-      </button>
-      <div class="dropdown-content">
-        <a href="/myprofile">My Profile</a>
-        <a href="#" id="logoutBtn">Logout</a>
-      </div>
-    </div>
-  `;
-})
-document.getElementById("logoutBtn").onclick = async (e) => {
-  e.preventDefault();
-  console.log("🚪 Logging out...");
-  await client.auth.signOut();
-  setTimeout(() => renderUser(), 100); // Fallback in case event doesn't fire
-};
+
+    // shorten email (backup if display_name missing)
+    const email = user.email;
+    const [local, domain] = email.split("@");
+    const shortLocal = local.length > 7 ? local.slice(0, 7) + "..." : local;
+    const shortEmail = `${shortLocal}@${domain}`;
+
+    // fetch profile
+    getProfile().then(profile => {
+      authArea.innerHTML = `
+        <div class="profile-dropdown">
+          <button class="profile-btn">
+            <img src="${
+              profile.profile_picture || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png"
+            }" alt="avatar" class="profile-pic">
+            <span class="profile-name">${
+              profile.display_name || user.user_metadata.full_name || shortEmail
+            }</span>
+          </button>
+          <div class="dropdown-content">
+            <a href="/myprofile">My Profile</a>
+            <a href="#" id="logoutBtn">Logout</a>
+          </div>
+        </div>
+      `;
+
+      // ✅ attach logout AFTER rendering
+      document.getElementById("logoutBtn").onclick = async (e) => {
+        e.preventDefault();
+        console.log("🚪 Logging out...");
+        await client.auth.signOut();
+        setTimeout(() => renderUser(), 100); // Fallback
+      };
+    });
+
   } else {
     console.log("🙅 No user logged in.");
+
     authArea.innerHTML = `
       <li><a href="#" id="loginBtn">🔑 Login with Google</a></li>
     `;
-document.getElementById("loginBtn").onclick = async (e) => {
-  e.preventDefault();
-  console.log("🔑 Starting OAuth sign in...");
 
-  // 🔄 Clear any lingering session before redirect
-  await client.auth.signOut();
+    document.getElementById("loginBtn").onclick = async (e) => {
+      e.preventDefault();
+      console.log("🔑 Starting OAuth sign in...");
 
-  // 🔐 Force Google to show account picker
-  await client.auth.signInWithOAuth({
-    provider: "google",
-    options: {
-      prompt: "select_account consent" // ✅ Force account switch
-    }
-  });
-};
+      // 🔄 Clear any lingering session before redirect
+      await client.auth.signOut();
+
+      // 🔐 Force Google to show account picker
+      await client.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          prompt: "select_account consent" // ✅ Force account switch
+        }
+      });
+    };
+
     console.log("🔑 Login button set up.");
-    
   }
 }
 
