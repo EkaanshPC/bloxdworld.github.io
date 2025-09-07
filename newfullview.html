@@ -238,6 +238,25 @@ body {
   flex-shrink: 0;
 }
 
+.tab-bar {
+  display: flex;
+  border-bottom: 2px solid #ccc;
+}
+
+.tab {
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: none;
+}
+
+.tab.active {
+  background-color: #01ffbf;
+  color: white;
+}
+
 </style>
 </head>
 <body>
@@ -326,6 +345,11 @@ body {
         <span><strong>By:</strong> <span id="uploaderName">...</span></span>
 </div>
 <div id="mod-detail-page" class="modrinth-style">
+  <div class="tab-bar">
+  <a href="/description" class="tab active">Description</a>
+  <a href="/changelog" class="tab">Changelog</a>
+  <a href="/versions" class="tab">Versions</a>
+</div>
     <p id="description" class="description">Loading description...</p>
       <div class="mod-code">
     <h2>Addon Code</h2>

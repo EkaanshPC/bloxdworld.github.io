@@ -193,3 +193,41 @@ body.dark-mode #authArea a:hover {
   max-width: 900px;
   margin: 20px auto;
 }
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  justify-content: space-between; /* spread left, center, right */
+}
+
+/* LEFT: logo & cube */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* CENTER: navbar links */
+.header-right {
+  display: flex;
+  flex: 1;                   /* take available space */
+  justify-content: center;    /* center nav links */
+}
+
+ul.navbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* RIGHT: auth/email area */
+#authArea {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto; /* sticks this to the far right */
+}
