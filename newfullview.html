@@ -120,7 +120,7 @@ body {
 }
 
 .mod-meta {
-  margin-top:105px;
+  margin-top:220px;
   padding: 15px;
   width:125px;
   background: #fff;
@@ -311,6 +311,7 @@ body {
   </div>
     <span style="text-align:left;"><strong><i class="fa-solid fa-tags"></i></strong> <span id="category">...</span></span>
   <div class="mod-description">
+    <p id="shortDescription">Loading short description...</p>
   <hr/>
   
   <div class="mod-meta">
@@ -460,7 +461,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   document.getElementById("uploadDate").textContent = mod.created_at.split("T")[0];
   document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
   document.getElementById("category").textContent = mod.category || "Uncategorized";
-  document.getElementById("description").innerHTML = formatDescription(mod.description);
+ document.getElementById("shortDescription").textContent= mod.shortdescription || "No Info"
+  document.getElementById("description").innerHTML = mod.description
   window.getLink = async (filePath) => {
     const { data } = client.storage.from("mod").getPublicUrl(filePath);
     if (data?.publicUrl) {

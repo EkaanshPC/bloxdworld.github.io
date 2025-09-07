@@ -89,7 +89,8 @@
   <textarea id="modDescription" placeholder="Enter Mod Description"></textarea><br>
   <input type="text" id="modImage" placeholder="Image URL"><br>
   <input type="text" id="modIcon" placeholder="Icon URL"><br>
-  <input type="text" id="modAuthor" placeholder="Author Name"><br>
+<input type="text" id="modShort" placeholder="Short Description">
+<p id="wordCountMsg" style="color: red;"></p>
   <select id="modCategory">
     <option value="">Select Category</option>
     <option value="Gameplay">Gameplay</option>
@@ -117,7 +118,18 @@ import { uploadMod, getUID } from './js/googlelogin.js';
 document.addEventListener('DOMContentLoaded', () => {
   const uploadBtn = document.querySelector('.upload-container button');
   const status = document.getElementById('uploadStatus');
+  const input = document.getElementById('modIcon');
+  const message = document.getElementById('wordCountMsg');
 
+  input.addEventListener('input', () => {
+    const words = input.value.trim().split(/\s+/).filter(Boolean);
+    if (words.length > 100) {
+      message.textContent = `Limit exceeded: ${words.length} words (max 100)`;
+      input.value = words.slice(0, 100).join(' ');
+    } else {
+      message.textContent = `Words: ${words.length}/100`;
+    }
+  });
   uploadBtn.addEventListener('click', async () => {
     const { data: { session } } = await client.auth.getSession();
 const user = session?.user;
@@ -131,6 +143,7 @@ if(!user.email) return status.textContent = 'You must be logged in to upload a m
       author: document.getElementById('modAuthor').value,
       category: document.getElementById('modCategory').value,
       creatoruid:getUID(),
+      shortdescription:document.getElementById('modShort').value,
       info: { extra: "submitted via form" }
     };
 
