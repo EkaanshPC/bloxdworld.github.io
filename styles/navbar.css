@@ -180,7 +180,6 @@ body.dark-mode #authArea a:hover {
   background: transparent;
   border-radius: 12px;
   padding: 10px 20px;
-  max-width: 900px;
   margin: 20px auto;
 }
 .header {
