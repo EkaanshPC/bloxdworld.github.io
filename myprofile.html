@@ -225,7 +225,7 @@ async function loadProfile() {
 }
 
 document.getElementById("profilePicture").addEventListener("input", (e) => {
-  document.getElementById("profilePreview").src = e.target.value || "https://via.placeholder.com/120";
+  document.getElementById("profilePreview").src = e.target.value || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png";
 });
 
 document.getElementById("saveProfile").addEventListener("click", async () => {
@@ -253,6 +253,25 @@ document.getElementById("saveProfile").addEventListener("click", async () => {
 });
 
 loadProfile();
+const themeToggle = document.getElementById("themeToggle");
+
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
+
+// Toggle and save preference
+themeToggle.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+
+  // Save preference
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="module" src="js/googlelogin.js"></script>

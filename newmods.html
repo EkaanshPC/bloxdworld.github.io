@@ -680,6 +680,25 @@ card.innerHTML = `
     const mods = await fetchMods();
     renderMods(mods);
   });
+  const themeToggle = document.getElementById("themeToggle");
+
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
+
+// Toggle and save preference
+themeToggle.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+
+  // Save preference
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
 </script>
 
 <footer class="site-footer">
