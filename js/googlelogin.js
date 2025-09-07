@@ -306,7 +306,7 @@ export async function updateProfile({ display_name, profile_picture, bio }) {
 }
 
 async function getProfiles() {
-  const { data, error } = await supabase
+  const { data, error } = await client
     .from("profiles")
     .select("*");
 
