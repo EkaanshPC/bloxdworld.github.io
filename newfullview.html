@@ -467,7 +467,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     .select("*")
     .eq("id", addonId)
     .single();
-
+    document.getElementById("descriptionbutton").href="https://bloxdworld.pages.dev/fullview?addonid="+addonId
+        document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
   if(error) {
     Toastify({
   text: `Error while finding mod: ${error}`,
