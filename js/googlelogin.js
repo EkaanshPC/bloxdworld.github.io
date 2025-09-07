@@ -363,7 +363,7 @@ async function applyApprovedVersions(mod) {
 }
 export async function approveVersion(versionId) {
   // Fetch version row
-  const { data: version, error: vError } = await supabase
+  const { data: version, error: vError } = await client
     .from("versions")
     .select("*")
     .eq("id", versionId)
@@ -372,7 +372,7 @@ export async function approveVersion(versionId) {
   if (vError) return console.error(vError);
 
   // Update the mod table
-  const { error: modError } = await supabase
+  const { error: modError } = await client
     .from("mod")
     .update({
       title: version.proposed_title,
@@ -384,7 +384,7 @@ export async function approveVersion(versionId) {
   if (modError) return console.error(modError);
 
   // Mark version as approved
-  await supabase
+  await client
     .from("versions")
     .update({ approved: true })
     .eq("id", versionId);
