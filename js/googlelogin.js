@@ -53,7 +53,6 @@ async function renderUser(sessionFromEvent) {
     const { data, error } = await client.auth.getSession();
     session = data.session;
     console.log("client is",client)
-    console.log("users are",await supabase.auth.admin.listUsers())
     console.log("client.auth is",client.auth)
     console.log("💾 getSession() response:", session, error);
   }
@@ -305,3 +304,32 @@ export async function updateProfile({ display_name, profile_picture, bio }) {
   if (error) return { error: error.message };
   return { success: true, data };
 }
+
+async function getProfiles() {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("*");
+
+  if (error) {
+    console.error("Failed to fetch profiles:", error);
+    return [];
+  }
+
+  return data;
+}
+
+getProfiles().then(profiles => console.log("all profiles are",profiles));
+async function getUserMods(uid) {
+  const res = await fetch("/functions/v1/get-user-mods", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ uid })
+  });
+
+  const data = await res.json();
+  return data.mods || [];
+}
+
+// Example
+const uid = await getUID();
+getUserMods(uid).then(mods => console.log("user's mods are",mods));
