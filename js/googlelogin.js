@@ -344,7 +344,7 @@ let uid=await getUID()
 getUserMods(uid).then(mods => mods.forEach(mod=>applyApprovedVersions(mod)));
 
 async function applyApprovedVersions(mod) {
-  const { data: versions } = await supabase
+  const { data: versions } = await client
     .from("versions")
     .select("*")
     .eq("mod_id", mod.id)
