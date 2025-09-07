@@ -132,20 +132,6 @@ body.mobile .nav-label {
   color: #ccc;
   padding: 0;
 }
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 45px;
-  padding: 0 20px;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .navbar-wrapper {
   flex: 1;
   display: flex;
