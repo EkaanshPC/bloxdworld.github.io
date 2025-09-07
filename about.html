@@ -199,7 +199,6 @@
 <body>
 <div class="modrinth-navbar">
   <div class="header">
-    
     <!-- Left: Logo -->
     <div class="header-left">
       <div style="display: flex; align-items: center; height: 100%;">
@@ -217,108 +216,98 @@
       <div class="logo-text">Bloxd<br>World</div>
     </div>
 
-    <!-- Right: Navbar + Auth split -->
+    <!-- Right: Navbar + Auth -->
     <div class="header-right">
       <div class="navbar-wrapper">
         <ul class="navbar">
-          <li class="nav-item">
-            <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
-          </li>
+          <li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li>
+          <li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a></li>
+          <li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a></li>
+          <li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a></li>
+          <li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a></li>
+          <li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a></li>
         </ul>
       </div>
       <div class="auth-wrapper" id="authArea">
         <!-- Auth content here -->
       </div>
     </div>
+  </div> <!-- end header -->
 
-<!-- 📦 How to Install Section -->
-<div class="install-section">
-  <h2>🛠️ How to Install?</h2>
-  <div class="install-step"><p>✅ Find the mod of your choice.</p></div>
-  <div class="install-step"><p>🔍 Click on the mod</p></div>
-  <div class="install-step"><p>📋 Copy the code snippet.</p></div>
-  <div class="install-step"><p>💾 Paste it in your world code / code block.</p></div>
-  <div class="install-step"><p>🎉 You are now done!</p></div>
-</div>
-
- <div class="devlog-container">
-  <h1>🛠️ Bloxd World Devlog & Roadmap</h1>
-
-  <div class="devlog-section">
-    <h2>📅 Latest Updates</h2>
-    <div class="devlog-entry">
-      <time>June 30, 2025</time>
-      <p>🏆 Added leaderboard page for top-voted mods.</p>
-    </div>
-    <div class="devlog-entry">
-      <time>June 15, 2025</time>
-      <p>🌟 Implemented "Mod of the Day" feature to highlight top mods.</p>
-    </div>
-    <div class="devlog-entry">
-      <time>June 15, 2025</time>
-      <p>🔧 Added dark mode toggle for better user experience.</p>
-    </div>
+  <!-- 📦 How to Install Section -->
+  <div class="install-section">
+    <h2>🛠️ How to Install?</h2>
+    <div class="install-step"><p>✅ Find the mod of your choice.</p></div>
+    <div class="install-step"><p>🔍 Click on the mod</p></div>
+    <div class="install-step"><p>📋 Copy the code snippet.</p></div>
+    <div class="install-step"><p>💾 Paste it in your world code / code block.</p></div>
+    <div class="install-step"><p>🎉 You are now done!</p></div>
   </div>
 
-  <div class="devlog-section roadmap">
-    <h2>✅ Completed Features</h2>
-    <ul>
-      <li class="done">Add upvoting system</li>
-      <li class="done">Toggle upvote (remove your vote)</li>
-      <li class="done">Persistent Mod IDs</li>
-      <li class="done">Dark mode toggle</li>
-      <li class="done">Tag-based filtering</li>
-      <li class="done">Mod search (name, tags, description)</li>
-      <li class="done">Leaderboard page</li>
-      <li class="done">Mod of the Day (random from top 10)</li>
-      <li class="done">Moderated mod submissions</li>
-      <li class="done">UI polish (mod cards, spacing, responsiveness)</li>
-      <li class="done">“How to Install” section on About page</li>
-      <li class="done">Basic user system (local usernames, vote tracking)</li>
-      <li class="done">Full Home Page — It ain't done yet... it's just an image rn soo....</li>
-      <li class="done">Mod analytics (views, votes, trends)</li>
-    </ul>
+  <!-- 🛠️ Devlog Section -->
+  <div class="devlog-container">
+    <h1>🛠️ Bloxd World Devlog & Roadmap</h1>
 
-    <h2>🔜 In Progress / Next Up</h2>
-    <ul>
-      <li>Mod editor / live preview (test your mod live in Bloxd)</li>
-      <li>Creator profiles (mods by user, badges, stats)</li>
-      <li>Code AI assistant (generate mod code from prompts)</li>
-    </ul>
+    <div class="devlog-section">
+      <h2>📅 Latest Updates</h2>
+      <div class="devlog-entry">
+        <time>June 30, 2025</time>
+        <p>🏆 Added leaderboard page for top-voted mods.</p>
+      </div>
+      <div class="devlog-entry">
+        <time>June 15, 2025</time>
+        <p>🌟 Implemented "Mod of the Day" feature to highlight top mods.</p>
+      </div>
+      <div class="devlog-entry">
+        <time>June 15, 2025</time>
+        <p>🔧 Added dark mode toggle for better user experience.</p>
+      </div>
+    </div>
 
-    <h2>🧠 Planned Features</h2>
-    <ul>
-      <li>Learn Bloxd Code hub (interactive tutorials and docs)</li>
-      <li>Mod idea generator (AI-powered inspiration)</li>
-      <li>Tooltip AI (hover explanations for mod fields)</li>
-      <li>Mod comments / feedback system</li>
-      <li>Achievements & badges (e.g. “Top Mod”, “First Upload”)</li>
-      <li>Theme customizer (user-selectable color palettes)</li>
-      <li>Better Mobile UI</li>
-      <li>Random mod button (discover mods by chance)</li>
-      <li>Mod jams (monthly creative challenges)</li>
-      <li>Creator badges (soon)</li>
-      <li>Email milestone updates to users</li>
-    </ul>
-  </div>
-</div>
+    <div class="devlog-section roadmap">
+      <h2>✅ Completed Features</h2>
+      <ul>
+        <li class="done">Add upvoting system</li>
+        <li class="done">Toggle upvote (remove your vote)</li>
+        <li class="done">Persistent Mod IDs</li>
+        <li class="done">Dark mode toggle</li>
+        <li class="done">Tag-based filtering</li>
+        <li class="done">Mod search (name, tags, description)</li>
+        <li class="done">Leaderboard page</li>
+        <li class="done">Mod of the Day (random from top 10)</li>
+        <li class="done">Moderated mod submissions</li>
+        <li class="done">UI polish (mod cards, spacing, responsiveness)</li>
+        <li class="done">“How to Install” section on About page</li>
+        <li class="done">Basic user system (local usernames, vote tracking)</li>
+        <li class="done">Full Home Page — placeholder image for now</li>
+        <li class="done">Mod analytics (views, votes, trends)</li>
+         <li class="done">Creator profiles (mods by user, badges, stats)</li>
+      </ul>
 
-  <!-- 💡 Mouse Tracking Script -->
+      <h2>🔜 In Progress / Next Up</h2>
+      <ul>
+        <li>Mod editor / live preview (test your mod live in Bloxd)</li>
+        <li>Code AI assistant (generate mod code from prompts)</li>
+      </ul>
+
+      <h2>🧠 Planned Features</h2>
+      <ul>
+        <li>Learn Bloxd Code hub (interactive tutorials and docs)</li>
+        <li>Mod idea generator (AI-powered inspiration)</li>
+        <li>Tooltip AI (hover explanations for mod fields)</li>
+        <li>Mod comments / feedback system</li>
+        <li>Achievements & badges (e.g. “Top Mod”, “First Upload”)</li>
+        <li>Theme customizer (user-selectable color palettes)</li>
+        <li>Better Mobile UI</li>
+        <li>Random mod button (discover mods by chance)</li>
+        <li>Mod jams (monthly creative challenges)</li>
+        <li>Creator badges (soon)</li>
+        <li>Email milestone updates to users</li>
+      </ul>
+    </div>
+  </div> <!-- end devlog-container -->
+</div> <!-- end modrinth-navbar container -->
+
   <script>
 const themeToggle = document.getElementById("themeToggle");
 
