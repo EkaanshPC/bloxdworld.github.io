@@ -133,8 +133,9 @@ color:white;
 </head>
 <body>
 <div class="modrinth-navbar">
-  <!-- 🧠 Header -->
   <div class="header">
+    
+    <!-- Left: Logo -->
     <div class="header-left">
       <div style="display: flex; align-items: center; height: 100%;">
         <div class="cube-container">
@@ -148,52 +149,41 @@ color:white;
           </div>
         </div>
       </div>
-      <div class="logo-text"> Bloxd <br>World</div>
+      <div class="logo-text">Bloxd<br>World</div>
     </div>
 
-   <div class="header-right">
-  <ul class="navbar">
-    <li class="nav-item">
-      <a href="index.html">
-        <i class="fas fa-home"></i>
-        <span class="nav-label">Home</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="mods.html">
-        <i class="fas fa-cubes"></i>
-        <span class="nav-label">Mods</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="upload.html">
-        <i class="fas fa-upload"></i>
-        <span class="nav-label">Upload</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="about.html">
-        <i class="fas fa-info-circle"></i>
-        <span class="nav-label">About</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="leaderboard.html">
-        <i class="fas fa-trophy"></i>
-        <span class="nav-label">Leaderboard</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" id="themeToggle">
-        <i class="fas fa-moon"></i>
-        <span class="nav-label">Theme</span>
-      </a>
-    </li>
-    <li class="nav-item" id="authArea"></li>
-  </ul>
+    <!-- Right: Navbar + Auth split -->
+    <div class="header-right">
+      <div class="navbar-wrapper">
+        <ul class="navbar">
+          <li class="nav-item">
+            <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="auth-wrapper" id="authArea">
+        <!-- Auth content here -->
+      </div>
     </div>
+
   </div>
-  </div>
+</div>
+
 <!-- 🌟 Mod of the Day -->
 <div id="mod-of-the-day" class="mod-of-the-day">
   <h2>🌟 Mod of the Day</h2>
