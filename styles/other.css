@@ -272,3 +272,95 @@ body.mobile .search-bar {
   width: 90%;
   font-size: 1rem;
 }
+ body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f8f8;
+    color: #004d4f;
+    margin: 0;
+    padding: 0 20px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .dark-mode {
+    background: #121212;
+    color: #66f9f9;
+  }
+
+  .hero-banner {
+    text-align: center;
+    margin: 40px 0;
+  }
+
+  .hero-banner img {
+    width: 90%;
+    max-width: 1000px;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+    transition: transform 0.3s ease;
+  }
+  .hero-banner img:hover {
+    transform: scale(1.05);
+  }
+
+  .intro-text {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    font-size: 1.3rem;
+    line-height: 1.8;
+  }
+
+  h1, h2 {
+    color: #007c7e;
+    margin-bottom: 12px;
+  }
+
+  .cta-buttons {
+    margin: 30px auto 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .cta-button {
+    background: #00b4b4;
+    color: white;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(0, 180, 180, 0.4);
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .cta-button:hover {
+    background: #00d6d6;
+    box-shadow: 0 7px 20px rgba(0, 214, 214, 0.7);
+  }
+
+  .how-it-works {
+    max-width: 800px;
+    margin: 40px auto 60px auto;
+  }
+
+  /* Dark mode tweaks */
+  .dark-mode h1, 
+  .dark-mode h2 {
+    color: #4efefe;
+  }
+
+  .dark-mode ul li::before {
+    color: #4efefe;
+  }
+
+  .dark-mode .cta-button {
+    background: #008080;
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.5);
+  }
+
+  .dark-mode .cta-button:hover {
+    background: #00ffff;
+    box-shadow: 0 7px 20px rgba(0, 255, 255, 0.9);
+  }
