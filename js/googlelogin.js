@@ -320,15 +320,28 @@ async function getProfiles() {
 
 getProfiles().then(profiles => console.log("all profiles are",profiles));
 async function getUserMods(uid) {
-  const res = await fetch("/functions/v1/get-user-mods", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ uid })
-  });
+  try {
+    const res = await fetch("https://bloxdworld.pages.dev/functions/v1/get-user-mods", {
+      method: "POST", // MUST be POST if server expects JSON body
+      headers: {
+        "Content-Type": "application/json", // MUST include
+      },
+      body: JSON.stringify({ uid }), // send uid in JSON
+    });
 
-  const data = await res.json();
-  return data.mods || [];
+    if (!res.ok) {
+      console.error("Failed request:", res.status, await res.text());
+      return null;
+    }
+
+    const data = await res.json(); // parse JSON safely
+    return data;
+  } catch (err) {
+    console.error("Error in getUserMods:", err);
+    return null;
+  }
 }
+
 
 // Example
 const uid = await getUID();
