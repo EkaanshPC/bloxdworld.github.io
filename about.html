@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/earth-cube.css">
@@ -196,8 +198,9 @@
 </head>
 <body>
 <div class="modrinth-navbar">
-  <!-- 🧠 Header -->
   <div class="header">
+    
+    <!-- Left: Logo -->
     <div class="header-left">
       <div style="display: flex; align-items: center; height: 100%;">
         <div class="cube-container">
@@ -211,52 +214,37 @@
           </div>
         </div>
       </div>
-      <div class="logo-text"> Bloxd <br>World</div>
+      <div class="logo-text">Bloxd<br>World</div>
     </div>
 
-   <div class="header-right">
-  <ul class="navbar">
-    <li class="nav-item">
-      <a id="i6" href="index.html">
-        <i class="fas fa-home"></i>
-        <span id="mi6" class="nav-label">Home</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="i5" href="mods.html">
-        <i class="fas fa-cubes"></i>
-        <span id="mi5" class="nav-label">Mods</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="i4" href="upload.html">
-        <i class="fas fa-upload"></i>
-        <span id="mi4" class="nav-label">Upload</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a id="i3" href="about.html">
-        <i class="fas fa-info-circle"></i>
-        <span id="mi3" class="nav-label">About</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a  id="i2" href="leaderboard.html">
-        <i class="fas fa-trophy"></i>
-        <span id="mi2"class="nav-label">Leaderboard</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a href="#" id="themeToggle">
-        <i class="fas fa-moon"></i>
-        <span id="mi1" class="nav-label">Theme</span>
-      </a>
-    </li>
-    <li class="nav-item" id="authArea"></li>
-  </ul>
+    <!-- Right: Navbar + Auth split -->
+    <div class="header-right">
+      <div class="navbar-wrapper">
+        <ul class="navbar">
+          <li class="nav-item">
+            <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="auth-wrapper" id="authArea">
+        <!-- Auth content here -->
+      </div>
     </div>
-  </div>
-  </div>
 
 <!-- 📦 How to Install Section -->
 <div class="install-section">
