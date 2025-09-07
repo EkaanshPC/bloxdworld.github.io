@@ -119,15 +119,21 @@ body {
 }
 
 .mod-meta {
-  display: flex;
-  justify-content: flex-end; /* pushes items to the right */
-  gap: 15px;
-  font-size: 0.95em;
-  margin-bottom: 10px;
+  max-width: 150px;
+  padding: 15px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.08);
+  position: absolute;  /* stick it to the right */
+  right: -180px;       /* push it to the side of main container */
+  top: 20px;
+  font-size: 0.9em;
+  color: #444;
 }
 
 .mod-meta span {
-  color: #666;
+  display: block;      /* stack info vertically */
+  margin-bottom: 8px;
 }
 
 .description {
