@@ -284,12 +284,53 @@ function renderMods(mods) {
   });
 
   modsList.querySelectorAll(".add-version-btn").forEach(btn => {
-    btn.addEventListener("click", async e => {
-      const modId = e.target.closest(".mod-card").dataset.id;
-      const version = prompt("Enter new version name or number:");
-      if (version) await createVersion(modId, version);
+  btn.addEventListener("click", e => {
+    const modCard = e.target.closest(".mod-card");
+    const modId = modCard.dataset.id;
+
+    // If form already exists, don't add another
+    if (modCard.querySelector(".version-form")) return;
+
+    // Create form
+    const formHtml = `
+      <div class="version-form">
+        <input type="text" name="title" placeholder="Proposed Title" value="${modCard.querySelector("h3").textContent}">
+        <textarea name="description" placeholder="Proposed Description">${modCard.querySelector("p").textContent}</textarea>
+        <input type="text" name="file_path" placeholder="Proposed File Path" value="${modCard.querySelector("a").href}">
+        <button class="submit-version-btn">Submit Update</button>
+        <button class="cancel-version-btn">Cancel</button>
+      </div>
+    `;
+    modCard.insertAdjacentHTML("beforeend", formHtml);
+
+    // Cancel button
+    modCard.querySelector(".cancel-version-btn").addEventListener("click", () => {
+      modCard.querySelector(".version-form").remove();
+    });
+
+    // Submit button
+    modCard.querySelector(".submit-version-btn").addEventListener("click", async () => {
+      const form = modCard.querySelector(".version-form");
+      const proposedTitle = form.querySelector("input[name='title']").value;
+      const proposedDesc = form.querySelector("textarea[name='description']").value;
+      const proposedFile = form.querySelector("input[name='file_path']").value;
+
+      const { error } = await supabase.from("versions").insert({
+        mod_id: modId,
+        proposed_title: proposedTitle,
+        proposed_description: proposedDesc,
+        proposed_file_path: proposedFile,
+        created_at: new Date(),
+        approved: false
+      });
+
+      if (error) return alert("Failed to submit version: " + error.message);
+
+      alert("Update proposal submitted! Awaiting approval.");
+      form.remove();
     });
   });
+});
 }
 
 async function deleteMod(modId) {
