@@ -361,3 +361,33 @@ async function applyApprovedVersions(mod) {
 
   return mod;
 }
+export async function approveVersion(versionId) {
+  // Fetch version row
+  const { data: version, error: vError } = await supabase
+    .from("versions")
+    .select("*")
+    .eq("id", versionId)
+    .single();
+
+  if (vError) return console.error(vError);
+
+  // Update the mod table
+  const { error: modError } = await supabase
+    .from("mod")
+    .update({
+      title: version.proposed_title,
+      shortdescription: version.proposed_description,
+      file_path: version.proposed_file_path
+    })
+    .eq("id", version.mod_id);
+
+  if (modError) return console.error(modError);
+
+  // Mark version as approved
+  await supabase
+    .from("versions")
+    .update({ approved: true })
+    .eq("id", versionId);
+
+  console.log("Version approved and mod updated!");
+}
