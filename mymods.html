@@ -268,7 +268,7 @@ function renderMods(mods) {
     <div class="mod-card" data-id="${mod.id}">
       <h3>${mod.title}</h3>
       <p>${mod.shortdescription || "No description"}</p>
-      <a href="${mod.file_path}" target="_blank">Download</a>
+      <a href="${"https://bloxdworld.pages.dev/newfullview?addonid="+mod.id}" target="_blank">Download</a>
       <button class="delete-btn">Delete</button>
       <button class="add-version-btn">Add Version</button>
     </div>
