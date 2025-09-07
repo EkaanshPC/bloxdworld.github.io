@@ -80,8 +80,8 @@ async function renderUser(sessionFromEvent) {
             }</span>
           </button>
           <div class="dropdown-content">
-            <a href="/myprofile">My Profile</a>
-            <a href="#" id="logoutBtn">Logout</a>
+            <a href="/myprofile style="color:white;">My Profile</a>
+            <a href="#" id="logoutBtn" style="color:white;">Logout</a>
           </div>
         </div>
       `;
