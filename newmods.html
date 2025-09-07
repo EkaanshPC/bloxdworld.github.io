@@ -447,15 +447,25 @@ body.dark-mode .sort-button:hover {
   flex-direction: column; /* title, author, category stacked */
   gap: 4px;
 }
-
+.mod-description {
+  color:white;
+}
 .mod-description {
   font-size: 1em;
   color: #1a1a1a;
-  background: #f5fafd;
   padding: 10px 14px;
   border-radius: 6px;
   box-shadow: 0 2px 6px rgba(33, 150, 243, 0.08);
+
+  /* 🛑 Prevent text overflow */
+  max-width: 100%;
+  word-wrap: break-word;      /* break long words if needed */
+  overflow-wrap: anywhere;    /* modern support */
+  white-space: pre-wrap;      /* keep line breaks, wrap text */
+  box-sizing: border-box;     /* padding counts in width */
 }
+
+
 .mod-card {
   display: flex;
   flex-direction: row; /* image left, content right */
