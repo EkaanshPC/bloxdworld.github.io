@@ -317,29 +317,28 @@ async function getProfiles() {
 
   return data;
 }
+const SUPABASE_URL = "https://pxmsgzfufvwxpnyeobwk.supabase.co/rest/v1/mod";
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
 
-getProfiles().then(profiles => console.log("all profiles are",profiles));
-export async function getUserMods() {
-  try {
-    const uid = await getUID(); // your existing function
-    if (!uid) throw new Error("User not logged in");
-
-    const res = await fetch(`https://bloxdworld.pages.dev/functions/v1/get-user-mods?uid=${uid}`);
-    
-    if (!res.ok) {
-      console.error("Failed request:", res.status);
-      return [];
+async function getUserMods(uid) {
+  const res = await fetch(`${SUPABASE_URL}?creatoruid=eq.${uid}`, {
+    method: "GET",
+    headers: {
+      "apikey": ANON_KEY,
+      "Authorization": `Bearer ${ANON_KEY}`,
+      "Content-Type": "application/json",
+      "Accept": "application/json"
     }
+  });
 
-    const data = await res.json();
-    return data.mods || [];
-    
-  } catch (err) {
-    console.error("Error fetching user mods:", err);
-    return [];
+  if (!res.ok) {
+    console.error("Failed request:", res.status, await res.text());
+    return null;
   }
-}
 
-// Example
-const uid = await getUID();
-getUserMods(uid).then(mods => console.log("user's mods are",mods));
+  const data = await res.json();
+  return data;
+}
+ 
+let uid=await getUID()
+getUserMods(uid).then(mods => console.log(mods));
