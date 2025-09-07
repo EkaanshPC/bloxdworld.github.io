@@ -68,7 +68,7 @@ getProfile().then(profile => {
     <div class="profile-dropdown">
       <button class="profile-btn">
         <img src="${profile.profile_picture}" alt="avatar" class="profile-pic">
-        <span class="profile-name">${profile.display_name}</span>
+        <span class="profile-name">${profile.display_name||shortEmail}</span>
       </button>
       <div class="dropdown-content">
         <a href="/myprofile">My Profile</a>
