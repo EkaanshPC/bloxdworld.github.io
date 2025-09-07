@@ -319,29 +319,26 @@ async function getProfiles() {
 }
 
 getProfiles().then(profiles => console.log("all profiles are",profiles));
-async function getUserMods(uid) {
+export async function getUserMods() {
   try {
-    const res = await fetch("https://bloxdworld.pages.dev/functions/v1/get-user-mods", {
-      method: "POST", // MUST be POST if server expects JSON body
-      headers: {
-        "Content-Type": "application/json", // MUST include
-      },
-      body: JSON.stringify({ uid }), // send uid in JSON
-    });
+    const uid = await getUID(); // your existing function
+    if (!uid) throw new Error("User not logged in");
 
+    const res = await fetch(`https://bloxdworld.pages.dev/functions/v1/get-user-mods?uid=${uid}`);
+    
     if (!res.ok) {
-      console.error("Failed request:", res.status, await res.text());
-      return null;
+      console.error("Failed request:", res.status);
+      return [];
     }
 
-    const data = await res.json(); // parse JSON safely
-    return data;
+    const data = await res.json();
+    return data.mods || [];
+    
   } catch (err) {
-    console.error("Error in getUserMods:", err);
-    return null;
+    console.error("Error fetching user mods:", err);
+    return [];
   }
 }
-
 
 // Example
 const uid = await getUID();
