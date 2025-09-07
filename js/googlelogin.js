@@ -53,6 +53,7 @@ async function renderUser(sessionFromEvent) {
     const { data, error } = await client.auth.getSession();
     session = data.session;
     console.log("client is",client)
+    console.log("users are",await supabase.auth.admin.listUsers())
     console.log("client.auth is",client.auth)
     console.log("💾 getSession() response:", session, error);
   }
