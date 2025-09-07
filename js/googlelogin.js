@@ -320,7 +320,7 @@ async function getProfiles() {
 const SUPABASE_URL = "https://pxmsgzfufvwxpnyeobwk.supabase.co/rest/v1/mod";
 const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
 
-async function getUserMods(uid) {
+export async function getUserMods(uid) {
   const res = await fetch(`${SUPABASE_URL}?creatoruid=eq.${uid}`, {
     method: "GET",
     headers: {
