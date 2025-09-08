@@ -181,7 +181,19 @@ body {
   font-size: 0.9em;
   color: #444;
 }
-
+.right-card {
+    margin-top:450px;
+  padding: 15px;
+  width:125px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  right: 20px;   /* stay inside, not outside */
+  top: 20px;
+  font-size: 0.9em;
+  color: #444;
+}
 .mod-meta span {
   display: block;
   margin-bottom: 8px;
@@ -362,36 +374,29 @@ body {
 
 
 <div class="mod-header">
-    <img src="" alt="Mod Icon" class="mod-icon" id="modIcon" style="margin-left:205px;">
-    <div>
-      <h1 class="mod-title" id="modTitle">Loading...</h1><button id="copyButton" style="margin-left:745px;">Copy Code</button>
-    </div>
-    <br/>
+  <img src="" alt="Mod Icon" class="mod-icon" id="modIcon" style="margin-left:205px;">
+  <div>
+    <h1 class="mod-title" id="modTitle">Loading...</h1>
+               <p id="shortDescription" style="text-align:left;">Loading short description...  <span style="margin-left:10px">|</span>  <strong style="margin-left:10px;"><i class="fa-solid fa-tags"></i></strong> <span id="category">Uncategorized</span> <span style="margin-left:10px">|</span> <i class="fas fa-file-code" style="margin-left:10px;"></i><span id="typeofcode" style="margin-left:7px">Not Specified</span><span style="margin-left:10px">|</span></p>
+</div>
+    <button id="copyButton" style="height:30px;border-radius:0px;margin-top:50px">Copy Latest Version</button>
   </div>
-<div style="text-align: left; margin-left:205px;">
-  <strong><i class="fa-solid fa-tags"></i></strong> 
-  <span id="category">...</span>
+  <br/>
 </div>
+<hr style="width: 69%; margin-bottom:10px; border: 2px solid;">
   <div class="mod-description">
-    <p id="shortDescription" style="text-align:left; margin-left:205px;">Loading short description...</p>
-
-<hr style="width: 69%; margin: 20px auto; border: 2px solid;">
-          <div class="tab-bar" style="margin-left:210px;">
-  <a href="/newfullview" class="tab active" id="descriptionbutton">Description</a>
-  <a href="/versions" class="tab" id="modversions">Versions</a>
-</div>
-
   
   <div class="mod-meta">
         <span><strong>Uploaded:</strong> <span id="uploadDate">...</span></span><br/>
         <hr/>
         <span><strong>By:</strong> <span id="uploaderName">...</span></span>
 </div>
+  <div class="right-card">
+        <span><strong>Feel something is wrong with this mod? report us here:</strong> (soon) </span><br/>
+</div>
 <div id="mod-detail-page" class="modrinth-style">
     <p id="description" class="description">Loading description...</p>
       <div class="mod-code">
-    <h2>Addon Code</h2>
-    <pre id="codeSnippet">Loading code...</pre>
   </div>
   </div>
 <!--

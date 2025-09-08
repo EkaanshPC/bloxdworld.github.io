@@ -181,7 +181,19 @@ body {
   font-size: 0.9em;
   color: #444;
 }
-
+.right-card {
+    margin-top:450px;
+  padding: 15px;
+  width:125px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 24px rgba(0, 0, 0, 0.08);
+  position: absolute;
+  right: 20px;   /* stay inside, not outside */
+  top: 20px;
+  font-size: 0.9em;
+  color: #444;
+}
 .mod-meta span {
   display: block;
   margin-bottom: 8px;
@@ -347,7 +359,33 @@ body {
   white-space: pre-wrap;
   font-family: "Fira Code", monospace;
 }
+.tab-bar {
+  display: flex;
+  border-radius: 12px;      /* makes the whole bar rounded */
+  overflow: hidden;          /* ensures tabs don’t spill outside */
+  background-color: #fff;    /* or whatever bg you want */
+  width: fit-content;        /* shrink to fit tabs */
+}
 
+.tab-bar .tab {
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  background-color: #fff;      /* default tab bg */
+  border: none;
+  transition: background 0.2s;
+}
+
+.tab-bar .tab.active {
+  background-color: #01ffbf;
+  color: white;
+}
+
+.tab-bar .tab:hover {
+  background-color: #00d6a5;   /* hover effect */
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -403,27 +441,26 @@ body {
   </div>
 </div>
 
+
 <div class="mod-header">
   <img src="" alt="Mod Icon" class="mod-icon" id="modIcon" style="margin-left:205px;">
   <div>
     <h1 class="mod-title" id="modTitle">Loading...</h1>
-    <button id="copyButton" style="margin-left:745px;">Copy Code</button>
+               <p id="shortDescription" style="text-align:left;">Loading short description...  <span style="margin-left:10px">|</span>  <strong style="margin-left:10px;"><i class="fa-solid fa-tags"></i></strong> <span id="category">Uncategorized</span> <span style="margin-left:10px">|</span> <i class="fas fa-file-code" style="margin-left:10px;"></i><span id="typeofcode" style="margin-left:7px">Not Specified</span><span style="margin-left:10px">|</span></p>
+</div>
+    <button id="copyButton" style="height:30px;border-radius:0px;margin-top:50px">Copy Latest Version</button>
   </div>
   <br/>
 </div>
-
-<div style="text-align: left; margin-left:205px;">
-  <strong><i class="fa-solid fa-tags"></i></strong> 
-  <span id="category">...</span>
-</div>
-    <p id="shortDescription" style="text-align:left; margin-left:205px;">Loading short description...</p>
-
-<hr style="width: 69%; margin: 20px auto; border: 2px solid;">
+<hr style="width: 69%; margin-bottom:10px; border: 2px solid;">
 
 <div class="mod-meta">
   <span><strong>Uploaded:</strong> <span id="uploadDate">...</span></span><br/>
   <hr/>
   <span><strong>By:</strong> <span id="uploaderName">...</span></span>
+</div>
+ <div class="right-card">
+        <span><strong>Feel something is wrong with this mod? report us here:</strong> (soon) </span><br/>
 </div>
         <div class="tab-bar" style="margin-left:210px;">
     <a href="/newfullview" class="tab" id="descriptionbutton">Description</a>
