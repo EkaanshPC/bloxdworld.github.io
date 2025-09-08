@@ -688,11 +688,11 @@ card.innerHTML = `
       container.appendChild(card);
     });
   }
-import {getUserMods,getProfile} from "https://bloxdworld.pages.dev/js/googlelogin.js"
+import {getUserMods,getUserProfileByUID} from "https://bloxdworld.pages.dev/js/googlelogin.js"
 let params=new URLSearchParams(window.location.search)
 let userUID=params.get("useruid")
 if(userUID){
-getProfile(userUID).then(profile=>{
+getUserProfileByUID(userUID).then(profile=>{
 if(!profile)return;
 if(profile.profile_picture)document.getElementById("user-display-icon").src=profile.profile_picture
 if(profile.display_name){

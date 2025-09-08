@@ -391,12 +391,12 @@ export async function approveVersion(versionId) {
 
   console.log("Version approved and mod updated!");
 }
-export async function getProfile(uid) {
+export async function getUserProfileByUID(uid) {
   if (!uid) {
     console.error("❌ getProfile called with no uid");
     return null;
   }
-  
+
   const { data, error } = await client
     .from("profiles")
     .select("*")
