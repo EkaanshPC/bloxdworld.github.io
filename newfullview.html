@@ -535,6 +535,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
   document.getElementById("copyButton").addEventListener("click",()=>{
     fetch(getLink(mod.file_path)).then(link=>{
+      console.log(`[DEBUG] copyBtn: link found! ${link}`)
     navigator.clipboard.writeText(link).then(()=>{Toastify({
   text: "Code copied to clipboard!",
   duration: 3000,
