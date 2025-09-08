@@ -356,6 +356,7 @@ body {
   padding: 10px;
   border-radius: 6px;
   overflow-x: auto;
+  overflow-y:auto;
   white-space: pre-wrap;
   font-family: "Fira Code", monospace;
 }
@@ -670,6 +671,20 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   close: true,
 }).showToast();});
   });
+});
+</script>
+<script>
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
+const themeToggle = document.getElementById("themeToggle");
+if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
+
+themeToggle.addEventListener("click", e => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
 });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
