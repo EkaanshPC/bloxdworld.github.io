@@ -476,10 +476,10 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const client = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
-  document.getElementById("descriptionbutton").href="https://bloxdworld.pages.dev/newfullview?addonid="+addonId
-        document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
   const params = new URLSearchParams(window.location.search);
   const addonId = params.get("addonid");
+    document.getElementById("descriptionbutton").href="https://bloxdworld.pages.dev/newfullview?addonid="+addonId
+        document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
   if (!addonId) {
     Toastify({
       text: "No AddonId found in URL!",
