@@ -391,3 +391,40 @@ export async function approveVersion(versionId) {
 
   console.log("Version approved and mod updated!");
 }
+export async function getProfile(uid) {
+  if (!uid) {
+    console.error("❌ getProfile called with no uid");
+    return null;
+  }
+  
+  const { data, error } = await client
+    .from("profiles")
+    .select("*")
+    .eq("uid", uid)
+    .limit(1);
+
+  if (error) {
+    console.error("❌ Failed to fetch profile:", error);
+    return null;
+  }
+
+  if (!data || data.length === 0) {
+    console.log("ℹ️ No profile found for uid:", uid);
+
+    // auto-create empty profile if none exists
+    const { data: newProfile, error: insertError } = await client
+      .from("profiles")
+      .insert({ uid })
+      .select()
+      .single();
+
+    if (insertError) {
+      console.error("❌ Failed to create new profile:", insertError);
+      return null;
+    }
+
+    return newProfile;
+  }
+
+  return data[0]; // ✅ first (and only) row
+}
