@@ -206,9 +206,67 @@ const client = supabase.createClient(
 );
 
 // 🛡️ text moderation
-function cleanText(input) {
-  return leoProfanity.clean(input || "");
+function cleanImages(input) {
+  return input.replace(/<img[^>]*>/gi, match => {
+    // Only allow http/https links
+    if (/src\s*=\s*["']?(https?:\/\/[^"'>\s]+)/i.test(match)) {
+      return match; // legit img, keep it
+    }
+    return "🚫"; // blocked img
+  });
 }
+async function moderateImagesInDescription(html) {
+  await loadNSFWModel(); // make sure the model is loaded
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  const images = div.querySelectorAll("img");
+
+  for (let img of images) {
+    try {
+      const imageEl = new Image();
+      imageEl.crossOrigin = "anonymous";
+      imageEl.src = img.src;
+
+      await new Promise((res, rej) => {
+        imageEl.onload = res;
+        imageEl.onerror = rej;
+      });
+
+      const predictions = await nsfwModel.classify(imageEl);
+
+      // 👈 HERE: calculate nsfwScore
+      const nsfwScore = predictions.find(p => 
+        ["Porn", "Hentai", "Sexy"].includes(p.className)
+      )?.probability || 0;
+
+      // 👈 Remove or replace image if NSFW
+      if (nsfwScore > 0.7) { 
+        img.src = "https://bloxdworld.pages.dev/assets/default-banner.png";
+        img.alt = "NSFW image removed";
+      }
+
+    } catch (err) {
+      console.warn("Failed to scan image:", err);
+      img.replaceWith("⚠️ [Unscannable Image]");
+    }
+  }
+
+  return div.innerHTML;
+}
+
+function cleanText(input) {
+  return (input || "")
+    .replace(/<\s*script[^>]*>/gi, "********")
+    .replace(/<\s*\/\s*script\s*>/gi, "********");
+}
+
+async function sanitizeDescription(input) {
+  let safeText = cleanText(input);
+  safeText = leoProfanity.clean(safeText); // profanity filter
+  let moderated = await moderateImagesInDescription(safeText);
+  return moderated;
+}
+
 
 // 🛡️ image url validator
 function validateImageURL(url) {
@@ -293,7 +351,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 🛡️ clean text
       title = cleanText(title);
-      description = cleanText(description);
+      let desc = document.getElementById("modDescription").value;
+desc = await sanitizeDescription(desc);
+description = desc;
       shortdescription = cleanText(shortdescription);
       category = cleanText(category);
 
