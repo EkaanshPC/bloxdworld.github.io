@@ -430,8 +430,8 @@ body {
 </div>
 <div id="mod-detail-page" class="modrinth-style">
   <div class="tab-bar">
-  <a href="/newfullview" class="tab active" id="descriptionbutton">Description</a>
-  <a href="/versions" class="tab" id="modversions">Versions</a>
+  <a href="/newfullview" class="tab" id="descriptionbutton">Description</a>
+  <a href="/versions" class="tab active" id="modversions">Versions</a>
 </div>
     <h2>Versions</h2>
   <div id="versions-container">
@@ -476,6 +476,8 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const client = supabase.createClient(supabaseUrl, supabaseKey);
 
 document.addEventListener("DOMContentLoaded", async () => {
+  document.getElementById("descriptionbutton").href="https://bloxdworld.pages.dev/newfullview?addonid="+addonId
+        document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
   const params = new URLSearchParams(window.location.search);
   const addonId = params.get("addonid");
   if (!addonId) {
@@ -490,7 +492,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     return console.error("No Addon ID in URL");
   }
 
-  // fetch mod info (for current version)
+  const container = document.getElementById("mod-detail-page");
+  container.innerHTML = `<h2>Versions</h2>`;
+
+  // --- Fetch mod info (Current Version) ---
   const { data: mod, error: modError } = await client
     .from("mod")
     .select("id, title, file_path")
@@ -501,10 +506,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // fetch all versions for this addon
+  // Current Version accordion
+  const currentId = "version-current";
+  container.innerHTML += `
+    <div class="version-card">
+      <button class="accordion" data-file="${mod.file_path}" data-target="${currentId}">
+        Current Version — <small>${mod.title}</small>
+      </button>
+      <div id="${currentId}" class="panel">
+        <pre class="code-block">Loading...</pre>
+      </div>
+    </div>
+  `;
+
+  // --- Fetch all other versions ---
   const { data: versions, error } = await client
     .from("versions")
-    .select(`id, title, created_at, file_path`)
+    .select("id, title, created_at, file_path")
     .eq("mod_id", addonId)
     .order("created_at", { ascending: false });
 
@@ -521,25 +539,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  const container = document.getElementById("mod-detail-page");
-  container.innerHTML = `<h2>Versions</h2>`;
-
-  // --- Current Version at the top ---
-  const currentId = "version-current";
-  container.innerHTML += `
-    <div class="version-card">
-      <button class="accordion" data-file="${mod.file_path}" data-target="${currentId}">
-        Current Version — <small>Current</small>
-      </button>
-      <div id="${currentId}" class="panel">
-        <pre class="code-block">Loading...</pre>
-      </div>
-    </div>
-  `;
-
-  // --- Append all other versions ---
   if (!versions || versions.length === 0) {
-    container.innerHTML += `<p>No versions uploaded yet.</p>`;
+    container.innerHTML += `<p>No previous versions uploaded yet.</p>`;
   } else {
     versions.forEach(v => {
       const versionId = `version-${v.id}`;
@@ -556,13 +557,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Accordion logic
+  // --- Accordion logic ---
   document.querySelectorAll(".accordion").forEach(btn => {
     btn.addEventListener("click", async () => {
       const panel = document.getElementById(btn.dataset.target);
       panel.classList.toggle("open");
 
-      // If opening, fetch code
       if (panel.classList.contains("open") && panel.dataset.loaded !== "true") {
         const fileUrl = `${supabaseUrl}/storage/v1/object/public/mod/${btn.dataset.file}`;
         try {
