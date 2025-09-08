@@ -34,9 +34,32 @@ const client = createClient(supabaseUrl, supabaseKey);
 
 // --- Admin Email ---
 const ADMIN_EMAIL = "ekaanshagarwal19564@gmail.com";
+// --- Debug: Just test the select ---
+async function debugSelectOnly() {
+  console.log("🔍 [debugSelectOnly] Testing raw select...");
+
+  const { data, error } = await client
+    .from("versions")
+    .select(`
+      *,
+      mod:mod_id(id,title,shortdescription,file_path,icon,image)
+    `);
+
+  if (error) {
+    console.error("❌ [debugSelectOnly] Error:", error);
+  } else {
+    console.log("✅ [debugSelectOnly] Raw select returned:");
+    console.table(data); // shows rows in a nice table
+  }
+}
 
 // --- Fetch pending versions ---
 async function fetchPendingVersions() {
+  console.log("🔍 [fetchPendingVersions] Starting fetch...");
+
+  // Run the raw select debug
+  await debugSelectOnly();
+
   const { data: versions, error } = await client
     .from("versions")
     .select(`
@@ -47,11 +70,22 @@ async function fetchPendingVersions() {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("❌ Error fetching versions:", error.message);
+    console.error("❌ [fetchPendingVersions] Error fetching versions:", error);
     return [];
   }
+
+  if (!versions || versions.length === 0) {
+    console.warn("⚠️ [fetchPendingVersions] No pending versions found.");
+    return [];
+  }
+
+  console.log(`✅ [fetchPendingVersions] Found ${versions.length} versions:`);
+  console.table(versions);
+
   return versions;
 }
+
+
 
 // --- Render versions ---
 function renderVersions(versions) {
