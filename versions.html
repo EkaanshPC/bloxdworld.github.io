@@ -404,41 +404,38 @@ body {
   </div>
 </div>
 
-
 <div class="mod-header">
-    <img src="" alt="Mod Icon" class="mod-icon" id="modIcon" style="margin-left:205px;">
-    <div>
-      <h1 class="mod-title" id="modTitle">Loading...</h1><button id="copyButton" style="margin-left:745px;">Copy Code</button>
-    </div>
-    <br/>
+  <img src="" alt="Mod Icon" class="mod-icon" id="modIcon" style="margin-left:205px;">
+  <div>
+    <h1 class="mod-title" id="modTitle">Loading...</h1>
+    <button id="copyButton" style="margin-left:745px;">Copy Code</button>
   </div>
+  <br/>
+</div>
+
 <div style="text-align: left; margin-left:205px;">
   <strong><i class="fa-solid fa-tags"></i></strong> 
   <span id="category">...</span>
 </div>
-  <div class="mod-description">
-    <p id="shortDescription" style="text-align:left; margin-left:205px;">Loading short description...</p>
 
-<hr style="width: 69%; margin: 20px auto; border: 2px solid;">
-
-
-  
-  <div class="mod-meta">
-        <span><strong>Uploaded:</strong> <span id="uploadDate">...</span></span><br/>
-        <hr/>
-        <span><strong>By:</strong> <span id="uploaderName">...</span></span>
+<div class="mod-meta">
+  <span><strong>Uploaded:</strong> <span id="uploadDate">...</span></span><br/>
+  <hr/>
+  <span><strong>By:</strong> <span id="uploaderName">...</span></span>
 </div>
+
 <div id="mod-detail-page" class="modrinth-style">
   <div class="tab-bar">
-  <a href="/newfullview" class="tab" id="descriptionbutton">Description</a>
-  <a href="/versions" class="tab active" id="modversions">Versions</a>
-</div>
-    <h2>Versions</h2>
+    <a href="/newfullview" class="tab" id="descriptionbutton">Description</a>
+    <a href="/versions" class="tab active" id="modversions">Versions</a>
+  </div>
+
+  <h2>Versions</h2>
   <div id="versions-container">
     <!-- JS will populate this with dropdowns for each version -->
   </div>
-  </div>
-  </div>
+</div>
+
 <!--
   <div class="analytics-bars-container">
   <div class="day-bar-wrapper">
@@ -479,7 +476,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
   const addonId = params.get("addonid");
     document.getElementById("descriptionbutton").href="https://bloxdworld.pages.dev/newfullview?addonid="+addonId
-        document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
+    document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
   if (!addonId) {
     Toastify({
       text: "No AddonId found in URL!",
