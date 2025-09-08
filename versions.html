@@ -522,7 +522,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   // --- Fetch all other versions ---
 const { data: versions, error } = await client
   .from("versions")
-  .select("id, title, created_at, file_path")
+  .select("id, proposed_title, created_at, proposed_file_path")
   .eq("mod_id", addonId)
   .eq("approved", true)   // only approved versions
   .order("created_at", { ascending: false });
