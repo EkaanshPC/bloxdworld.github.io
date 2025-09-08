@@ -316,7 +316,33 @@ body {
   background-color: #01ffbf;
   color: white;
 }
+.tab-bar {
+  display: flex;
+  border-radius: 12px;      /* makes the whole bar rounded */
+  overflow: hidden;          /* ensures tabs don’t spill outside */
+  background-color: #fff;    /* or whatever bg you want */
+  width: fit-content;        /* shrink to fit tabs */
+}
 
+.tab-bar .tab {
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  color: black;
+  background-color: #fff;      /* default tab bg */
+  border: none;
+  transition: background 0.2s;
+}
+
+.tab-bar .tab.active {
+  background-color: #01ffbf;
+  color: white;
+}
+
+.tab-bar .tab:hover {
+  background-color: #00d6a5;   /* hover effect */
+  color: white;
+}
 </style>
 </head>
 <body>
