@@ -189,74 +189,146 @@
 </footer>
 
 <script type="module">
-  import { getProfile } from "./js/googlelogin.js";
-  const client = supabase.createClient(
+ import { getProfile, uploadMod, getUID } from "./js/googlelogin.js";
+import * as leoProfanity from "https://cdn.jsdelivr.net/npm/leo-profanity/+esm";
+import * as nsfwjs from "https://cdn.jsdelivr.net/npm/nsfwjs/+esm";
+
+const client = supabase.createClient(
   "https://pxmsgzfufvwxpnyeobwk.supabase.co",
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U",
   {
     auth: {
-      persistSession: true,         // ✅ Keeps user logged in across reloads
-      autoRefreshToken: true,       // ✅ Refreshes JWTs automatically
-      storage: localStorage         // ✅ Stores session in browser
+      persistSession: true,
+      autoRefreshToken: true,
+      storage: localStorage
     }
   }
 );
-import { uploadMod, getUID } from './js/googlelogin.js';
-document.addEventListener('DOMContentLoaded', () => {
-  const uploadBtn = document.querySelector('.upload-container button');
-  const status = document.getElementById('uploadStatus');
-  const input = document.getElementById('modIcon');
-  const message = document.getElementById('wordCountMsg');
 
-  // Word count limiter
-  input.addEventListener('input', () => {
-    const words = input.value.trim().split(/\s+/).filter(Boolean);
-    if (words.length > 100) {
-      message.textContent = `Limit exceeded: ${words.length} words (max 100)`;
-      input.value = words.slice(0, 100).join(' ');
+// 🛡️ text moderation
+function cleanText(input) {
+  return leoProfanity.clean(input || "");
+}
+
+// 🛡️ image url validator
+function validateImageURL(url) {
+  if (!url) return false;
+  try {
+    const u = new URL(url);
+    return ["http:", "https:"].includes(u.protocol);
+  } catch {
+    return false;
+  }
+}
+
+// 🛡️ NSFWJS setup
+let nsfwModel = null;
+async function loadNSFWModel() {
+  if (!nsfwModel) nsfwModel = await nsfwjs.load();
+  return nsfwModel;
+}
+async function isImageSafe(url) {
+  if (!validateImageURL(url)) return false;
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+    img.src = url;
+    img.onload = async () => {
+      try {
+        const model = await loadNSFWModel();
+        const predictions = await model.classify(img);
+        console.log("Image moderation:", predictions);
+        const unsafe = predictions.some(
+          (p) => ["Porn", "Sexy", "Hentai"].includes(p.className) && p.probability > 0.6
+        );
+        resolve(!unsafe);
+      } catch {
+        resolve(false);
+      }
+    };
+    img.onerror = () => resolve(false);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const uploadBtn = document.querySelector(".upload-container button");
+  const status = document.getElementById("uploadStatus");
+  const descInput = document.getElementById("modDescription");
+  const shortInput = document.getElementById("modShort");
+  const message = document.getElementById("wordCountMsg");
+
+  // word count limiter (on short desc)
+  shortInput.addEventListener("input", () => {
+    const words = shortInput.value.trim().split(/\s+/).filter(Boolean);
+    if (words.length > 30) {
+      message.textContent = `Limit exceeded: ${words.length} words (max 30)`;
+      shortInput.value = words.slice(0, 30).join(" ");
     } else {
-      message.textContent = `Words: ${words.length}/100`;
+      message.textContent = `Words: ${words.length}/30`;
     }
   });
 
-  // Upload handler
-  uploadBtn.addEventListener('click', async () => {
-    status.textContent = 'Uploading... ⏳';
+  uploadBtn.addEventListener("click", async () => {
+    status.textContent = "Uploading... ⏳";
 
     try {
       const { data: { session } } = await client.auth.getSession();
       const user = session?.user;
       if (!user?.email) {
-        status.textContent = '❌ You must be logged in to upload a mod!';
+        status.textContent = "❌ You must be logged in to upload a mod!";
         return;
       }
 
       const profile = await getProfile();
       const author = profile.display_name || user.user_metadata.display_name || user.email;
 
+      // grab form data
+      let title = document.getElementById("modTitle").value;
+      let file = document.getElementById("modFile").files[0];
+      let description = document.getElementById("modDescription").value;
+      let image = document.getElementById("modImage").value;
+      let icon = document.getElementById("modIcon").value;
+      let category = document.getElementById("modCategory").value;
+      let shortdescription = document.getElementById("modShort").value;
+
+      // 🛡️ clean text
+      title = cleanText(title);
+      description = cleanText(description);
+      shortdescription = cleanText(shortdescription);
+      category = cleanText(category);
+
+      // 🛡️ moderate images
+      if (!(await isImageSafe(icon))) {
+        icon = "https://bloxdworld.pages.dev/assets/default-icon.png";
+        Toastify({ text: "Unsafe or invalid icon replaced with default.", backgroundColor: "orange", duration: 3000 }).showToast();
+      }
+      if (!(await isImageSafe(image))) {
+        image = "https://bloxdworld.pages.dev/assets/default-banner.png";
+        Toastify({ text: "Unsafe or invalid banner replaced with default.", backgroundColor: "orange", duration: 3000 }).showToast();
+      }
+
       const modData = {
-        title: document.getElementById('modTitle').value,
-        file: document.getElementById('modFile').files[0],
-        description: document.getElementById('modDescription').value,
-        image: document.getElementById('modImage').value,
-        icon: document.getElementById('modIcon').value,
-        author: author,
-        category: document.getElementById('modCategory').value,
+        title,
+        file,
+        description,
+        image,
+        icon,
+        author,
+        category,
         creatoruid: getUID(),
-        shortdescription: document.getElementById('modShort').value,
+        shortdescription,
         info: { extra: "submitted via form" }
       };
 
       const result = await uploadMod(modData);
       if (result.error) {
-        status.textContent = '❌ ' + result.error;
+        status.textContent = "❌ " + result.error;
       } else {
-        status.textContent = '✅ Upload successful!';
+        status.textContent = "✅ Upload successful!";
       }
-
     } catch (err) {
       console.error(err);
-      status.textContent = '❌ Upload failed due to an unexpected error.';
+      status.textContent = "❌ Upload failed due to an unexpected error.";
     }
   });
 });
