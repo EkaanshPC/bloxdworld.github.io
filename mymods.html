@@ -46,6 +46,65 @@
 <link rel="stylesheet" href="styles/navbar.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
+  button {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin: 5px;
+}
+
+/* Approve button (green vibes) */
+.approve-btn,
+.submit-version-btn {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+}
+.approve-btn:hover,
+.submit-version-btn:hover {
+  background: linear-gradient(135deg, #34d058, #2c974b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* Reject button (red danger) */
+.reject-btn,
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+}
+.reject-btn:hover,
+.delete-btn:hover {
+  background: linear-gradient(135deg, #e55365, #b21f2d);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Add version button (blue chill) */
+.add-version-btn {
+  background: linear-gradient(135deg, #007bff, #0069d9);
+  color: white;
+}
+.add-version-btn:hover {
+  background: linear-gradient(135deg, #339dff, #0056b3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+/* Cancel button (gray lowkey) */
+.cancel-version-btn {
+  background: #6c757d;
+  color: white;
+}
+.cancel-version-btn:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
     .my-mods-container {
   max-width: 900px;
   margin: 2rem auto;
@@ -292,15 +351,16 @@ function renderMods(mods) {
     if (modCard.querySelector(".version-form")) return;
 
     // Create form
-    const formHtml = `
-      <div class="version-form">
-        <input type="text" name="title" placeholder="Proposed Title" value="${modCard.querySelector("h3").textContent}">
-        <textarea name="description" placeholder="Proposed Description">${modCard.querySelector("p").textContent}</textarea>
-        <input type="text" name="file_path" placeholder="Proposed File Path" value="${modCard.querySelector("a").href}">
-        <button class="submit-version-btn">Submit Update</button>
-        <button class="cancel-version-btn">Cancel</button>
-      </div>
-    `;
+  const formHtml = `
+  <div class="version-form">
+    <input type="text" name="title" placeholder="Proposed Title" value="${modCard.querySelector("h3").textContent}">
+    <textarea name="description" placeholder="Proposed Description">${modCard.querySelector("p").textContent}</textarea>
+    <input type="file" name="file_upload" accept=".txt,.js,.json">
+    <button class="submit-version-btn">Submit Update</button>
+    <button class="cancel-version-btn">Cancel</button>
+  </div>
+`;
+
     modCard.insertAdjacentHTML("beforeend", formHtml);
 
     // Cancel button
@@ -309,26 +369,44 @@ function renderMods(mods) {
     });
 
     // Submit button
-    modCard.querySelector(".submit-version-btn").addEventListener("click", async () => {
-      const form = modCard.querySelector(".version-form");
-      const proposedTitle = form.querySelector("input[name='title']").value;
-      const proposedDesc = form.querySelector("textarea[name='description']").value;
-      const proposedFile = form.querySelector("input[name='file_path']").value;
+modCard.querySelector(".submit-version-btn").addEventListener("click", async () => {
+  const form = modCard.querySelector(".version-form");
+  const proposedTitle = form.querySelector("input[name='title']").value;
+  const proposedDesc = form.querySelector("textarea[name='description']").value;
+  const fileInput = form.querySelector("input[name='file_upload']");
+  const file = fileInput.files[0];
 
-      const { error } = await supabase.from("versions").insert({
-        mod_id: modId,
-        proposed_title: proposedTitle,
-        proposed_description: proposedDesc,
-        proposed_file_path: proposedFile,
-        created_at: new Date(),
-        approved: false
-      });
+  if (!file) return alert("Please upload a file!");
 
-      if (error) return alert("Failed to submit version: " + error.message);
+  // Unique path for this mod’s version
+  const filePath = `${modId}/${Date.now()}-${file.name}`;
 
-      alert("Update proposal submitted! Awaiting approval.");
-      form.remove();
-    });
+  // Upload file to Supabase Storage
+  const { error: uploadError } = await supabase.storage
+    .from("mods") // 👈 bucket name
+    .upload(filePath, file);
+
+  if (uploadError) return alert("❌ Upload failed: " + uploadError.message);
+
+  // Get public URL of the file
+  const { data } = supabase.storage.from("mods").getPublicUrl(filePath);
+  const publicUrl = data.publicUrl;
+
+  // Insert version proposal into table
+  const { error: insertError } = await supabase.from("versions").insert({
+    mod_id: modId,
+    proposed_title: proposedTitle,
+    proposed_description: proposedDesc,
+    proposed_file_path: publicUrl, // now linked to uploaded file
+    created_at: new Date(),
+    approved: false
+  });
+
+  if (insertError) return alert("❌ Failed to submit version: " + insertError.message);
+
+  alert("✅ Update proposal submitted! Awaiting approval.");
+  form.remove();
+});
   });
 });
 }

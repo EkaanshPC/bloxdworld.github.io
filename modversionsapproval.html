@@ -123,6 +123,7 @@ function renderVersions(versions) {
 }
 
 // --- Approve version ---
+// --- Approve version ---
 window.approveVersion = async (versionId) => {
   // fetch version
   const { data: version, error: vError } = await client
@@ -143,30 +144,34 @@ window.approveVersion = async (versionId) => {
     .eq("id", version.mod_id);
   if (modError) return alert("Error updating mod: " + modError.message);
 
-  // mark version as approved
-  const { error: verApproveError } = await client
+  // remove from versions table
+  const { error: delError } = await client
     .from("versions")
-    .update({ approved: true })
+    .delete()
     .eq("id", versionId);
-  if (verApproveError) return alert("Error marking version approved: " + verApproveError.message);
+  if (delError) return alert("Error deleting version: " + delError.message);
+
+  // remove from UI instantly
+  document.querySelector(`.mod-card[data-id="${versionId}"]`)?.remove();
 
   alert("✅ Version approved and mod updated!");
-  const versions = await fetchPendingVersions();
-  renderVersions(versions);
-}
+};
 
-// --- Reject version ---
+
+
 window.rejectVersion = async (versionId) => {
   const { error } = await client
     .from("versions")
-    .update({ approved: false })
+    .delete()
     .eq("id", versionId);
   if (error) return alert("❌ Error rejecting version: " + error.message);
 
+  // remove from UI instantly
+  document.querySelector(`.mod-card[data-id="${versionId}"]`)?.remove();
+
   alert("❌ Version rejected!");
-  const versions = await fetchPendingVersions();
-  renderVersions(versions);
-}
+};
+
 
 // --- Run ---
 document.addEventListener("DOMContentLoaded", async () => {
