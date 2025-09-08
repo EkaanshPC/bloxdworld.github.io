@@ -579,6 +579,66 @@ const { data: versions, error } = await client
     });
   });
 });
+document.addEventListener("DOMContentLoaded", async ()=>{
+  const params = new URLSearchParams(window.location.search);
+  const addonId = params.get("addonid");
+  if(!addonId) {
+    Toastify({
+  text: "No AddonId found in URL!",
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #FF0000, #D3D3D3)",
+  close: true,
+}).showToast();
+    return console.error("No Addon ID in URL");}
+
+  const { data, error } = await client
+    .from("mod")
+    .select("*")
+    .eq("id", addonId)
+    .single();
+    document.getElementById("descriptionbutton").href="https://bloxdworld.pages.dev/newfullview?addonid="+addonId
+        document.getElementById("modversions").href="https://bloxdworld.pages.dev/versions?addonid="+addonId
+  if(error) {
+    Toastify({
+  text: `Error while finding mod: ${error}`,
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #FF0000, #D3D3D3)",
+  close: true,
+}).showToast();
+    return console.error(error);}
+
+  const mod = data;
+  console.log("data got! it is:",mod)
+  document.getElementById("modTitle").textContent = mod.title;
+  document.getElementById("uploadDate").textContent = mod.created_at.split("T")[0];
+  document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
+  document.getElementById("category").textContent = mod.category || "Uncategorized";
+ document.getElementById("shortDescription").textContent= mod.shortdescription || "No Info"
+  window.getLink = async (filePath) => {
+    const { data } = client.storage.from("mod").getPublicUrl(filePath);
+    if (data?.publicUrl) {
+      return data;
+    }
+  };
+  document.getElementById("modIcon").src = mod.icon || "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png";
+
+  updateAnalytics(mod);
+
+  document.getElementById("copyButton").addEventListener("click",()=>{
+    navigator.clipboard.writeText('Bloxdworld: soon').then(()=>{Toastify({
+  text: "Code copied to clipboard!",
+  duration: 3000,
+  gravity: "bottom", // bottom or top
+  position: "right", // left, center, right
+  backgroundColor: "linear-gradient(to right, #ADD8E6, #D3D3D3)",
+  close: true,
+}).showToast();});
+  });
+});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="module" src="js/googlelogin.js"></script>
