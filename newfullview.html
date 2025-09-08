@@ -534,14 +534,15 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
 
   document.getElementById("copyButton").addEventListener("click",()=>{
-    navigator.clipboard.writeText('Bloxdworld: soon').then(()=>{Toastify({
+    fetch(getLink(mod.file_path)).then(link=>{
+    navigator.clipboard.writeText(link).then(()=>{Toastify({
   text: "Code copied to clipboard!",
   duration: 3000,
   gravity: "bottom", // bottom or top
   position: "right", // left, center, right
   backgroundColor: "linear-gradient(to right, #ADD8E6, #D3D3D3)",
   close: true,
-}).showToast();});
+}).showToast();});})
   });
 });
 const themeToggle = document.getElementById("themeToggle");
