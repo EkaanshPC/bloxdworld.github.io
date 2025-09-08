@@ -377,7 +377,61 @@
 
 <script type="module">
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import * as leoProfanity from "https://cdn.jsdelivr.net/npm/leo-profanity/+esm";
+import * as nsfwjs from "https://cdn.jsdelivr.net/npm/nsfwjs/+esm";
 
+// 🛡️ NSFWJS setup
+let nsfwModel = null;
+async function loadNSFWModel() {
+  if (!nsfwModel) nsfwModel = await nsfwjs.load();
+  return nsfwModel;
+}
+
+// 🛡️ Text moderation
+function cleanText(input) {
+  return (input || "")
+    .replace(/<\s*script[^>]*>/gi, "********")
+    .replace(/<\s*\/\s*script\s*>/gi, "********")
+    .replace(/\S+/g, word => leoProfanity.clean(word));
+}
+
+// 🛡️ Image moderation inside HTML
+async function moderateImagesInDescription(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  const images = div.querySelectorAll("img");
+
+  for (let img of images) {
+    try {
+      const imageEl = new Image();
+      imageEl.crossOrigin = "anonymous";
+      imageEl.src = img.src;
+      await new Promise((res, rej) => {
+        imageEl.onload = res;
+        imageEl.onerror = rej;
+      });
+
+      const predictions = await loadNSFWModel().then(m => m.classify(imageEl));
+      const nsfwScore = predictions.find(p =>
+        ["Porn", "Hentai", "Sexy"].includes(p.className)
+      )?.probability || 0;
+
+      if (nsfwScore > 0.7) img.replaceWith("🚫 [NSFW Image Removed]");
+    } catch (err) {
+      console.warn("Failed to scan image:", err);
+      img.replaceWith("⚠️ [Unscannable Image]");
+    }
+  }
+
+  return div.innerHTML;
+}
+
+// 🛡️ Sanitize description
+async function sanitizeDescription(input) {
+  let safeText = cleanText(input);
+  let moderated = await moderateImagesInDescription(safeText);
+  return moderated;
+}
 
 const SUPABASE_URL = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
 const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
@@ -449,32 +503,29 @@ modCard.querySelector(".submit-version-btn").addEventListener("click", async () 
 
   if (!file) return alert("Please upload a file!");
 
-  // Unique path for this mod’s version
-  const filePath = `${modId}/${Date.now()}-${file.name}`;
+  // 🛡️ Moderate title & description
+  const safeTitle = cleanText(proposedTitle);
+  const safeDesc = await sanitizeDescription(proposedDesc);
 
   // Upload file to Supabase Storage
-  const { error: uploadError } = await supabase.storage
-    .from("mods") // 👈 bucket name
-    .upload(filePath, file);
-
+  const filePath = `${modId}/${Date.now()}-${file.name}`;
+  const { error: uploadError } = await supabase.storage.from("mods").upload(filePath, file);
   if (uploadError) return alert("❌ Upload failed: " + uploadError.message);
 
-  // Get public URL of the file
   const { data } = supabase.storage.from("mods").getPublicUrl(filePath);
   const publicUrl = data.publicUrl;
 
-  // Insert version proposal into table
+  // Insert moderated version proposal
   const { error: insertError } = await supabase.from("versions").insert({
     mod_id: modId,
-    proposed_title: proposedTitle,
-    proposed_description: proposedDesc,
-    proposed_file_path: publicUrl, // now linked to uploaded file
+    proposed_title: safeTitle,
+    proposed_description: safeDesc,
+    proposed_file_path: publicUrl,
     created_at: new Date(),
     approved: false
   });
 
   if (insertError) return alert("❌ Failed to submit version: " + insertError.message);
-
   alert("✅ Update proposal submitted! Awaiting approval.");
   form.remove();
 });
