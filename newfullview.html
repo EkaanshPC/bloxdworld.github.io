@@ -535,19 +535,32 @@ document.addEventListener("DOMContentLoaded", async ()=>{
 
 document.getElementById("copyButton").addEventListener("click", async () => {
   const data = await getLink(mod.file_path);
-  const link = data.publicUrl; // get the actual URL
-  console.log(`[DEBUG] copyBtn: link found! ${link}`);
-  navigator.clipboard.writeText(link).then(() => {
+  const link = data.publicUrl;
+
+  try {
+    const response = await fetch(link);
+    const code = await response.text(); // get raw code
+    console.log(`[DEBUG] copyBtn: code fetched!`);
+    navigator.clipboard.writeText(code).then(() => {
+      Toastify({
+        text: "Code copied to clipboard!",
+        duration: 3000,
+        gravity: "bottom",
+        position: "right",
+        backgroundColor: "linear-gradient(to right, #ADD8E6, #D3D3D3)",
+        close: true,
+      }).showToast();
+    });
+  } catch (err) {
+    console.error("Failed to fetch code:", err);
     Toastify({
-      text: "Code copied to clipboard!",
+      text: "❌ Failed to copy code",
+      backgroundColor: "red",
       duration: 3000,
-      gravity: "bottom",
-      position: "right",
-      backgroundColor: "linear-gradient(to right, #ADD8E6, #D3D3D3)",
-      close: true,
     }).showToast();
-  });
+  }
 });
+
 
 });
 const themeToggle = document.getElementById("themeToggle");
