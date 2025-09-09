@@ -1,3 +1,8 @@
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,30 +46,28 @@
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Bloxd World",
-  "url": "https://bloxdworld.pages.dev",
-  "description": "Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd.",
-  "publisher": {
-    "@type": "Organization",
-    "name": "NeonJet Studios",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"
-    }
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://bloxdworld.pages.dev/search?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Bloxd World",
+  "url": "https://bloxdworld.pages.dev",
+  "description": "Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "NeonJet Studios",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://bloxdworld.pages.dev/search?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
 }
 </script>
 
-
 <style>
-
 .upload-container {
 max-width: 800px;
 margin: 40px auto;
@@ -101,7 +104,6 @@ background-color: #1565c0;
 <body>
 <div class="modrinth-navbar">
   <div class="header">
-    
     <!-- Left: Logo -->
     <div class="header-left">
       <div style="display: flex; align-items: center; height: 100%;">
@@ -147,286 +149,134 @@ background-color: #1565c0;
         <!-- Auth content here -->
       </div>
     </div>
-
   </div>
 </div>
 
 <div class="upload-container">
-  <h2>Upload Your Mod</h2>
-  <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
-  <textarea id="modDescription" placeholder="Enter Mod Description"></textarea><br>
-  <input type="text" id="modImage" placeholder="Image URL"><br>
-  <input type="text" id="modIcon" placeholder="Icon URL"><br>
-<input type="text" id="modShort" placeholder="Short Description">
-<p id="wordCountMsg" style="color: red;"></p>
-  <select id="modCategory">
-    <option value="">Select Category</option>
-    <option value="Gameplay">Gameplay</option>
-    <option value="Visual">Visual</option>
-    <option value="Utility">Utility</option>
-    <option value="Other">Other</option>
-  </select><br>
-  <input type="file" id="modFile"><br>
-  <button>Upload 🔥</button>
-  <p id="uploadStatus"></p>
+  <h2>Upload Your Mod</h2>
+  <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
+  <textarea id="modDescription" placeholder="Enter Mod Description"></textarea><br>
+  <input type="text" id="modImage" placeholder="Image URL"><br>
+  <input type="text" id="modIcon" placeholder="Icon URL"><br>
+  <input type="text" id="modShort" placeholder="Short Description">
+  <p id="wordCountMsg" style="color: red;"></p>
+  <select id="modCategory">
+    <option value="">Select Category</option>
+    <option value="Gameplay">Gameplay</option>
+    <option value="Visual">Visual</option>
+    <option value="Utility">Utility</option>
+    <option value="Other">Other</option>
+  </select><br>
+  <input type="file" id="modFile"><br>
+  <button>Upload 🔥</button>
+  <p id="uploadStatus"></p>
 </div>
 
 <footer class="site-footer">
-  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
-  <nav class="footer-links">
-    <a href="/about">About</a>
-    <a href="/leaderboard">Leaderboard</a>
-    <a href="/upload">Submit a Mod</a>
-    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
-  </nav>
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
 </footer>
 
 <script type="module">
-  console.log("Script module loaded.");
-  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-  import { getProfile, uploadMod, getUID } from "./js/googlelogin.js";
-  import * as leoProfanity from "https://cdn.jsdelivr.net/npm/leo-profanity/+esm";
-  import * as nsfwjs from "https://cdn.jsdelivr.net/npm/nsfwjs/+esm";
+  import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  import { getProfile, uploadMod, getUID } from "./js/googlelogin.js";
+  import * as leoProfanity from "https://cdn.jsdelivr.net/npm/leo-profanity/+esm";
+  import * as nsfwjs from "https://cdn.jsdelivr.net/npm/nsfwjs/+esm";
 
-const client = createClient(
-  "https://pxmsgzfufvwxpnyeobwk.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U",
-  {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      storage: localStorage
-    }
-  }
-);
-console.log("point reached! client created!")
-// 🛡️ text moderation
-function cleanImages(input) {
-  return input.replace(/<img[^>]*>/gi, match => {
-    // Only allow http/https links
-    if (/src\s*=\s*["']?(https?:\/\/[^"'>\s]+)/i.test(match)) {
-      return match; // legit img, keep it
-    }
-    return "🚫"; // blocked img
-  });
-}
-async function moderateImagesInDescription(html) {
-  await loadNSFWModel(); // make sure the model is loaded
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  const images = div.querySelectorAll("img");
+  // client setup
+  const client = createClient(
+    "https://pxmsgzfufvwxpnyeobwk.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U",
+    { auth: { persistSession: true, autoRefreshToken: true, storage: localStorage } }
+  );
 
-  for (let img of images) {
-    try {
-      const imageEl = new Image();
-      imageEl.crossOrigin = "anonymous";
-      imageEl.src = img.src;
+  console.log("point reached! client created!");
 
-      await new Promise((res, rej) => {
-        imageEl.onload = res;
-        imageEl.onerror = rej;
-      });
+  // ... all your cleanText, sanitizeDescription, validateImageURL, isImageSafe, etc functions here ...
+  // (unchanged, just keep them as you had)
 
-      const predictions = await nsfwModel.classify(imageEl);
+  // ---- INIT CODE (runs immediately) ----
+  console.log("DOM ready (no wrapper). Checking user session...");
 
-      // 👈 HERE: calculate nsfwScore
-      const nsfwScore = predictions.find(p => 
-        ["Porn", "Hentai", "Sexy"].includes(p.className)
-      )?.probability || 0;
+  const uploadBtn = document.querySelector(".upload-container button");
+  const status = document.getElementById("uploadStatus");
+  const shortInput = document.getElementById("modShort");
+  const message = document.getElementById("wordCountMsg");
 
-      // 👈 Remove or replace image if NSFW
-      if (nsfwScore > 0.7) { 
-        img.src = "https://bloxdworld.pages.dev/assets/default-banner.png";
-        img.alt = "NSFW image removed";
-      }
+  shortInput.addEventListener("input", () => {
+    const words = shortInput.value.trim().split(/\s+/).filter(Boolean);
+    if (words.length > 30) {
+      message.textContent = `Limit exceeded: ${words.length} words (max 30)`;
+      shortInput.value = words.slice(0, 30).join(" ");
+    } else {
+      message.textContent = `Words: ${words.length}/30`;
+    }
+  });
 
-    } catch (err) {
-      console.warn("Failed to scan image:", err);
-      img.replaceWith("⚠️ [Unscannable Image]");
-    }
-  }
+  uploadBtn.addEventListener("click", async () => {
+    console.log("Upload button clicked.");
+    status.textContent = "Uploading... ⏳";
 
-  return div.innerHTML;
-}
+    try {
+      const { data: { session } } = await client.auth.getSession();
+      const user = session?.user;
+      if (!user?.email) {
+        status.textContent = "❌ You must be logged in to upload a mod!";
+        return;
+      }
 
-function cleanText(input) {
-  return (input || "")
-    .replace(/<\s*script[^>]*>/gi, "********")
-    .replace(/<\s*\/\s*script\s*>/gi, "********");
-}
+      const profile = await getProfile();
+      const author = profile.display_name || user.user_metadata.display_name || user.email;
 
-async function sanitizeDescription(input) {
-  let safeText = cleanText(input);
-  safeText = leoProfanity.clean(safeText); // profanity filter
-  let moderated = await moderateImagesInDescription(safeText);
-  return moderated;
-}
+      // grab form data
+      let title = document.getElementById("modTitle").value;
+      let file = document.getElementById("modFile").files[0];
+      let description = document.getElementById("modDescription").value;
+      let image = document.getElementById("modImage").value;
+      let icon = document.getElementById("modIcon").value;
+      let category = document.getElementById("modCategory").value;
+      let shortdescription = document.getElementById("modShort").value;
 
+      // clean text + sanitize desc
+      title = cleanText(title);
+      description = await sanitizeDescription(description);
+      shortdescription = cleanText(shortdescription);
+      category = cleanText(category);
 
-// 🛡️ image url validator
-function validateImageURL(url) {
-  if (!url) return false;
-  try {
-    const u = new URL(url);
-    return ["http:", "https:"].includes(u.protocol);
-  } catch {
-    return false;
-  }
-}
+      // validate images
+      if (!(await isImageSafe(icon))) icon = "https://bloxdworld.pages.dev/assets/default-icon.png";
+      if (!(await isImageSafe(image))) image = "https://bloxdworld.pages.dev/assets/default-banner.png";
 
-// 🛡️ NSFWJS setup
-let nsfwModel = null;
-async function loadNSFWModel() {
-  if (!nsfwModel) nsfwModel = await nsfwjs.load();
-  return nsfwModel;
-}
-async function isImageSafe(url) {
-  if (!validateImageURL(url)) return false;
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-    img.src = url;
-    img.onload = async () => {
-      try {
-        const model = await loadNSFWModel();
-        const predictions = await model.classify(img);
-        console.log("Image moderation:", predictions);
-        const unsafe = predictions.some(
-          (p) => ["Porn", "Sexy", "Hentai"].includes(p.className) && p.probability > 0.6
-        );
-        resolve(!unsafe);
-      } catch {
-        resolve(false);
-      }
-    };
-    img.onerror = () => resolve(false);
-  });
-}
-console.log("point reached! functions defined")
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM content loaded. Checking user session...");
+      const modData = { title, file, description, image, icon, author, category, creatoruid: getUID(), shortdescription, info: { extra: "submitted via form" } };
 
-  const uploadBtn = document.querySelector(".upload-container button");
-  const status = document.getElementById("uploadStatus");
-  const descInput = document.getElementById("modDescription");
-  const shortInput = document.getElementById("modShort");
-  const message = document.getElementById("wordCountMsg");
-console.log("point reached! found elements by id",uploadBtn,status,descInput,shortInput,message)
-console.log("point reached! shortInput event listener creating....")
-  shortInput.addEventListener("input", () => {
-    const words = shortInput.value.trim().split(/\s+/).filter(Boolean);
-    if (words.length > 30) {
-      message.textContent = `Limit exceeded: ${words.length} words (max 30)`;
-      shortInput.value = words.slice(0, 30).join(" ");
-    } else {
-      message.textContent = `Words: ${words.length}/30`;
-    }
-  });
-console.log("point reached! add upload btn click event listener")
-  uploadBtn.addEventListener("click", async () => {
-  console.log("point reached! added upload btn event listener!")
-    console.log("Upload button clicked.");
-    status.textContent = "Uploading... ⏳";
-
-    try {
-      const { data: { session } } = await client.auth.getSession();
-      const user = session?.user;
-      console.log("User session check:", user);
-
-      if (!user?.email) {
-        console.error("User not logged in.");
-        status.textContent = "❌ You must be logged in to upload a mod!";
-        return;
-      }
-
-      const profile = await getProfile();
-      const author = profile.display_name || user.user_metadata.display_name || user.email;
-      console.log("Author:", author);
-
-      // grab form data
-      let title = document.getElementById("modTitle").value;
-      let fileInput = document.getElementById("modFile");
-      let file = fileInput.files[0];
-      let description = document.getElementById("modDescription").value;
-      let image = document.getElementById("modImage").value;
-      let icon = document.getElementById("modIcon").value;
-      let category = document.getElementById("modCategory").value;
-      let shortdescription = document.getElementById("modShort").value;
-      console.log("Collected form data:", {
-        title, file, description, image, icon, category, shortdescription
-      });
-      console.log("File object:", file);
-
-      // 🛡️ clean text
-      title = cleanText(title);
-      let desc = document.getElementById("modDescription").value;
-      desc = await sanitizeDescription(desc);
-      description = desc;
-      shortdescription = cleanText(shortdescription);
-      category = cleanText(category);
-
-      // 🛡️ moderate images
-      console.log("Moderating image URLs...");
-      if (!(await isImageSafe(icon))) {
-        console.warn("Icon image not safe. Using default.");
-        icon = "https://bloxdworld.pages.dev/assets/default-icon.png";
-        Toastify({ text: "Unsafe or invalid icon replaced with default.", backgroundColor: "orange", duration: 3000 }).showToast();
-      }
-      if (!(await isImageSafe(image))) {
-        console.warn("Banner image not safe. Using default.");
-        image = "https://bloxdworld.pages.dev/assets/default-banner.png";
-        Toastify({ text: "Unsafe or invalid banner replaced with default.", backgroundColor: "orange", duration: 3000 }).showToast();
-      }
-
-      const modData = {
-        title,
-        file,
-        description,
-        image,
-        icon,
-        author,
-        category,
-        creatoruid: getUID(),
-        shortdescription,
-        info: { extra: "submitted via form" }
-      };
-
-      console.log("Final mod data to be sent to uploadMod:", modData);
-      
-      // Make sure your googlelogin.js exports an uploadMod function that takes this object
-      const result = await uploadMod(modData);
-      
-      console.log("Result from uploadMod:", result);
-
-      if (result.error) {
-        status.textContent = "❌ " + result.error;
-      } else {
-        status.textContent = "✅ Upload successful!";
-      }
-    } catch (err) {
-      console.error("❌ An unexpected error occurred during upload:", err);
-      status.textContent = "❌ Upload failed due to an unexpected error.";
-    }
-  });
-});
-
+      const result = await uploadMod(modData);
+      status.textContent = result.error ? "❌ " + result.error : "✅ Upload successful!";
+    } catch (err) {
+      console.error(err);
+      status.textContent = "❌ Upload failed due to an unexpected error.";
+    }
+  });
 </script>
 
 <script>
 if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-  document.body.classList.add("mobile");
+  document.body.classList.add("mobile");
 }
-
 const themeToggle = document.getElementById("themeToggle");
 if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
-
 themeToggle.addEventListener("click", e => {
-  e.preventDefault();
-  document.body.classList.toggle("dark-mode");
-  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
 });
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script type="module" src="js/googlelogin.js"></script>
-</body> 
+</body>
 </html>
