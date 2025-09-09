@@ -1,3 +1,4 @@
+<script>
 fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec", {
   method: "POST",
   body: new URLSearchParams({
@@ -9,3 +10,4 @@ fetch("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL
 .then(res => res.text())
 .then(console.log)
 .catch(console.error);
+</script>

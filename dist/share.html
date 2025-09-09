@@ -1,1 +1,689 @@
-<!DOCTYPE html><html lang="en"><head><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"><meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc"><meta charset="UTF-8"><title>Mods | Bloxd World</title><meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios."><meta id="data-title" property="og:title" content="Bloxd World – Share and Discover Mods"><meta id="data-desc" property="og:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations."><meta id="data-image" property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png"><meta id="data-url" property="og:url" content="https://bloxdworld.pages.dev"><meta name="twitter:card" content="summary_large_image"><link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><link rel="stylesheet" href="styles/earth-cube.css"><link rel="stylesheet" href="styles/header.css"><link rel="stylesheet" href="styles/devlogandindex.css"><link rel="stylesheet" href="styles/other.css"><link rel="stylesheet" href="styles/navbar.css"><style>body.mobile .devlog-container,body.mobile .mods-container{padding:10px}.mod-card button{align-self:flex-start;margin-top:10px}.mod-icon{width:140px;height:140px;object-fit:cover;border-radius:8px;flex-shrink:0}.mod-content{flex:1;display:flex;flex-direction:column}body.mobile .mod-card{padding:12px;margin-bottom:16px;font-size:.95rem;border-radius:10px}body.mobile .mod-card img{max-width:100%;height:auto;display:block;margin:10px auto}body.mobile .vote-icon{width:28px;margin-right:8px}body.mobile .nav-links{flex-direction:column;gap:10px;align-items:center}body.mobile .search-bar{width:90%;font-size:1rem}body{margin:0;font-family:Fredoka,sans-serif;background-color:#f0f0f0;color:#000;transition:background-color .3s ease,color .3s ease}.vote-icon{pointer-events:auto;z-index:10;position:relative}.mods-container{max-width:1000px;margin:40px auto;padding:20px}.mods-header{font-size:28px;margin-bottom:20px;color:#00a7a9;text-align:center}#categoryFilter,.search-bar{display:block;margin:0 auto 20px;padding:10px 12px;font-size:16px;width:300px;border-radius:6px;border:1px solid #ccc;background-color:#fff;color:#333;transition:box-shadow .3s ease,border-color .3s ease;outline:0}#categoryFilter:focus,#categoryFilter:hover,.search-bar:focus,.search-bar:hover{border-color:#0ff;box-shadow:0 0 8px rgba(0,255,255,.6)}body.dark #categoryFilter,body.dark .search-bar{background-color:#222;color:#eee;border-color:#444}body.dark #categoryFilter:focus,body.dark #categoryFilter:hover,body.dark .search-bar:focus,body.dark .search-bar:hover{border-color:#0ff;box-shadow:0 0 8px rgba(0,255,255,.6)}.mod-card{display:flex;background:#fff;border-radius:8px;padding:20px;margin-bottom:20px;box-shadow:0 0 10px rgba(0,0,0,.1);transition:background-color .3s ease,box-shadow .3s ease;gap:16px;max-width:100%;box-sizing:border-box;overflow-wrap:break-word}.mod-card:hover{box-shadow:0 0 12px rgba(0,255,255,.6),0 0 24px rgba(0,255,255,.4)}.mod-card h3{margin-top:0;text-align:left;color:#007c7e}.mod-card p{margin:10px 0 0;text-align:left;color:#333}.mod-card img{max-width:100%;text-align:left;border-radius:6px;margin-top:10px}.mod-details{text-align:left;display:none;margin-top:10px}.mod-details pre{text-align:left;font-family:'Courier New',monospace;background-color:#f5f5f5;padding:10px;border-radius:6px;overflow-x:auto;margin-top:10px;word-break:break-word;white-space:pre-wrap;max-width:100%}.vote-btn{margin-top:10px;padding:6px 12px;border:none;border-radius:4px;background-color:#007c7e;color:#fff;cursor:pointer;transition:box-shadow .3s ease,background-color .3s ease}.vote-btn:hover{background-color:#009fa1;box-shadow:0 0 10px rgba(0,255,255,.5)}img.vote-icon:hover{transform:scale(1.1);transition:transform .2s ease}body.dark-mode{background-color:#111;color:#eee}body.dark-mode .mod-card{background-color:#222}body.dark-mode .mod-card p{color:#ccc}body.dark-mode .mod-card h3{color:#00e0e2}body.dark-mode .mod-details pre{background-color:#333;color:#ddd}body.dark-mode .search-bar{background-color:#222;color:#eee;border-color:#555}body.dark-mode .vote-btn{background-color:#009fa1}@media (max-width:600px){.mods-container{padding:10px}.mod-card{padding:15px}.search-bar{width:90%}}#sortVotes{display:block;margin:10px auto 30px;padding:10px 16px;font-size:16px;border:none;border-radius:6px;background-color:#007c7e;color:#fff;cursor:pointer;transition:background-color .3s ease,box-shadow .3s ease}#sortVotes:hover{background-color:#009fa1;box-shadow:0 0 10px rgba(0,255,255,.5)}body.dark #sortVotes{background-color:#005f61;color:#eee}body.dark #sortVotes:hover{background-color:#008b8d;box-shadow:0 0 10px rgba(0,255,255,.6)}@media (max-width:600px){.mod-card{flex-direction:column;align-items:center}.mod-icon{width:100px;height:100px;margin-bottom:12px}.mod-content{align-items:center;text-align:center}}</style></head><body><div class="header"><div class="header-left"><div style="display:flex;align-items:center;height:100%"><div class="cube-container"><div class="cube"><div class="face front"></div><div class="face back"></div><div class="face right"></div><div class="face left"></div><div class="face top"></div><div class="face bottom"></div></div></div></div><div class="logo-text">Bloxd<br>World</div></div><div class="header-right"><ul class="navbar"><li class="nav-item"><a href="index.html"><i class="fas fa-home"></i> <span class="nav-label">Home</span></a></li><li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i> <span class="nav-label">Mods</span></a></li><li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i> <span class="nav-label">Upload</span></a></li><li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i> <span class="nav-label">About</span></a></li><li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i> <span class="nav-label">Leaderboard</span></a></li><li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i> <span class="nav-label">Theme</span></a></li><li class="nav-item" id="authArea"></li></ul></div></div><div class="mods-container"><div class="mods-header">Community Mods</div><input id="search" class="search-bar" placeholder="Search mods..."> <select id="categoryFilter"><option selected="selected" value="">OTHER</option><option value="Gameplay">Gameplay</option><option value="Visual">Visual</option><option value="NPC/AI">NPC/AI</option><option value="Utilities">Tools/Utilities</option><option value="Experimental">Experimental</option><option value="Other">Other</option></select> <button id="sortVotes">Sort by Votes</button><div id="mods-list">Loading. Please Wait</div></div><script>console.log("Referrer:",document.referrer);const themeToggle=document.getElementById("themeToggle");"dark"===localStorage.getItem("theme")&&document.body.classList.add("dark-mode"),themeToggle.addEventListener("click",e=>{e.preventDefault(),document.body.classList.toggle("dark-mode"),document.body.classList.contains("dark-mode")?localStorage.setItem("theme","dark"):localStorage.setItem("theme","light")}),document.getElementById("sortVotes").addEventListener("click",()=>{renderMods([...allMods].sort((e,t)=>(voteData[t["Addon ID"]]||0)-(voteData[e["Addon ID"]]||0)))}),document.getElementById("categoryFilter").addEventListener("change",e=>{const t=e.target.value.toLowerCase();renderMods(allMods.filter(e=>""===t||(e["Category (what type of mod is this?)"]||"").toLowerCase()===t))});let allMods=[];const urlParams=new URLSearchParams(window.location.search),sharedAddonId=urlParams.get("addonId");let voteData={};function createTextElement(e,t){const o=document.createElement(e);return o.textContent=t,o}const votedMods=JSON.parse(localStorage.getItem("votedMods")||"{}");function renderMods(e){const t=document.getElementById("mods-list");t.innerHTML="",sharedAddonId&&(e=e.filter(e=>e["Addon ID"]===sharedAddonId)),0!==e.length?e.forEach(e=>{const o=e["Addon ID"],d=document.createElement("div");d.className="mod-card";const n=createTextElement("h3",e["Addon Name"]||"Unnamed Mod");document.getElementById("data-title").content=e["Addon Name"]||"Unnamed Mod";const a=createTextElement("p",`Category: ${e["Category (what type of mod is this?)"]||"Uncategorized"}`),s=document.createElement("div");s.className="mod-details";const l=createTextElement("p",e["About Addon / Description"]||"No description provided.");document.getElementById("data-desc").content=e["About Addon / Description"]||"No description provided.";const r=createTextElement("p",`Author: ${e["Author Name (leave blank for your username to be displayed anonymous)"]||"Anonymous"}`);if(s.appendChild(l),s.appendChild(r),e["Image (upload image to imgur, put the link here.)"]){const t=document.createElement("img");t.src=e["Image (upload image to imgur, put the link here.)"],t.alt="Mod Image",s.appendChild(t),document.getElementById("data-image").content=e["Image (upload image to imgur, put the link here.)"]}if(e["Addon Code"]){const t=document.createElement("pre");t.textContent=e["Addon Code"],s.appendChild(t)}const c=document.createElement("button");document.getElementById("data-url").content=`https://bloxdworld.pages.dev/share?addonId=${o}`,c.textContent="📋",c.className="vote-btn",c.style.background="none",c.style.border="none",c.style.width="30px",c.style.height="30px",c.style.fontSize="30px",c.style.marginLeft="10px",c.addEventListener("click",()=>{const e=`https://bloxdworld.pages.dev/share?addonId=${o}`;navigator.clipboard.writeText(e).then(()=>{c.textContent="✅",setTimeout(()=>{c.textContent="📋"},1500)}).catch(e=>{console.error("❌ Failed to copy:",e),c.textContent="⚠️ Failed"})});const i=document.createElement("button");i.textContent="Show More",i.className="vote-btn",i.addEventListener("click",()=>{const e="block"===s.style.display;s.style.display=e?"none":"block",i.textContent=e?"Show More":"Show Less"});const m=document.createElement("div");m.style.marginTop="10px";const p=document.createElement("img");p.src="https://bloxdworld.pages.dev/pixil-frame-0%20(12).png",p.alt="Upvote",p.style.width="32px",p.style.cursor="pointer",p.style.marginRight="10px",p.classList.add("vote-icon");const h=document.createElement("span");let g=voteData[o]?parseInt(voteData[o]):0;h.textContent=`${g}`,votedMods[o]?(p.src="https://bloxdworld.pages.dev/pixilart-drawing.png",p.alt="Voted",p.style.opacity="0.7",p.title="Click to remove vote"):p.title="Click to upvote",p.addEventListener("click",()=>{if(votedMods[o]){const e=g-1;h.textContent=` ${e}`,voteData[o]=e,g=e,delete votedMods[o],localStorage.setItem("votedMods",JSON.stringify(votedMods)),p.src="https://bloxdworld.pages.dev/pixil-frame-0%20(12).png",p.alt="Upvote",p.style.opacity="1",p.title="Click to upvote",fetch("https://bloxdworld.pages.dev/proxy?url="+encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"),{method:"POST",body:new URLSearchParams({name:o,votes:e})}).then(()=>{console.log(`🔁 Vote for "${o}" removed.`)}).catch(e=>{console.error(`❌ Failed to remove vote for "${o}":`,e)})}else{const e=g+1;h.textContent=` ${e}`,voteData[o]=e,g=e,votedMods[o]=!0,localStorage.setItem("votedMods",JSON.stringify(votedMods)),p.src="https://bloxdworld.pages.dev/pixilart-drawing.png",p.alt="Voted",p.style.opacity="0.7",p.title="Click to remove vote",fetch("https://bloxdworld.pages.dev/proxy?url="+encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"),{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({name:o,votes:e})}).then(()=>{console.log(`✅ Vote for "${o}" submitted successfully.`)}).catch(e=>{console.error(`❌ Failed to submit vote for "${o}":`,e)})}}),m.appendChild(p),m.appendChild(h);const u=document.createElement("div");u.className="mod-content",u.appendChild(n),u.appendChild(a),u.appendChild(i),u.appendChild(s),u.appendChild(m);let y=document.createElement("img");e["Mod Icon (samething as Image uploading, but this will be displayed.)"]?y.src=e["Mod Icon (samething as Image uploading, but this will be displayed.)"]:y.src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png",y.alt="Mod Icon",y.className="mod-icon",d.appendChild(y),d.appendChild(u),t.appendChild(d)}):t.appendChild(createTextElement("p","No mods found."))}Promise.all([fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(e=>e.json())]).then(([e])=>{if(!Array.isArray(e))throw new Error("Mods data is not an array");allMods=e.filter(e=>"true"===(e.Approved||"").toLowerCase()),renderMods(allMods)}).catch(e=>{document.getElementById("mods-list").appendChild(createTextElement("p","⚠️ Failed to load mods. Check console for details.")),console.error("❌ Error loading mods:",e)}),fetch("https://bloxdworld.pages.dev/proxy?url="+encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes")).then(e=>e.json()).then(e=>{voteData=e,renderMods(allMods)}).catch(e=>{console.error("❌ Failed to fetch votes:",e)}),document.getElementById("search").addEventListener("input",e=>{const t=e.target.value.toLowerCase();renderMods(allMods.filter(e=>(e["Addon Name"]||"").toLowerCase().includes(t)||(e["About Addon / Description"]||"").toLowerCase().includes(t)||(e["Author Name (leave blank for your username to be displayed anonymous)"]||"").toLowerCase().includes(t)))}),/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)&&document.body.classList.add("mobile")</script><footer class="site-footer"><p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p><nav class="footer-links"><a href="/about">About</a> <a href="/leaderboard">Leaderboard</a> <a href="/about">About</a> <a href="/upload">Submit a Mod</a> <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a></nav></footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script type="module" src="js/googlelogin.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc" />
+  <meta charset="UTF-8">
+  <title>Mods | Bloxd World</title>
+<meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
+<meta id="data-title" property="og:title" content="Bloxd World – Share and Discover Mods">
+<meta id="data-desc" property="og:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations.">
+<meta id="data-image" property="og:image" content="https://bloxdworld.pages.dev/THE PLACE FOR.png">
+<meta id="data-url" property="og:url" content="https://bloxdworld.pages.dev">
+<meta name="twitter:card" content="summary_large_image">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="styles/earth-cube.css">
+<link rel="stylesheet" href="styles/header.css">
+<link rel="stylesheet" href="styles/devlogandindex.css">
+<link rel="stylesheet" href="styles/other.css">
+<link rel="stylesheet" href="styles/navbar.css">   <style>
+body.mobile .mods-container,
+body.mobile .devlog-container {
+  padding: 10px;
+}
+.mod-card button {
+  align-self: flex-start; /* Aligns the button to the left in a flex container */
+  margin-top: 10px;       /* Optional spacing */
+}
+.mod-icon{
+width:140px;
+height:140px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+.mod-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+body.mobile .mod-card {
+  padding: 12px;
+  margin-bottom: 16px;
+  font-size: 0.95rem;
+  border-radius: 10px;
+}
+
+body.mobile .mod-card img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}
+
+body.mobile .vote-icon {
+  width: 28px;
+  margin-right: 8px;
+}
+
+body.mobile .nav-links {
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+body.mobile .search-bar {
+  width: 90%;
+  font-size: 1rem;
+}
+
+    body {
+  margin: 0;
+  font-family: 'Fredoka', sans-serif;
+  background-color: #f0f0f0;
+  color: #000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.vote-icon {
+  pointer-events: auto;
+  z-index: 10;
+  position: relative;
+}
+
+.mods-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.mods-header {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #00a7a9;
+  text-align: center;
+}
+/* Shared base style */
+.search-bar,
+#categoryFilter {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 10px 12px;
+  font-size: 16px;
+  width: 300px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #333;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  outline: none;
+}
+
+/* Glow on hover and focus */
+.search-bar:hover,
+.search-bar:focus,
+#categoryFilter:hover,
+#categoryFilter:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+/* Optional: dark mode support */
+body.dark .search-bar,
+body.dark #categoryFilter {
+  background-color: #222;
+  color: #eee;
+  border-color: #444;
+}
+
+body.dark .search-bar:hover,
+body.dark .search-bar:focus,
+body.dark #categoryFilter:hover,
+body.dark #categoryFilter:focus {
+  border-color: #00ffff;
+  box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+
+.mod-card {
+display: flex;
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  gap: 16px;
+max-width: 100%;
+  box-sizing: border-box;
+  overflow-wrap: break-word;
+}
+
+.mod-card:hover {
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.6), 0 0 24px rgba(0, 255, 255, 0.4);
+}
+
+
+.mod-card h3 {
+  margin-top: 0;
+text-align:left;
+  color: #007c7e;
+}
+
+.mod-card p {
+  margin: 10px 0 0;
+text-align:left;
+  color: #333;
+}
+
+.mod-card img {
+  max-width: 100%;
+text-align:left;
+  border-radius: 6px;
+  margin-top: 10px;
+}
+
+.mod-details {
+text-align:left;
+  display: none;
+  margin-top: 10px;
+}
+
+.mod-details pre {
+text-align:left;
+  font-family: 'Courier New', monospace;
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-top: 10px;
+  word-break: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+}
+
+.vote-btn {
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007c7e;
+  color: white;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.vote-btn:hover {
+  background-color: #009fa1;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+
+img.vote-icon:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+/* 🌙 Dark Mode Styles */
+body.dark-mode {
+  background-color: #111;
+  color: #eee;
+}
+
+body.dark-mode .mod-card {
+  background-color: #222;
+}
+
+body.dark-mode .mod-card p {
+  color: #ccc;
+}
+
+body.dark-mode .mod-card h3 {
+  color: #00e0e2;
+}
+
+body.dark-mode .mod-details pre {
+  background-color: #333;
+  color: #ddd;
+}
+
+body.dark-mode .search-bar {
+  background-color: #222;
+  color: #eee;
+  border-color: #555;
+}
+
+body.dark-mode .vote-btn {
+  background-color: #009fa1;
+}
+
+/* 📱 Responsive */
+@media (max-width: 600px) {
+  .mods-container {
+    padding: 10px;
+  }
+  .mod-card {
+    padding: 15px;
+  }
+  .search-bar {
+    width: 90%;
+  }
+}
+#sortVotes {
+  display: block;
+  margin: 10px auto 30px;
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007c7e;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#sortVotes:hover {
+  background-color: #009fa1;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+}
+
+/* Optional: dark mode support */
+body.dark #sortVotes {
+  background-color: #005f61;
+  color: #eee;
+}
+
+body.dark #sortVotes:hover {
+  background-color: #008b8d;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+}
+@media (max-width: 600px) {
+  .mod-card {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mod-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .mod-content {
+    align-items: center;
+    text-align: center;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="header-left">
+<div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text"> Bloxd <br>World</div>
+    </div>
+   <div class="header-right">
+  <ul class="navbar">
+    <li class="nav-item">
+      <a href="index.html">
+        <i class="fas fa-home"></i>
+        <span class="nav-label">Home</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="mods.html">
+        <i class="fas fa-cubes"></i>
+        <span class="nav-label">Mods</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="upload.html">
+        <i class="fas fa-upload"></i>
+        <span class="nav-label">Upload</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="about.html">
+        <i class="fas fa-info-circle"></i>
+        <span class="nav-label">About</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="leaderboard.html">
+        <i class="fas fa-trophy"></i>
+        <span class="nav-label">Leaderboard</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <span class="nav-label">Theme</span>
+      </a>
+    </li>
+    <li class="nav-item" id="authArea"></li>
+  </ul>
+    </div>
+  </div>
+
+  <div class="mods-container">
+    <div class="mods-header">Community Mods</div>
+    <input type="text" id="search" class="search-bar" placeholder="Search mods...">
+<select id="categoryFilter">
+<option selected value="">OTHER</option>
+<option value="Gameplay">Gameplay</option>
+<option value="Visual">Visual</option>
+<option value="NPC/AI">NPC/AI</option>
+<option value="Utilities">Tools/Utilities</option>
+<option value="Experimental">Experimental</option>
+<option value="Other">Other</option>
+</select>
+<button id="sortVotes">Sort by Votes</button>
+    <div id="mods-list">Loading. Please Wait</div>
+  </div>
+
+  <script>
+console.log("Referrer:", document.referrer);
+const themeToggle = document.getElementById("themeToggle");
+
+// Apply saved theme on load
+if (localStorage.getItem("theme") === "dark") {
+  document.body.classList.add("dark-mode");
+}
+
+// Toggle and save preference
+themeToggle.addEventListener("click", (e) => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+
+  // Save preference
+  if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("theme", "dark");
+  } else {
+    localStorage.setItem("theme", "light");
+  }
+});
+
+
+document.getElementById("sortVotes").addEventListener("click", () => {
+  const sorted = [...allMods].sort((a,b) => 
+    (voteData[b["Addon ID"]] || 0) - (voteData[a["Addon ID"]] || 0)
+  );
+  renderMods(sorted);
+});
+
+document.getElementById("categoryFilter").addEventListener("change", e => {
+  const cat = e.target.value.toLowerCase();
+  const filtered = allMods.filter(mod => 
+    cat === "" || (mod["Category (what type of mod is this?)"] || "").toLowerCase() === cat
+  );
+  renderMods(filtered);
+});
+
+    let allMods = [];
+const urlParams = new URLSearchParams(window.location.search);
+const sharedAddonId = urlParams.get("addonId");
+    let voteData = {};
+
+    function createTextElement(tag, text) {
+      const el = document.createElement(tag);
+      el.textContent = text;
+      return el;
+    }
+const votedMods = JSON.parse(localStorage.getItem("votedMods") || "{}");
+    function renderMods(mods) {
+      const container = document.getElementById("mods-list");
+      container.innerHTML = "";
+  if (sharedAddonId) {
+    mods = mods.filter(mod => mod["Addon ID"] === sharedAddonId);
+  }
+      if (mods.length === 0) {
+        container.appendChild(createTextElement("p", "No mods found."));
+        return;
+      }
+
+      mods.forEach(mod => {
+const modId = mod["Addon ID"];
+        const card = document.createElement("div");
+        card.className = "mod-card";
+
+        const title = createTextElement("h3", mod["Addon Name"] || "Unnamed Mod");
+document.getElementById("data-title").content=mod["Addon Name"] || "Unnamed Mod"
+        const category = createTextElement("p", `Category: ${mod["Category (what type of mod is this?)"] || "Uncategorized"}`);
+
+        const details = document.createElement("div");
+        details.className = "mod-details";
+
+        const description = createTextElement("p", mod["About Addon / Description"] || "No description provided.");
+document.getElementById("data-desc").content=mod["About Addon / Description"] || "No description provided."
+        const author = createTextElement("p", `Author: ${mod["Author Name (leave blank for your username to be displayed anonymous)"] || "Anonymous"}`);
+        details.appendChild(description);
+        details.appendChild(author);
+
+        if (mod["Image (upload image to imgur, put the link here.)"]) {
+          const img = document.createElement("img");
+          img.src = mod["Image (upload image to imgur, put the link here.)"];
+          img.alt = "Mod Image";
+          details.appendChild(img);
+document.getElementById("data-image").content=mod["Image (upload image to imgur, put the link here.)"]
+        }
+
+        if (mod["Addon Code"]) {
+          const codeBlock = document.createElement("pre");
+          codeBlock.textContent = mod["Addon Code"];
+          details.appendChild(codeBlock);
+        }
+const copyBtn = document.createElement("button");
+document.getElementById("data-url").content=`https://bloxdworld.pages.dev/share?addonId=${modId}`
+copyBtn.textContent = "📋";
+copyBtn.className = "vote-btn";
+copyBtn.style.background = "none";
+copyBtn.style.border = "none";
+copyBtn.style.width="30px";
+copyBtn.style.height="30px";
+copyBtn.style.fontSize="30px";
+copyBtn.style.marginLeft = "10px";
+
+copyBtn.addEventListener("click", () => {
+  const shareURL = `https://bloxdworld.pages.dev/share?addonId=${modId}`;
+
+  navigator.clipboard.writeText(shareURL)
+    .then(() => {
+      copyBtn.textContent = "✅";
+      setTimeout(() => {
+        copyBtn.textContent = "📋";
+      }, 1500);
+    })
+    .catch(err => {
+      console.error("❌ Failed to copy:", err);
+      copyBtn.textContent = "⚠️ Failed";
+    });
+});
+        const toggleBtn = document.createElement("button");
+        toggleBtn.textContent = "Show More";
+        toggleBtn.className = "vote-btn";
+        toggleBtn.addEventListener("click", () => {
+          const isVisible = details.style.display === "block";
+          details.style.display = isVisible ? "none" : "block";
+          toggleBtn.textContent = isVisible ? "Show More" : "Show Less";
+        });
+
+        const voteContainer = document.createElement("div");
+        voteContainer.style.marginTop = "10px";
+
+        const upvoteBtn = document.createElement("img");
+upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
+upvoteBtn.alt = "Upvote";
+upvoteBtn.style.width = "32px";
+upvoteBtn.style.cursor = "pointer";
+upvoteBtn.style.marginRight = "10px";
+upvoteBtn.classList.add("vote-icon");
+
+
+        const voteCount = document.createElement("span");
+        let currentVotes = voteData[modId] ? parseInt(voteData[modId]) : 0;
+        voteCount.textContent = `${currentVotes}`;
+
+        if (votedMods[modId]) {
+  upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+  upvoteBtn.alt = "Voted";
+  upvoteBtn.style.opacity = "0.7";
+  upvoteBtn.title = "Click to remove vote";
+} else {
+  upvoteBtn.title = "Click to upvote";
+}
+
+
+upvoteBtn.addEventListener("click", () => {
+  const hasVoted = votedMods[modId];
+
+  if (hasVoted) {
+    // 🔄 Remove vote
+    const newVotes = currentVotes - 1;
+    voteCount.textContent = ` ${newVotes}`;
+    voteData[modId] = newVotes;
+    currentVotes = newVotes;
+
+    delete votedMods[modId];
+    localStorage.setItem("votedMods", JSON.stringify(votedMods));
+
+    upvoteBtn.src = "https://bloxdworld.pages.dev/pixil-frame-0%20(12).png";
+    upvoteBtn.alt = "Upvote";
+    upvoteBtn.style.opacity = "1";
+    upvoteBtn.title = "Click to upvote";
+
+    fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
+      method: "POST",
+      body: new URLSearchParams({
+        name: modId,
+        votes: newVotes
+      })
+    }).then(() => {
+      console.log(`🔁 Vote for "${modId}" removed.`);
+    }).catch(err => {
+      console.error(`❌ Failed to remove vote for "${modId}":`, err);
+    });
+
+  } else {
+    // ✅ Add vote
+    const newVotes = currentVotes + 1;
+    voteCount.textContent = ` ${newVotes}`;
+    voteData[modId] = newVotes;
+    currentVotes = newVotes;
+
+    votedMods[modId] = true;
+    localStorage.setItem("votedMods", JSON.stringify(votedMods));
+
+    upvoteBtn.src = "https://bloxdworld.pages.dev/pixilart-drawing.png";
+    upvoteBtn.alt = "Voted";
+    upvoteBtn.style.opacity = "0.7";
+    upvoteBtn.title = "Click to remove vote";
+
+    fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: new URLSearchParams({
+        name: modId,
+        votes: newVotes
+      })
+    })
+    .then(() => {
+      console.log(`✅ Vote for "${modId}" submitted successfully.`);
+    })
+    .catch(err => {
+      console.error(`❌ Failed to submit vote for "${modId}":`, err);
+    });
+  }
+});
+  
+
+        voteContainer.appendChild(upvoteBtn);
+        voteContainer.appendChild(voteCount);
+
+const contentWrapper = document.createElement("div");
+contentWrapper.className = "mod-content";
+
+// Add title, category, toggleBtn, details, voteContainer to contentWrapper
+contentWrapper.appendChild(title);
+contentWrapper.appendChild(category);
+contentWrapper.appendChild(toggleBtn);
+contentWrapper.appendChild(details);
+contentWrapper.appendChild(voteContainer);
+
+let icon = document.createElement("img");
+
+if (mod["Mod Icon (samething as Image uploading, but this will be displayed.)"]) {
+  icon.src = mod["Mod Icon (samething as Image uploading, but this will be displayed.)"];
+} else {
+  icon.src = "https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png";
+}
+
+icon.alt = "Mod Icon";
+icon.className = "mod-icon";
+
+card.appendChild(icon);
+card.appendChild(contentWrapper);
+container.appendChild(card);
+
+      });
+    }
+
+Promise.all([
+  fetch("https://opensheet.vercel.app/1DR9qcrbVIV1uirY5MHHRPSQhuf5n8Cd2zuBb77uEZWg/Form%20Responses%201").then(res => res.json())
+])
+.then(([mods]) => {
+  if (!Array.isArray(mods)) {
+    throw new Error("Mods data is not an array");
+  }
+
+  allMods = mods.filter(mod => (mod["Approved"] || "").toLowerCase() === "true");
+  renderMods(allMods);
+})
+.catch(err => {
+  const container = document.getElementById("mods-list");
+  container.appendChild(createTextElement("p", "⚠️ Failed to load mods. Check console for details."));
+  console.error("❌ Error loading mods:", err);
+});
+
+fetch("https://bloxdworld.pages.dev/proxy?url=" + encodeURIComponent("https://script.google.com/macros/s/AKfycbyUK1z9W3Xfv8pKvIu7xdAiZy048lSsKL8aYMgKKJzq3lY64RKkcnTqH4dhHIVphCCy/exec?action=getVotes"))
+  .then(res => res.json())
+  .then(votes => {
+    voteData = votes;
+    renderMods(allMods);
+  })
+  .catch(err => {
+    console.error("❌ Failed to fetch votes:", err);
+  });
+
+    document.getElementById("search").addEventListener("input", e => {
+      const query = e.target.value.toLowerCase();
+      const filtered = allMods.filter(mod =>
+        (mod["Addon Name"] || "").toLowerCase().includes(query) ||
+        (mod["About Addon / Description"] || "").toLowerCase().includes(query) ||
+        (mod["Author Name (leave blank for your username to be displayed anonymous)"] || "").toLowerCase().includes(query)
+      );
+      renderMods(filtered);
+    });
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
+  </script>
+<footer class="site-footer">
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/about">About</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="js/googlelogin.js"></script>
+</body>
+</html>

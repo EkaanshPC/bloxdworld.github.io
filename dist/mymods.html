@@ -1,4 +1,288 @@
-<!DOCTYPE html><html lang="en"><head><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka&display=swap" rel="stylesheet"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script><link rel="icon" type="image/png" sizes="32x32" href="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"><link rel="apple-touch-icon" href="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc"><title>Upload a mod | Bloxd World</title><meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios."><meta name="keywords" content="BloxdWorld, Bloxd mods, Bloxd.io mods, NeonJet Studios, ObiloxYT, modding, leaderboards"><meta name="author" content="NeonJet Studios"><meta property="og:type" content="website"><meta property="og:site_name" content="Bloxd World"><meta property="og:url" content="https://bloxdworld.pages.dev"><meta property="og:title" content="Bloxd World – Share and Discover Mods"><meta property="og:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations."><meta property="og:image" content="https://bloxdworld.pages.dev/THE%20PLACE%20FOR.png"><meta property="og:image:alt" content="Bloxd World Preview Image"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Bloxd World – Share and Discover Mods"><meta name="twitter:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations."><meta name="twitter:image" content="https://bloxdworld.pages.dev/THE%20PLACE%20FOR.png"><meta name="theme-color" content="#00c3ff"><link rel="stylesheet" href="styles/earth-cube.css"><link rel="stylesheet" href="styles/header.css"><link rel="stylesheet" href="styles/devlogandindex.css"><link rel="stylesheet" href="styles/other.css"><link rel="stylesheet" href="styles/navbar.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><style>.version-form{margin-top:12px;padding:15px;border:1px solid #ddd;border-radius:10px;background:#f9f9f9;display:flex;flex-direction:column;gap:10px}.version-form input[type=file],.version-form input[type=text],.version-form textarea{padding:10px;border:1px solid #ccc;border-radius:6px;font-size:14px;width:100%;box-sizing:border-box;transition:border .2s ease,box-shadow .2s ease}.version-form input[type=file]:focus,.version-form input[type=text]:focus,.version-form textarea:focus{border-color:#007bff;box-shadow:0 0 5px rgba(0,123,255,.3);outline:0}.version-form textarea{min-height:80px;resize:vertical}.version-form button{padding:10px 14px;font-size:14px;font-weight:600;border:none;border-radius:6px;cursor:pointer;transition:all .2s ease-in-out}.version-form .submit-version-btn{background:linear-gradient(135deg,#28a745,#218838);color:#fff}.version-form .submit-version-btn:hover{background:linear-gradient(135deg,#34d058,#2c974b);transform:translateY(-2px);box-shadow:0 4px 10px rgba(40,167,69,.3)}.version-form .cancel-version-btn{background:#6c757d;color:#fff}.version-form .cancel-version-btn:hover{background:#5a6268;transform:translateY(-2px);box-shadow:0 4px 10px rgba(108,117,125,.3)}button{padding:10px 16px;font-size:14px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .2s ease-in-out;margin:5px}.approve-btn,.submit-version-btn{background:linear-gradient(135deg,#28a745,#218838);color:#fff}.approve-btn:hover,.submit-version-btn:hover{background:linear-gradient(135deg,#34d058,#2c974b);transform:translateY(-2px);box-shadow:0 4px 12px rgba(40,167,69,.4)}.delete-btn,.reject-btn{background:linear-gradient(135deg,#dc3545,#c82333);color:#fff}.delete-btn:hover,.reject-btn:hover{background:linear-gradient(135deg,#e55365,#b21f2d);transform:translateY(-2px);box-shadow:0 4px 12px rgba(220,53,69,.4)}.add-version-btn{background:linear-gradient(135deg,#007bff,#0069d9);color:#fff}.add-version-btn:hover{background:linear-gradient(135deg,#339dff,#0056b3);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,123,255,.4)}.cancel-version-btn{background:#6c757d;color:#fff}.cancel-version-btn:hover{background:#5a6268;transform:translateY(-2px);box-shadow:0 4px 12px rgba(108,117,125,.4)}.my-mods-container{max-width:900px;margin:2rem auto;padding:1rem}.my-mods-container h2{font-size:2rem;margin-bottom:1rem;text-align:center;color:#00c3ff}.mods-list{display:flex;flex-direction:column;gap:1rem}.mod-card{background:#1e1e1e;color:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,.25);display:flex;flex-direction:column;gap:.5rem;transition:transform .2s}.mod-card:hover{transform:translateY(-2px)}.mod-card h3{margin:0;font-size:1.3rem}.mod-card p{margin:0;word-wrap:break-word;white-space:pre-wrap;overflow-wrap:break-word}.mod-card a{color:#00c3ff;text-decoration:none;font-weight:700;margin-top:.3rem}.mod-card a:hover{text-decoration:underline}.mod-card .add-version-btn,.mod-card .delete-btn{margin-top:.5rem;padding:6px 14px;border:none;border-radius:8px;cursor:pointer;font-weight:700;transition:.2s}.mod-card .delete-btn{background:#ff4c4c;color:#fff}.mod-card .delete-btn:hover{background:#e03a3a}.mod-card .add-version-btn{background:#00c3ff;color:#fff}.mod-card .add-version-btn:hover{background:#09c}@media (max-width:600px){.mod-card{padding:12px}.mod-card h3{font-size:1.1rem}.mod-card .add-version-btn,.mod-card .delete-btn{padding:5px 10px;font-size:.9rem}}</style><script type="application/ld+json">{
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- 🎨 Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<!-- 🖼️ Favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png">
+<link rel="apple-touch-icon" href="https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png">
+
+<!-- ⚡ Meta -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="uwGK_wrZ8HW1YDPlIVdaqyOErueoMH5-9DF-fXL7uSc" />
+<title>Upload a mod | Bloxd World</title>
+<meta name="description" content="Bloxd World is a community-driven modding site where you can upload, vote, and explore creative mods for Bloxd. Built by NeonJet Studios.">
+<meta name="keywords" content="BloxdWorld, Bloxd mods, Bloxd.io mods, NeonJet Studios, ObiloxYT, modding, leaderboards">
+<meta name="author" content="NeonJet Studios">
+
+<!-- 🟦 Open Graph (Facebook/Discord) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Bloxd World">
+<meta property="og:url" content="https://bloxdworld.pages.dev">
+<meta property="og:title" content="Bloxd World – Share and Discover Mods">
+<meta property="og:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations.">
+<meta property="og:image" content="https://bloxdworld.pages.dev/THE%20PLACE%20FOR.png">
+<meta property="og:image:alt" content="Bloxd World Preview Image">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+
+<!-- 🐦 Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bloxd World – Share and Discover Mods">
+<meta name="twitter:description" content="Upload and explore mods for Bloxd. Vote, sort, and share your creations.">
+<meta name="twitter:image" content="https://bloxdworld.pages.dev/THE%20PLACE%20FOR.png">
+
+<!-- 🎨 Theme -->
+<meta name="theme-color" content="#00c3ff">
+
+<!-- 🎭 Styles -->
+<link rel="stylesheet" href="styles/earth-cube.css">
+<link rel="stylesheet" href="styles/header.css">
+<link rel="stylesheet" href="styles/devlogandindex.css">
+<link rel="stylesheet" href="styles/other.css">
+<link rel="stylesheet" href="styles/navbar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  .version-form {
+  margin-top: 12px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs + textarea + file upload */
+.version-form input[type="text"],
+.version-form textarea,
+.version-form input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.version-form input[type="text"]:focus,
+.version-form textarea:focus,
+.version-form input[type="file"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0,123,255,0.3);
+  outline: none;
+}
+
+/* Textarea height */
+.version-form textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+/* Buttons */
+.version-form button {
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Submit (green) */
+.version-form .submit-version-btn {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+}
+.version-form .submit-version-btn:hover {
+  background: linear-gradient(135deg, #34d058, #2c974b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+}
+
+/* Cancel (gray) */
+.version-form .cancel-version-btn {
+  background: #6c757d;
+  color: white;
+}
+.version-form .cancel-version-btn:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(108, 117, 125, 0.3);
+}
+
+  button {
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin: 5px;
+}
+
+/* Approve button (green vibes) */
+.approve-btn,
+.submit-version-btn {
+  background: linear-gradient(135deg, #28a745, #218838);
+  color: white;
+}
+.approve-btn:hover,
+.submit-version-btn:hover {
+  background: linear-gradient(135deg, #34d058, #2c974b);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+}
+
+/* Reject button (red danger) */
+.reject-btn,
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+}
+.reject-btn:hover,
+.delete-btn:hover {
+  background: linear-gradient(135deg, #e55365, #b21f2d);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Add version button (blue chill) */
+.add-version-btn {
+  background: linear-gradient(135deg, #007bff, #0069d9);
+  color: white;
+}
+.add-version-btn:hover {
+  background: linear-gradient(135deg, #339dff, #0056b3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+}
+
+/* Cancel button (gray lowkey) */
+.cancel-version-btn {
+  background: #6c757d;
+  color: white;
+}
+.cancel-version-btn:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+}
+
+    .my-mods-container {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.my-mods-container h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #00c3ff;
+}
+
+.mods-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mod-card {
+  background: #1e1e1e;
+  color: #fff;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.mod-card:hover {
+  transform: translateY(-2px);
+}
+
+.mod-card h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.mod-card p {
+  margin: 0;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.mod-card a {
+  color: #00c3ff;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 0.3rem;
+}
+
+.mod-card a:hover {
+  text-decoration: underline;
+}
+
+.mod-card .delete-btn,
+.mod-card .add-version-btn {
+  margin-top: 0.5rem;
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s;
+}
+
+.mod-card .delete-btn {
+  background: #ff4c4c;
+  color: #fff;
+}
+
+.mod-card .delete-btn:hover {
+  background: #e03a3a;
+}
+
+.mod-card .add-version-btn {
+  background: #00c3ff;
+  color: #fff;
+}
+
+.mod-card .add-version-btn:hover {
+  background: #0099cc;
+}
+
+@media (max-width: 600px) {
+  .mod-card {
+    padding: 12px;
+  }
+
+  .mod-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .mod-card .delete-btn,
+  .mod-card .add-version-btn {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+</style>
+<!-- 📊 Structured Data (SEO JSON-LD) -->
+<script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Bloxd World",
@@ -17,4 +301,272 @@
     "target": "https://bloxdworld.pages.dev/search?q={search_term_string}",
     "query-input": "required name=search_term_string"
   }
-}</script><style></style></head><body><div class="modrinth-navbar"><div class="header"><div class="header-left"><div style="display:flex;align-items:center;height:100%"><div class="cube-container"><div class="cube"><div class="face front"></div><div class="face back"></div><div class="face right"></div><div class="face left"></div><div class="face top"></div><div class="face bottom"></div></div></div></div><div class="logo-text">Bloxd<br>World</div></div><div class="header-right"><div class="navbar-wrapper"><ul class="navbar"><li class="nav-item"><a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a></li><li class="nav-item"><a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a></li><li class="nav-item"><a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a></li><li class="nav-item"><a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a></li><li class="nav-item"><a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a></li><li class="nav-item"><a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a></li></ul></div><div class="auth-wrapper" id="authArea"></div></div></div></div><div class="my-mods-container"><h2>My Mods</h2><div id="modsList" class="mods-list"></div></div><footer class="site-footer"><p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p><nav class="footer-links"><a href="/about">About</a> <a href="/leaderboard">Leaderboard</a> <a href="/upload">Submit a Mod</a> <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a></nav></footer><script type="module">import{createClient}from"https://esm.sh/@supabase/supabase-js@2";import*as leoProfanity from"https://cdn.jsdelivr.net/npm/leo-profanity/+esm";import*as nsfwjs from"https://cdn.jsdelivr.net/npm/nsfwjs/+esm";let nsfwModel=null;async function loadNSFWModel(){return nsfwModel||(nsfwModel=await nsfwjs.load()),nsfwModel}function cleanText(e){return(e||"").replace(/<\s*script[^>]*>/gi,"********").replace(/<\s*\/\s*script\s*>/gi,"********").replace(/\S+/g,e=>leoProfanity.clean(e))}async function moderateImagesInDescription(e){const t=document.createElement("div");t.innerHTML=e;const n=t.querySelectorAll("img");for(let e of n)try{const t=new Image;t.crossOrigin="anonymous",t.src=e.src,await new Promise((e,n)=>{t.onload=e,t.onerror=n});const n=await loadNSFWModel().then(e=>e.classify(t));(n.find(e=>["Porn","Hentai","Sexy"].includes(e.className))?.probability||0)>.7&&e.replaceWith("🚫 [NSFW Image Removed]")}catch(t){console.warn("Failed to scan image:",t),e.replaceWith("⚠️ [Unscannable Image]")}return t.innerHTML}async function sanitizeDescription(e){let t=cleanText(e);return await moderateImagesInDescription(t)}const SUPABASE_URL="https://pxmsgzfufvwxpnyeobwk.supabase.co",ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U",supabase=createClient(SUPABASE_URL,ANON_KEY),modsList=document.getElementById("modsList");import{getUserMods}from"./js/googlelogin.js";async function fetchAndRenderMods(){const{data:{user:e}}=await supabase.auth.getUser();if(!e)return;renderMods(await getUserMods(e.id))}function renderMods(e){modsList.innerHTML=e.map(e=>`\n    <div class="mod-card" data-id="${e.id}">\n      <h3>${e.title}</h3>\n      <p>${e.shortdescription||"No description"}</p>\n      <a href="${"https://bloxdworld.pages.dev/newfullview?addonid="+e.id}" target="_blank">Download</a>\n      <button class="delete-btn">Delete</button>\n      <button class="add-version-btn">Add Version</button>\n    </div>\n  `).join(""),modsList.querySelectorAll(".delete-btn").forEach(e=>{e.addEventListener("click",async e=>{const t=e.target.closest(".mod-card").dataset.id;confirm("Are you sure you want to delete this mod?")&&await deleteMod(t)})}),modsList.querySelectorAll(".add-version-btn").forEach(e=>{e.addEventListener("click",e=>{const t=e.target.closest(".mod-card"),n=t.dataset.id;if(t.querySelector(".version-form"))return;const o=`\n  <div class="version-form">\n    <input type="text" name="title" placeholder="Proposed Title" value="${t.querySelector("h3").textContent}">\n    <textarea name="description" placeholder="Proposed Description">${t.querySelector("p").textContent}</textarea>\n    <input type="file" name="file_upload" accept=".txt,.js,.json">\n    <button class="submit-version-btn">Submit Update</button>\n    <button class="cancel-version-btn">Cancel</button>\n  </div>\n`;t.insertAdjacentHTML("beforeend",o),t.querySelector(".cancel-version-btn").addEventListener("click",()=>{t.querySelector(".version-form").remove()}),t.querySelector(".submit-version-btn").addEventListener("click",async()=>{const e=t.querySelector(".version-form"),o=e.querySelector("input[name='title']").value,a=e.querySelector("textarea[name='description']").value,s=e.querySelector("input[name='file_upload']").files[0];if(!s)return alert("Please upload a file!");const r=cleanText(o),i=await sanitizeDescription(a),d=`${n}/${Date.now()}-${s.name}`,{error:l}=await supabase.storage.from("mods").upload(d,s);if(l)return alert("❌ Upload failed: "+l.message);const{data:c}=supabase.storage.from("mods").getPublicUrl(d),m=c.publicUrl,{error:u}=await supabase.from("versions").insert({mod_id:n,proposed_title:r,proposed_description:i,proposed_file_path:m,created_at:new Date,approved:!1});if(u)return alert("❌ Failed to submit version: "+u.message);alert("✅ Update proposal submitted! Awaiting approval."),e.remove()})})})}async function deleteMod(e){const{error:t}=await supabase.from("mod").delete().eq("id",e);if(t)return alert("Failed to delete mod: "+t.message);alert("Mod deleted!"),fetchAndRenderMods()}async function createVersion(e,t){const{error:n}=await supabase.from("versions").insert({mod_id:e,version_name:t,created_at:new Date});if(n)return alert("Failed to add version: "+n.message);alert("Version added!")}fetchAndRenderMods(),/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)&&document.body.classList.add("mobile");const themeToggle=document.getElementById("themeToggle");"dark"===localStorage.getItem("theme")&&document.body.classList.add("dark-mode"),themeToggle.addEventListener("click",e=>{e.preventDefault(),document.body.classList.toggle("dark-mode"),localStorage.setItem("theme",document.body.classList.contains("dark-mode")?"dark":"light")})</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script type="module" src="js/googlelogin.js"></script></body></html>
+}
+</script>
+
+
+<style>
+</style>
+</head>
+<body>
+<div class="modrinth-navbar">
+  <div class="header">
+    
+    <!-- Left: Logo -->
+    <div class="header-left">
+      <div style="display: flex; align-items: center; height: 100%;">
+        <div class="cube-container">
+          <div class="cube">
+            <div class="face front"></div>
+            <div class="face back"></div>
+            <div class="face right"></div>
+            <div class="face left"></div>
+            <div class="face top"></div>
+            <div class="face bottom"></div>
+          </div>
+        </div>
+      </div>
+      <div class="logo-text">Bloxd<br>World</div>
+    </div>
+
+    <!-- Right: Navbar + Auth split -->
+    <div class="header-right">
+      <div class="navbar-wrapper">
+        <ul class="navbar">
+          <li class="nav-item">
+            <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
+          </li>
+        </ul>
+      </div>
+      <div class="auth-wrapper" id="authArea">
+        <!-- Auth content here -->
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="my-mods-container">
+  <h2>My Mods</h2>
+  <div id="modsList" class="mods-list"></div>
+</div>
+
+<footer class="site-footer">
+  <p>© NeonJet Studios. <strong>Bloxd World</strong> is made by NeonJet Studios and is not affiliated with Bloxd.io.</p>
+  <nav class="footer-links">
+    <a href="/about">About</a>
+    <a href="/leaderboard">Leaderboard</a>
+    <a href="/upload">Submit a Mod</a>
+    <a href="https://discord.gg/yourserver" target="_blank">Join Discord (SOON)</a>
+  </nav>
+</footer>
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import * as leoProfanity from "https://cdn.jsdelivr.net/npm/leo-profanity/+esm";
+import * as nsfwjs from "https://cdn.jsdelivr.net/npm/nsfwjs/+esm";
+
+// 🛡️ NSFWJS setup
+let nsfwModel = null;
+async function loadNSFWModel() {
+  if (!nsfwModel) nsfwModel = await nsfwjs.load();
+  return nsfwModel;
+}
+
+// 🛡️ Text moderation
+function cleanText(input) {
+  return (input || "")
+    .replace(/<\s*script[^>]*>/gi, "********")
+    .replace(/<\s*\/\s*script\s*>/gi, "********")
+    .replace(/\S+/g, word => leoProfanity.clean(word));
+}
+
+// 🛡️ Image moderation inside HTML
+async function moderateImagesInDescription(html) {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  const images = div.querySelectorAll("img");
+
+  for (let img of images) {
+    try {
+      const imageEl = new Image();
+      imageEl.crossOrigin = "anonymous";
+      imageEl.src = img.src;
+      await new Promise((res, rej) => {
+        imageEl.onload = res;
+        imageEl.onerror = rej;
+      });
+
+      const predictions = await loadNSFWModel().then(m => m.classify(imageEl));
+      const nsfwScore = predictions.find(p =>
+        ["Porn", "Hentai", "Sexy"].includes(p.className)
+      )?.probability || 0;
+
+      if (nsfwScore > 0.7) img.replaceWith("🚫 [NSFW Image Removed]");
+    } catch (err) {
+      console.warn("Failed to scan image:", err);
+      img.replaceWith("⚠️ [Unscannable Image]");
+    }
+  }
+
+  return div.innerHTML;
+}
+
+// 🛡️ Sanitize description
+async function sanitizeDescription(input) {
+  let safeText = cleanText(input);
+  let moderated = await moderateImagesInDescription(safeText);
+  return moderated;
+}
+
+const SUPABASE_URL = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
+const ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
+const supabase = createClient(SUPABASE_URL, ANON_KEY);
+
+const modsList = document.getElementById("modsList");
+import { getUserMods } from "./js/googlelogin.js"
+async function fetchAndRenderMods() {
+  const { data: { user } } = await supabase.auth.getUser(); 
+  if (!user) return;
+
+  const mods = await getUserMods(user.id);
+  renderMods(mods);
+}
+
+function renderMods(mods) {
+  modsList.innerHTML = mods.map(mod => `
+    <div class="mod-card" data-id="${mod.id}">
+      <h3>${mod.title}</h3>
+      <p>${mod.shortdescription || "No description"}</p>
+      <a href="${"https://bloxdworld.pages.dev/newfullview?addonid="+mod.id}" target="_blank">Download</a>
+      <button class="delete-btn">Delete</button>
+      <button class="add-version-btn">Add Version</button>
+    </div>
+  `).join("");
+
+  modsList.querySelectorAll(".delete-btn").forEach(btn => {
+    btn.addEventListener("click", async e => {
+      const modId = e.target.closest(".mod-card").dataset.id;
+      if (confirm("Are you sure you want to delete this mod?")) {
+        await deleteMod(modId);
+      }
+    });
+  });
+
+  modsList.querySelectorAll(".add-version-btn").forEach(btn => {
+  btn.addEventListener("click", e => {
+    const modCard = e.target.closest(".mod-card");
+    const modId = modCard.dataset.id;
+
+    // If form already exists, don't add another
+    if (modCard.querySelector(".version-form")) return;
+
+    // Create form
+  const formHtml = `
+  <div class="version-form">
+    <input type="text" name="title" placeholder="Proposed Title" value="${modCard.querySelector("h3").textContent}">
+    <textarea name="description" placeholder="Proposed Description">${modCard.querySelector("p").textContent}</textarea>
+    <input type="file" name="file_upload" accept=".txt,.js,.json">
+    <button class="submit-version-btn">Submit Update</button>
+    <button class="cancel-version-btn">Cancel</button>
+  </div>
+`;
+
+    modCard.insertAdjacentHTML("beforeend", formHtml);
+
+    // Cancel button
+    modCard.querySelector(".cancel-version-btn").addEventListener("click", () => {
+      modCard.querySelector(".version-form").remove();
+    });
+
+    // Submit button
+modCard.querySelector(".submit-version-btn").addEventListener("click", async () => {
+  const form = modCard.querySelector(".version-form");
+  const proposedTitle = form.querySelector("input[name='title']").value;
+  const proposedDesc = form.querySelector("textarea[name='description']").value;
+  const fileInput = form.querySelector("input[name='file_upload']");
+  const file = fileInput.files[0];
+
+  if (!file) return alert("Please upload a file!");
+
+  // 🛡️ Moderate title & description
+  const safeTitle = cleanText(proposedTitle);
+  const safeDesc = await sanitizeDescription(proposedDesc);
+
+  // Upload file to Supabase Storage
+  const filePath = `${modId}/${Date.now()}-${file.name}`;
+  const { error: uploadError } = await supabase.storage.from("mods").upload(filePath, file);
+  if (uploadError) return alert("❌ Upload failed: " + uploadError.message);
+
+  const { data } = supabase.storage.from("mods").getPublicUrl(filePath);
+  const publicUrl = data.publicUrl;
+
+  // Insert moderated version proposal
+  const { error: insertError } = await supabase.from("versions").insert({
+    mod_id: modId,
+    proposed_title: safeTitle,
+    proposed_description: safeDesc,
+    proposed_file_path: publicUrl,
+    created_at: new Date(),
+    approved: false
+  });
+
+  if (insertError) return alert("❌ Failed to submit version: " + insertError.message);
+  alert("✅ Update proposal submitted! Awaiting approval.");
+  form.remove();
+});
+  });
+});
+}
+
+async function deleteMod(modId) {
+  const { error } = await supabase.from("mod").delete().eq("id", modId);
+  if (error) return alert("Failed to delete mod: " + error.message);
+  alert("Mod deleted!");
+  fetchAndRenderMods();
+}
+
+async function createVersion(modId, version) {
+  const { error } = await supabase.from("versions").insert({
+    mod_id: modId,
+    version_name: version,
+    created_at: new Date()
+  });
+  if (error) return alert("Failed to add version: " + error.message);
+  alert("Version added!");
+}
+
+fetchAndRenderMods();
+
+if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+  document.body.classList.add("mobile");
+}
+
+const themeToggle = document.getElementById("themeToggle");
+if (localStorage.getItem("theme") === "dark") document.body.classList.add("dark-mode");
+
+themeToggle.addEventListener("click", e => {
+  e.preventDefault();
+  document.body.classList.toggle("dark-mode");
+  localStorage.setItem("theme", document.body.classList.contains("dark-mode") ? "dark" : "light");
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module" src="js/googlelogin.js"></script>
+</body> 
+</html>
+

@@ -4,55 +4,66 @@ const { minify: minifyHTML } = require("html-minifier-terser");
 const fs = require("fs-extra");
 const path = require("path");
 
-// Paths
 const DIST = path.join(__dirname, "dist");
-const ASSETS = path.join(__dirname, "assets");
-const STYLES = path.join(__dirname, "styles");
-const JS = path.join(__dirname, "js");
-const FUNCTIONS = path.join(__dirname, "functions");
 
-async function build() {
-  // Clean dist
-  fs.removeSync(DIST);
-  fs.mkdirSync(DIST);
+// Clean dist
+fs.removeSync(DIST);
+fs.mkdirSync(DIST);
 
-  // Copy assets as-is
-  fs.copySync(ASSETS, path.join(DIST, "assets"));
+// Copy everything except 'dist' and 'build.js'
+fs.readdirSync(__dirname).forEach(item => {
+  if (item === "dist" || item === "build.js") return; // skip
+  const srcPath = path.join(__dirname, item);
+  const destPath = path.join(DIST, item);
+  fs.copySync(srcPath, destPath);
+});
 
-  // Minify CSS
-  for (const file of fs.readdirSync(STYLES)) {
+console.log("✅ All files copied to dist/ without breaking fs-extra");
+
+
+
+// 3️⃣ Minify CSS files
+const minifyCSSFiles = folder => {
+  fs.readdirSync(folder).forEach(file => {
+    const filePath = path.join(folder, file);
+    const stat = fs.statSync(filePath);
+    if (stat.isDirectory()) return minifyCSSFiles(filePath);
     if (file.endsWith(".css")) {
-      const css = fs.readFileSync(path.join(STYLES, file), "utf-8");
+      const css = fs.readFileSync(filePath, "utf-8");
       const min = csso.minify(css).css;
-      await fs.outputFile(path.join(DIST, "styles", file), min);
+      fs.writeFileSync(filePath, min);
+    }
+  });
+};
+
+// 4️⃣ Minify JS files
+const minifyJSFiles = async folder => {
+  for (const file of fs.readdirSync(folder)) {
+    const filePath = path.join(folder, file);
+    const stat = fs.statSync(filePath);
+    if (stat.isDirectory()) await minifyJSFiles(filePath);
+    else if (file.endsWith(".js")) {
+      const tempOut = filePath + ".min.tmp.js";
+      await esbuild.build({
+        entryPoints: [filePath],
+        bundle: true,
+        minify: true,
+        format: "esm", // allows top-level exports
+        outfile: tempOut
+      });
+      fs.renameSync(tempOut, filePath); // overwrite original
     }
   }
+};
 
-  // Minify JS (js/ and functions/)
-  const processJSFolder = async folder => {
-    for (const file of fs.readdirSync(folder)) {
-      const filePath = path.join(folder, file);
-      const stat = fs.statSync(filePath);
-      if (stat.isDirectory()) {
-        await processJSFolder(filePath); // recurse
-      } else if (file.endsWith(".js")) {
-        await esbuild.build({
-          entryPoints: [filePath],
-          bundle: true,
-          minify: true,
-          outfile: path.join(DIST, path.relative(__dirname, filePath))
-        });
-      }
-    }
-  };
-
-  await processJSFolder(JS);
-  await processJSFolder(FUNCTIONS);
-
-  // Minify HTML files in root
-  for (const file of fs.readdirSync(__dirname)) {
-    if (file.endsWith(".html")) {
-      const html = fs.readFileSync(file, "utf-8");
+// 5️⃣ Minify HTML files
+const minifyHTMLFiles = async folder => {
+  for (const file of fs.readdirSync(folder)) {
+    const filePath = path.join(folder, file);
+    const stat = fs.statSync(filePath);
+    if (stat.isDirectory()) await minifyHTMLFiles(filePath);
+    else if (file.endsWith(".html")) {
+      const html = fs.readFileSync(filePath, "utf-8");
       const min = await minifyHTML(html, {
         collapseWhitespace: true,
         removeComments: true,
@@ -61,12 +72,21 @@ async function build() {
         minifyCSS: true,
         minifyJS: true
       });
-      await fs.outputFile(path.join(DIST, file), min);
+      fs.writeFileSync(filePath, min);
     }
   }
+};
 
-  console.log("✅ Build complete! Check the dist/ folder.");
-}
+// 6️⃣ Run build
+(async () => {
+  console.log("🚀 Minifying CSS...");
+  minifyCSSFiles(DIST);
 
-build().catch(err => console.error(err));
+  console.log("🚀 Minifying JS...");
+  await minifyJSFiles(DIST);
 
+  console.log("🚀 Minifying HTML...");
+  await minifyHTMLFiles(DIST);
+
+  console.log("✅ Build complete! All files copied and minified in dist/");
+})();
