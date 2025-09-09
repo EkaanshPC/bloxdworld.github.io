@@ -12,11 +12,13 @@ fs.mkdirSync(DIST);
 
 // Copy everything except 'dist' and 'build.js'
 fs.readdirSync(__dirname).forEach(item => {
-  if (item === "dist" || item === "build.js") return; // skip
+  if (item === "dist" || item === "build.js" || item === "node_modules") return; // skip dev stuff
   const srcPath = path.join(__dirname, item);
   const destPath = path.join(DIST, item);
   fs.copySync(srcPath, destPath);
 });
+
+
 
 console.log("✅ All files copied to dist/ without breaking fs-extra");
 
@@ -48,7 +50,8 @@ const minifyJSFiles = async folder => {
         entryPoints: [filePath],
         bundle: true,
         minify: true,
-        format: "esm", // allows top-level exports
+        format: "esm",
+        keepNames: true, // <--- THIS prevents function/variable renaming
         outfile: tempOut
       });
       fs.renameSync(tempOut, filePath); // overwrite original
