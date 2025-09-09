@@ -199,7 +199,7 @@ const client = createClient(
     }
   }
 );
-
+console.log("point reached! client created!")
 // 🛡️ text moderation
 function cleanImages(input) {
   return input.replace(/<img[^>]*>/gi, match => {
@@ -302,16 +302,17 @@ async function isImageSafe(url) {
     img.onerror = () => resolve(false);
   });
 }
-
+console.log("point reached! functions defined")
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM content loaded. Checking user session...");
+
   const uploadBtn = document.querySelector(".upload-container button");
   const status = document.getElementById("uploadStatus");
   const descInput = document.getElementById("modDescription");
   const shortInput = document.getElementById("modShort");
   const message = document.getElementById("wordCountMsg");
-
-  // word count limiter (on short desc)
+console.log("point reached! found elements by id",uploadBtn,status,descInput,shortInput,message)
+console.log("point reached! shortInput event listener creating....")
   shortInput.addEventListener("input", () => {
     const words = shortInput.value.trim().split(/\s+/).filter(Boolean);
     if (words.length > 30) {
@@ -321,8 +322,9 @@ document.addEventListener("DOMContentLoaded", () => {
       message.textContent = `Words: ${words.length}/30`;
     }
   });
-
+console.log("point reached! add upload btn click event listener")
   uploadBtn.addEventListener("click", async () => {
+  console.log("point reached! added upload btn event listener!")
     console.log("Upload button clicked.");
     status.textContent = "Uploading... ⏳";
 
@@ -350,7 +352,6 @@ document.addEventListener("DOMContentLoaded", () => {
       let icon = document.getElementById("modIcon").value;
       let category = document.getElementById("modCategory").value;
       let shortdescription = document.getElementById("modShort").value;
-      
       console.log("Collected form data:", {
         title, file, description, image, icon, category, shortdescription
       });
