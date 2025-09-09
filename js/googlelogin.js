@@ -340,8 +340,20 @@ export async function getUserMods(uid) {
   return data;
 }
  
-let uid=await getUID()
-getUserMods(uid).then(mods => mods.forEach(mod=>applyApprovedVersions(mod)));
+(async () => {
+  try {
+    let uid = await getUID();
+    const mods = await getUserMods(uid);
+    if (mods) {
+      for (const mod of mods) {
+        await applyApprovedVersions(mod);
+      }
+    }
+  } catch (err) {
+    console.error("❌ Error initializing user mods:", err);
+  }
+})();
+
 
 async function applyApprovedVersions(mod) {
   const { data: versions } = await client
