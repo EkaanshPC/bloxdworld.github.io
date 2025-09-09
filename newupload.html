@@ -197,8 +197,211 @@ background-color: #1565c0;
 
   console.log("point reached! client created!");
 
-  // ... all your cleanText, sanitizeDescription, validateImageURL, isImageSafe, etc functions here ...
-  // (unchanged, just keep them as you had)
+// 🛡️ text moderation
+
+function cleanImages(input) {
+
+  return input.replace(/<img[^>]*>/gi, match => {
+
+    // Only allow http/https links
+
+    if (/src\s*=\s*["']?(https?:\/\/[^"'>\s]+)/i.test(match)) {
+
+      return match; // legit img, keep it
+
+    }
+
+    return "🚫"; // blocked img
+
+  });
+
+}
+
+async function moderateImagesInDescription(html) {
+
+  await loadNSFWModel(); // make sure the model is loaded
+
+  const div = document.createElement("div");
+
+  div.innerHTML = html;
+
+  const images = div.querySelectorAll("img");
+
+
+
+  for (let img of images) {
+
+    try {
+
+      const imageEl = new Image();
+
+      imageEl.crossOrigin = "anonymous";
+
+      imageEl.src = img.src;
+
+
+
+      await new Promise((res, rej) => {
+
+        imageEl.onload = res;
+
+        imageEl.onerror = rej;
+
+      });
+
+
+
+      const predictions = await nsfwModel.classify(imageEl);
+
+
+
+      // 👈 HERE: calculate nsfwScore
+
+      const nsfwScore = predictions.find(p =>
+
+        ["Porn", "Hentai", "Sexy"].includes(p.className)
+
+      )?.probability || 0;
+
+
+
+      // 👈 Remove or replace image if NSFW
+
+      if (nsfwScore > 0.7) {
+
+        img.src = "https://bloxdworld.pages.dev/assets/default-banner.png";
+
+        img.alt = "NSFW image removed";
+
+      }
+
+
+
+    } catch (err) {
+
+      console.warn("Failed to scan image:", err);
+
+      img.replaceWith("⚠️ [Unscannable Image]");
+
+    }
+
+  }
+
+
+
+  return div.innerHTML;
+
+}
+
+
+
+function cleanText(input) {
+
+  return (input || "")
+
+    .replace(/<\s*script[^>]*>/gi, "********")
+
+    .replace(/<\s*\/\s*script\s*>/gi, "********");
+
+}
+
+
+
+async function sanitizeDescription(input) {
+
+  let safeText = cleanText(input);
+
+  safeText = leoProfanity.clean(safeText); // profanity filter
+
+  let moderated = await moderateImagesInDescription(safeText);
+
+  return moderated;
+
+}
+
+
+
+
+
+// 🛡️ image url validator
+
+function validateImageURL(url) {
+
+  if (!url) return false;
+
+  try {
+
+    const u = new URL(url);
+
+    return ["http:", "https:"].includes(u.protocol);
+
+  } catch {
+
+    return false;
+
+  }
+
+}
+
+
+
+// 🛡️ NSFWJS setup
+
+let nsfwModel = null;
+
+async function loadNSFWModel() {
+
+  if (!nsfwModel) nsfwModel = await nsfwjs.load();
+
+  return nsfwModel;
+
+}
+
+async function isImageSafe(url) {
+
+  if (!validateImageURL(url)) return false;
+
+  return new Promise((resolve) => {
+
+    const img = new Image();
+
+    img.crossOrigin = "anonymous";
+
+    img.src = url;
+
+    img.onload = async () => {
+
+      try {
+
+        const model = await loadNSFWModel();
+
+        const predictions = await model.classify(img);
+
+        console.log("Image moderation:", predictions);
+
+        const unsafe = predictions.some(
+
+          (p) => ["Porn", "Sexy", "Hentai"].includes(p.className) && p.probability > 0.6
+
+        );
+
+        resolve(!unsafe);
+
+      } catch {
+
+        resolve(false);
+
+      }
+
+    };
+
+    img.onerror = () => resolve(false);
+
+  });
+
+}
+
+
 
   // ---- INIT CODE (runs immediately) ----
   console.log("DOM ready (no wrapper). Checking user session...");
