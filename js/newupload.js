@@ -253,7 +253,7 @@ async function isImageSafe(url) {
       let title = document.getElementById("modTitle").value;
       let file = document.getElementById("modFile").files[0];
       let description = document.getElementById("modDescription").value;
-      let image = document.getElementById("modImage").value;
+      let image ="";
       let icon = document.getElementById("modIcon").value;
       let category = document.getElementById("modCategory").value;
       let shortdescription = document.getElementById("modShort").value;
