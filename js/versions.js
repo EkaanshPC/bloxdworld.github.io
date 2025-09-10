@@ -1,7 +1,7 @@
 const supabaseUrl = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U"; // safe anon key
 const client = supabase.createClient(supabaseUrl, supabaseKey);
-
+import { getUserProfileByUID } from "./googlelogin";
 document.addEventListener("DOMContentLoaded", async () => {
   const params = new URLSearchParams(window.location.search);
   const addonId = params.get("addonid");
