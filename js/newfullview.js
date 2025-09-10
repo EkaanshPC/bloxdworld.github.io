@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     return console.error(error);}
 
   const mod = data;
-  creatorProfile=await getUserProfileByUID(mod.creatoruid)
+  let creatorProfile=await getUserProfileByUID(mod.creatoruid)
   console.log("data got! it is:",mod)
   document.getElementById("modTitle").textContent = mod.title;
   document.getElementById("uploadDate").textContent = mod.created_at.split("T")[0];
