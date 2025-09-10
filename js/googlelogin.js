@@ -215,7 +215,7 @@ export async function uploadMod({
   creatoruid,
   shortdescription,
   info ,
-  typeOfCode
+  typeofcode
 }) {
   if (!title || !file) return { error: "Fill title and file!" };
 
@@ -245,7 +245,7 @@ export async function uploadMod({
       created_at: new Date(),
       creatoruid,
       shortdescription,
-      typeOfCode
+      typeofcode
     });
 
   if (dbError) return { error: dbError.message };
