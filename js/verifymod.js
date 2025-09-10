@@ -12,7 +12,7 @@ async function fetchMods() {
   const { data: mods, error } = await client
     .from("mod")
     .select("*")
-    .eq("approval", false) // only pending mods
+    .eq("approval", null) // only pending mods
     .order("created_at", { ascending: false });
 
   if (error) {

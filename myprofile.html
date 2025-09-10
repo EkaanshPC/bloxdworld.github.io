@@ -39,11 +39,11 @@
 <meta name="theme-color" content="#00c3ff">
 
 <!-- 🎭 Styles -->
-<link rel="stylesheet" href="styles/earth-cube.css">
-<link rel="stylesheet" href="styles/header.css">
-<link rel="stylesheet" href="styles/devlogandindex.css">
-<link rel="stylesheet" href="styles/other.css">
-<link rel="stylesheet" href="styles/navbar.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/earth-cube.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/header.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/devlogandindex.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/other.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/navbar.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <!-- 📊 Structured Data (SEO JSON-LD) -->
@@ -76,7 +76,6 @@
 body {
   background: #f9f9f9;
   color: #111;
-  font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -96,7 +95,7 @@ body {
   color: #111;
 }
 
-.profile-field label {
+.profile-field p {
   display: block;
   margin-bottom: 5px;
   font-weight: bold;
@@ -105,10 +104,11 @@ body {
 
 .profile-field input,
 .profile-field textarea {
-  width: 100%;
+  width: 70%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 20px;
+margin:10px;
   background: #fff;
   color: #111;
 }
@@ -130,7 +130,7 @@ body {
   padding: 15px;
   width: 100%;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 20px;
   transition: background 0.2s, box-shadow 0.2s;
 }
 
@@ -154,7 +154,8 @@ body.dark-mode .profile-container h2 {
   color: #fff;
 }
 
-body.dark-mode .profile-field label {
+body.dark-mode .profile-field label,
+body.dark-mode .profile-field p {
   color: #e0e0e0;
 }
 
@@ -209,16 +210,10 @@ body.dark-mode #saveProfile:hover {
             <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
           </li>
           <li class="nav-item">
-            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
+            <a href="newmods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
           </li>
           <li class="nav-item">
             <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
           </li>
           <li class="nav-item">
             <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
@@ -239,21 +234,18 @@ body.dark-mode #saveProfile:hover {
   <img id="profilePreview" src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png" alt="Profile Picture Preview">
   
   <div class="profile-field">
-    <label for="displayName">Display Name</label>
-    <input type="text" id="displayName">
+    <input type="text" id="displayName" placeholder="Display Name" style="width:90%">
   </div>
   
   <div class="profile-field">
-    <label for="bio">Bio</label>
-    <textarea id="bio"></textarea>
+    <textarea id="bio" style="width:90%;height:200px;" placeholder="Bio"></textarea>
   </div>
 
   <div class="profile-field">
-    <label for="profilePicture">Profile Picture URL</label>
-    <input type="text" id="profilePicture">
+    <input type="text" id="profilePicture" style="width:90%" placeholder="Profile Picture URL">
   </div>
 
-  <button id="saveProfile">Save Profile</button>
+  <button id="saveProfile" style="width:50%">Save</button>
 </div>
 
 <footer class="site-footer">
@@ -266,8 +258,8 @@ body.dark-mode #saveProfile:hover {
   </nav>
 </footer>
 
-<script type="module" src="js/myprofile.js"></script>
+<script type="module" src="https://bloxdworld.pages.dev/js/myprofile.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type="module" src="js/googlelogin.js"></script>
+<script type="module" src="https://bloxdworld.pages.dev/js/googlelogin.js"></script>
 </body>
 </html>

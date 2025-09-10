@@ -84,6 +84,7 @@ async function renderUser(sessionFromEvent) {
           <div class="dropdown-content">
             <a href="/myprofile" style="color:white;" id="BEWHITEBRO">My Profile</a>
             <a href="#" id="logoutBtn" style="color:white;">Logout</a>
+            <a href="/mymods" style="color:white;">Manage my mods</a>
           </div>
         </div>
       `;

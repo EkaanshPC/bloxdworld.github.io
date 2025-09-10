@@ -249,6 +249,169 @@ body.dark-mode .site-footer {
   </div>
 </div>
 
+<div id="update-popup">
+  <div class="popup-card">
+    <div class="popup-header">
+      <h2>🚀 Bloxd World v2 Update!</h2>
+      <label><input type="checkbox" id="dont-show"> Don't show again</label>
+    </div>
+    <div class="popup-body">
+      <p>Check out all the insane new features and improvements in v2!</p>
+      <ul>
+        <li>📝 Upload requires login and file upload; HTML allowed in descriptions</li>
+        <li>💖 Votes renamed to Likes; favourites system coming in v2.5</li>
+        <li>📄 Description snippet (150 chars) on /mods</li>
+        <li>📊 Fullview: Versions tab added, fixed description size, Likes visible</li>
+        <li>👤 /myprofile: Edit display name, profile pic, view your mods</li>
+        <li>🛠️ /mymods: Delete/edit mods, add new version, redirect to upload</li>
+        <li> A Major UI Update! </li>
+        <li> Update has JUST released, report any bugs to <code>caplente</code> on discord</li>
+      </ul>
+    </div>
+    <div class="popup-footer">
+      <button id="close-update">Close</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Overlay & popup */
+#update-popup {
+  position: fixed;
+  top:0; left:0;
+  width:100vw; height:100vh;
+  background: rgba(0,0,0,0.6);
+  display:flex; justify-content:center; align-items:center;
+  z-index:9999;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity 0.4s ease;
+}
+
+#update-popup.show {
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* Card */
+.popup-card {
+  background:#fff;
+  border-radius:16px;
+  width:450px;
+  max-width:90%;
+  box-shadow: 0 0 40px rgba(0,0,0,0.4);
+  transform: translateY(-30px);
+  opacity:0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+#update-popup.show .popup-card {
+  transform: translateY(0);
+  opacity:1;
+}
+
+/* Header */
+.popup-header {
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  padding:20px;
+  border-top-left-radius:16px;
+  border-top-right-radius:16px;
+  color:#fff;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.popup-header h2 {
+  margin:0;
+  font-size:1.5em;
+}
+
+.popup-header label {
+  font-size:0.8em;
+  display:flex; align-items:center;
+  gap:5px;
+}
+
+/* Body */
+.popup-body {
+  padding:20px;
+  color:#333;
+}
+
+.popup-body p {
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.popup-body ul {
+  list-style:none;
+  padding-left:0;
+}
+
+.popup-body li {
+  margin-bottom:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+/* Footer buttons */
+.popup-footer {
+  display:flex;
+  justify-content: space-between;
+  padding:20px;
+  gap:10px;
+}
+
+.popup-footer button {
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+  transition: all 0.2s ease;
+}
+#update-popup, #update-popup * {
+  font-family: 'Poppins', 'Inter', 'Roboto', system-ui, -apple-system, sans-serif;
+}
+
+#view-update {
+  background:#00aaff;
+  color:#fff;
+}
+
+#view-update:hover {
+  background:#008ecc;
+}
+
+#close-update {
+  background:#ccc;
+  color:#333;
+}
+
+#close-update:hover {
+  background:#999;
+}
+</style>
+
+<script>
+// Show popup if not disabled
+if (!localStorage.getItem('hideUpdatePopup')) {
+  document.getElementById('update-popup').classList.add('show');
+}
+
+// Close button
+document.getElementById('close-update').addEventListener('click', () => {
+  if(document.getElementById('dont-show').checked){
+    localStorage.setItem('hideUpdatePopup','true');
+  }
+  document.getElementById('update-popup').classList.remove('show');
+});
+
+
+</script>
 
 <section>
   <img src="What you’d expect.png" alt="Bloxd World Banner" id="bworldbanner"/>

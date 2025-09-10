@@ -70,15 +70,25 @@ async function fetchAndRenderMods() {
 }
 
 function renderMods(mods) {
-  modsList.innerHTML = mods.map(mod => `
-    <div class="mod-card" data-id="${mod.id}">
-      <h3>${mod.title}</h3>
-      <p>${mod.shortdescription || "No description"}</p>
-      <a href="${"https://bloxdworld.pages.dev/newfullview?addonid="+mod.id}" target="_blank">Download</a>
-      <button class="delete-btn">Delete</button>
-      <button class="add-version-btn">Add Version</button>
+  modsList.innerHTML = mods.map(mod => modsList.innerHTML += `
+  <div class="mod-card" data-id="${mod.id}" style="border:1px solid #ddd; padding:10px; border-radius:8px; width:350px; margin-bottom:10px;">
+    <!-- Flex container for image + title -->
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <img src="${mod.icon||"https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"}" style="width:100px; height:100px; object-fit:contain;">
+      <h3 style="margin:0;">${mod.title}</h3>
     </div>
-  `).join("");
+
+    <p>${mod.shortdescription || "No description"}</p>
+
+    <a href="https://bloxdworld.pages.dev/newfullview?addonid=${mod.id}" target="_blank" 
+       style="display:block; width:100%; padding:5px 0; background-color:lightgray; text-decoration:none; color:inherit; border-radius:5px; text-align:center; margin-bottom:5px;">
+       Download
+    </a>
+
+    <button class="delete-btn" style="width:100%; margin-bottom:5px;">Delete</button>
+    <button class="add-version-btn" style="width:100%;">Add Version</button>
+  </div>
+`.join(""))
 
   modsList.querySelectorAll(".delete-btn").forEach(btn => {
     btn.addEventListener("click", async e => {

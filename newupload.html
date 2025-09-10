@@ -37,11 +37,11 @@
 
 <meta name="theme-color" content="#00c3ff">
 
-<link rel="stylesheet" href="styles/earth-cube.css">
-<link rel="stylesheet" href="styles/header.css">
-<link rel="stylesheet" href="styles/devlogandindex.css">
-<link rel="stylesheet" href="styles/other.css">
-<link rel="stylesheet" href="styles/navbar.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/earth-cube.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/header.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/devlogandindex.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/other.css">
+<link rel="stylesheet" href="https://bloxdworld.pages.dev/styles/navbar.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script type="application/ld+json">
@@ -91,21 +91,23 @@
 .upload-container select ,
 .upload-container input
 {
-  width: 90%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 6px;
+ font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  width: 500px;
+padding:10px;
+margin:3px;
+  border-radius: 20px;
   border: 1px solid #ccc;
   background: white;
   color: black;
 }
 
 /* Dark mode input styling */
-.upload-container.dark-mode input[type="text"],
-.upload-container.dark-mode input[type="file"],
-.upload-container.dark-mode textarea,
-.upload-container.dark-mode select,
-.upload-conatiner .dark-mode input
+.dark-mode .upload-container input[type="text"],
+.dark-mode .upload-container input[type="file"],
+.dark-mode .upload-container textarea,
+.dark-mode .upload-container select,
+.dark-mode .upload-conatiner input
 {
   background: #2a2a2a;
   color: #f0f0f0;
@@ -127,19 +129,24 @@
 }
 
 /* Dark mode button styling */
-.upload-container.dark-mode button {
+.dark-mode .upload-container button {
   background-color: #3a8de0;
   color: white;
 }
 
-.upload-container.dark-mode button:hover {
+.dark-mode .upload-container button:hover {
   background-color: #2b6cb0;
+}
+  .dark-mode .upload-container {
+background: #333;
+  color: #ccc;
 }
 </style>
 </head>
 <body>
 <div class="modrinth-navbar">
   <div class="header">
+    
     <!-- Left: Logo -->
     <div class="header-left">
       <div style="display: flex; align-items: center; height: 100%;">
@@ -165,16 +172,10 @@
             <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
           </li>
           <li class="nav-item">
-            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
+            <a href="newmods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
           </li>
           <li class="nav-item">
             <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
           </li>
           <li class="nav-item">
             <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
@@ -185,29 +186,29 @@
         <!-- Auth content here -->
       </div>
     </div>
+
   </div>
 </div>
 
 <div class="upload-container">
   <h2>Upload Your Mod</h2>
   <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
-  <textarea id="modDescription" placeholder="Enter Mod Description"></textarea><br>
-  <select id="modTypeOfCode">
+  <textarea id="modDescription" placeholder="Enter Mod Description" style="height:200px;"></textarea><br>
+  <select id="modTypeOfCode" style="width:257px;">
     <option value="" selected disabled>Type of Code</option>
     <option value="Code Block">Code Block</option>
     <option value="World Code">World Code</option>
-  </select>
-  <br>
-  <input type="text" id="modIcon" placeholder="Icon URL"><br>
-  <input type="text" id="modShort" placeholder="Short Description">
-  <p id="wordCountMsg" style="color: red;"></p>
-  <select id="modCategory">
+  </select>  <select id="modCategory" style="width:257px;">
     <option value="">Select Category</option>
     <option value="Gameplay">Gameplay</option>
     <option value="Visual">Visual</option>
     <option value="Utility">Utility</option>
     <option value="Other">Other</option>
-  </select><br>
+  </select>
+  <br>
+  <input type="text" id="modIcon" placeholder="Icon URL"><br>
+  <input type="text" id="modShort" placeholder="Short Description" style="width:400px;">
+  <p id="wordCountMsg" style="color: red;display:inline;">Words: 0/30</p><br>
   <input type="file" id="modFile"><br>
   <button>Upload 🔥</button>
   <p id="uploadStatus"></p>
@@ -223,7 +224,7 @@
   </nav>
 </footer>
 
-<script type="module" src="js/newupload.js"></script>
+<script type="module" src="https://bloxdworld.pages.dev/js/newupload.js"></script>
 
 <script>
 if (/Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
@@ -239,6 +240,6 @@ themeToggle.addEventListener("click", e => {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type="module" src="js/googlelogin.js"></script>
+<script type="module" src="https://bloxdworld.pages.dev/js/googlelogin.js"></script>
 </body>
 </html>

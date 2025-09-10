@@ -169,7 +169,7 @@ body {
 }
 
 .mod-meta {
-  margin-top:290px;
+  margin-top:320px;
   padding: 15px;
   width:125px;
   background: #fff;
@@ -182,7 +182,7 @@ body {
   color: #444;
 }
 .right-card {
-    margin-top:450px;
+    margin-top:500px;
   padding: 15px;
   width:125px;
   background: #fff;
@@ -198,6 +198,7 @@ body {
   display: block;
   margin-bottom: 8px;
 }
+
 
 .description {
   text-align: left;
@@ -386,6 +387,11 @@ body {
   background-color: #00d6a5;   /* hover effect */
   color: white;
 }
+.dark-mode .right-card,
+.dark-mode .mod-meta {
+  background: #333;
+  color: white;
+}
 </style>
 </head>
 <body>
@@ -417,16 +423,10 @@ body {
             <a href="index.html"><i class="fas fa-home"></i><span class="nav-label">Home</span></a>
           </li>
           <li class="nav-item">
-            <a href="mods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="upload.html"><i class="fas fa-upload"></i><span class="nav-label">Upload</span></a>
+            <a href="newmods.html"><i class="fas fa-cubes"></i><span class="nav-label">Mods</span></a>
           </li>
           <li class="nav-item">
             <a href="about.html"><i class="fas fa-info-circle"></i><span class="nav-label">About</span></a>
-          </li>
-          <li class="nav-item">
-            <a href="leaderboard.html"><i class="fas fa-trophy"></i><span class="nav-label">Leaderboard</span></a>
           </li>
           <li class="nav-item">
             <a href="#" id="themeToggle"><i class="fas fa-moon"></i><span class="nav-label">Theme</span></a>
@@ -468,7 +468,7 @@ body {
   <div class="mod-meta" style="width:300px;">
         <span><strong>Uploaded:</strong> <span id="uploadDate">...</span></span><br/>
         <hr/>
-        <span><strong>By:</strong>  <br><img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png" alt="Mod Icon" class="mod-icon" id="creatorprofilepic" style="width:20px;height:20px;margin-top:10px;"><a id="uploaderName" style="display:inline;font-size:15px;">Unknown User</a></span>
+        <span><strong>By:</strong>  <br><img src="https://bloxdworld.pages.dev/assets/pixil-frame-0%20(14).png" alt="Mod Icon" class="mod-icon" id="creatorprofilepic" style="width:20px;height:20px;margin-top:10px;"><a id="uploaderName" style="margin-left:10px;display:inline;font-size:20px;text-decoration:none; color:inherit;">Unknown User</a></span>
 </div>
   <div class="right-card">
         <span><strong>Feel something is wrong with this mod? report us here:</strong> (soon) </span><br/>
