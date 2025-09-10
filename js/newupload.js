@@ -84,8 +84,6 @@ async function moderateImagesInDescription(html) {
 
       if (nsfwScore > 0.7) {
 
-        img.src = "https://bloxdworld.pages.dev/assets/default-banner.png";
-
         img.alt = "NSFW image removed";
 
       }
@@ -257,7 +255,7 @@ async function isImageSafe(url) {
       let icon = document.getElementById("modIcon").value;
       let category = document.getElementById("modCategory").value;
       let shortdescription = document.getElementById("modShort").value;
-       let typeOfCode = document.getElementById("modTypeOfCode").value;
+       let typeofcode = document.getElementById("modTypeOfCode").value;
 
       // clean text + sanitize desc
       title = cleanText(title);
@@ -266,10 +264,9 @@ async function isImageSafe(url) {
       category = cleanText(category);
 
       // validate images
-      if (!(await isImageSafe(icon))) icon = "https://bloxdworld.pages.dev/assets/default-icon.png";
-      if (!(await isImageSafe(image))) image = "https://bloxdworld.pages.dev/assets/default-banner.png";
+      if (!(await isImageSafe(icon))) icon = "https://bloxdworld.pages.dev/assets/pixil-frame-0 (14).png";
 
-      const modData = { title, file, description, image, icon, author, category, creatoruid: getUID(), shortdescription, info: { extra: "submitted via form" }, typeOfCode };
+      const modData = { title, file, description, image, icon, author, category, creatoruid: getUID(), shortdescription, info: { extra: "submitted via form" }, typeofcode };
 
       const result = await uploadMod(modData);
       status.textContent = result.error ? "❌ " + result.error : "✅ Upload successful!";

@@ -1,3 +1,5 @@
+import { getUserProfileByUID } from "./googlelogin";
+
  Toastify({
   text: "This is still in alpha testing!",
   duration: 3000,
@@ -9,14 +11,6 @@
 const supabaseUrl = "https://pxmsgzfufvwxpnyeobwk.supabase.co";
 const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4bXNnemZ1ZnZ3eHBueWVvYndrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NjU1OTksImV4cCI6MjA2NzM0MTU5OX0.-fRzI_259AIkq60Ck7PcgpX2SThnp8rBwVGglKxgY2U";
 const client = supabase.createClient(supabaseUrl, supabaseKey);
-
-function formatDescription(raw) {
-  if(!raw) return 'No description provided.';
-  return raw.replace(/\n/g,'<br>')
-            .replace(/\*(.*?)\*/g,'<strong>$1</strong>')
-            .replace(/_(.*?)_/g,'<u>$1</u>')
-            .replace(/`(.*?)`/g,'<code>$1</code>');
-}
 
 document.addEventListener("DOMContentLoaded", async ()=>{
   const params = new URLSearchParams(window.location.search);
@@ -51,13 +45,16 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     return console.error(error);}
 
   const mod = data;
+  creatorProfile=await getUserProfileByUID(mod.creatoruid)
   console.log("data got! it is:",mod)
   document.getElementById("modTitle").textContent = mod.title;
   document.getElementById("uploadDate").textContent = mod.created_at.split("T")[0];
-  document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
+  document.getElementById("uploaderName").textContent = creatorProfile.display_name||mod.author;
+  document.getElementById("creatorprofilepic").textContent=creatorProfile.profile_picture||"https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"
+  document.getElementById("uploaderName").href="https://bloxdworld.pages.dev/profile?useruid="+mod.creatoruid
   document.getElementById("category").textContent = mod.category || "Uncategorized";
  document.getElementById("shortDescription").textContent= mod.shortdescription || "No Info"
-  document.getElementById("description").innerHTML = mod.description
+  document.getElementById("description").innerHTML = mod.description || "nothing here.... (except tumbleweeds)"
   document.getElementById("typeofcode").innerHTML = mod.typeofcode
   window.getLink = async (filePath) => {
     const { data } = client.storage.from("mod").getPublicUrl(filePath);

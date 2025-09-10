@@ -137,13 +137,16 @@ document.addEventListener("DOMContentLoaded", async ()=>{
     return console.error(error);}
 
   const mod = data;
+  creatorProfile=await getUserProfileByUID(mod.creatoruid)
   console.log("data got! it is:",mod)
   document.getElementById("modTitle").textContent = mod.title;
   document.getElementById("uploadDate").textContent = mod.created_at.split("T")[0];
-  document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
+  document.getElementById("uploaderName").textContent = creatorProfile.display_name||mod.author;
+  document.getElementById("creatorprofilepic").textContent=creatorProfile.profile_picture||"https://bloxdworld.pages.dev/assets/pixil-frame-0%20%2814%29.png"
+  document.getElementById("uploaderName").href="https://bloxdworld.pages.dev/profile?useruid="+mod.creatoruid
   document.getElementById("category").textContent = mod.category || "Uncategorized";
  document.getElementById("shortDescription").textContent= mod.shortdescription || "No Info"
-   document.getElementById("typeofcode").innerHTML = mod.typeofcode
+  document.getElementById("typeofcode").innerHTML = mod.typeofcode
 
   window.getLink = async (filePath) => {
     const { data } = client.storage.from("mod").getPublicUrl(filePath);
