@@ -88,7 +88,9 @@
 .upload-container input[type="text"],
 .upload-container input[type="file"],
 .upload-container textarea,
-.upload-container select {
+.upload-container select ,
+.upload-container input
+{
   width: 90%;
   padding: 10px;
   margin: 10px 0;
@@ -102,7 +104,9 @@
 .upload-container.dark-mode input[type="text"],
 .upload-container.dark-mode input[type="file"],
 .upload-container.dark-mode textarea,
-.upload-container.dark-mode select {
+.upload-container.dark-mode select,
+.upload-conatiner .dark-mode input
+{
   background: #2a2a2a;
   color: #f0f0f0;
   border: 1px solid #555;
@@ -188,7 +192,12 @@
   <h2>Upload Your Mod</h2>
   <input type="text" id="modTitle" placeholder="Enter Mod Title"><br>
   <textarea id="modDescription" placeholder="Enter Mod Description"></textarea><br>
-  <input type="text" id="modImage" placeholder="Image URL"><br>
+  <select id="modTypeOfCode">
+    <option value="" selected disabled>Type of Code</option>
+    <option value="Code Block">Code Block</option>
+    <option value="World Code">World Code</option>
+  </select>
+  <br>
   <input type="text" id="modIcon" placeholder="Icon URL"><br>
   <input type="text" id="modShort" placeholder="Short Description">
   <p id="wordCountMsg" style="color: red;"></p>

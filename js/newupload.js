@@ -257,6 +257,7 @@ async function isImageSafe(url) {
       let icon = document.getElementById("modIcon").value;
       let category = document.getElementById("modCategory").value;
       let shortdescription = document.getElementById("modShort").value;
+       let typeOfCode = document.getElementById("modTypeOfCode").value;
 
       // clean text + sanitize desc
       title = cleanText(title);
@@ -268,7 +269,7 @@ async function isImageSafe(url) {
       if (!(await isImageSafe(icon))) icon = "https://bloxdworld.pages.dev/assets/default-icon.png";
       if (!(await isImageSafe(image))) image = "https://bloxdworld.pages.dev/assets/default-banner.png";
 
-      const modData = { title, file, description, image, icon, author, category, creatoruid: getUID(), shortdescription, info: { extra: "submitted via form" } };
+      const modData = { title, file, description, image, icon, author, category, creatoruid: getUID(), shortdescription, info: { extra: "submitted via form" }, typeOfCode };
 
       const result = await uploadMod(modData);
       status.textContent = result.error ? "❌ " + result.error : "✅ Upload successful!";

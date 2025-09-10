@@ -143,6 +143,8 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   document.getElementById("uploaderName").textContent = mod.author || "Anonymous";
   document.getElementById("category").textContent = mod.category || "Uncategorized";
  document.getElementById("shortDescription").textContent= mod.shortdescription || "No Info"
+   document.getElementById("typeofcode").innerHTML = mod.typeofcode
+
   window.getLink = async (filePath) => {
     const { data } = client.storage.from("mod").getPublicUrl(filePath);
     if (data?.publicUrl) {

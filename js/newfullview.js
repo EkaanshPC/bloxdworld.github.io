@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   document.getElementById("category").textContent = mod.category || "Uncategorized";
  document.getElementById("shortDescription").textContent= mod.shortdescription || "No Info"
   document.getElementById("description").innerHTML = mod.description
+  document.getElementById("typeofcode").innerHTML = mod.typeofcode
   window.getLink = async (filePath) => {
     const { data } = client.storage.from("mod").getPublicUrl(filePath);
     if (data?.publicUrl) {
